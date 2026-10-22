@@ -1,0 +1,152 @@
+{
+  "evidence_id": "ev_4a644de0253fad07611b894c21ba7725f0937a9492bc443ef78adf8f41062597",
+  "reference": "https://palangkaraya.go.id/kualitas-udara-titik-panas-kota-palangkaraya",
+  "operation": "capture_browser_scenario",
+  "browser": {
+    "mode": "launch",
+    "process_ownership": "provider-owned",
+    "cleanup": "terminated-owned-process",
+    "product": "Chromium",
+    "version": "155.0.8059.85"
+  },
+  "dom_sha256": "4168eba6f16bdeccd3ed153a9ffe5d3a87f537b2c01360580824b4576de0deb8",
+  "requests": [
+    {
+      "url": "https://bpbd.palangkaraya.go.id/wp-json/wp/v2/categories?slug=infografis&_fields=id",
+      "status": 200,
+      "transaction_id": "request-13"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/hotspot_high2.json",
+      "status": 200,
+      "transaction_id": "request-16"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/hotspot_medium2.json",
+      "status": 200,
+      "transaction_id": "request-17"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/hotspot_low2.json",
+      "status": 200,
+      "transaction_id": "request-18"
+    },
+    {
+      "url": "https://kominfo.palangkaraya.go.id/wp-json/wp/v2/categories?slug=infografis&_fields=id",
+      "status": 200,
+      "transaction_id": "request-14"
+    },
+    {
+      "url": "https://bpbd.palangkaraya.go.id/wp-json/wp/v2/posts?categories=34&per_page=4&page=1&_embed",
+      "status": 200,
+      "transaction_id": "request-35"
+    },
+    {
+      "url": "https://kominfo.palangkaraya.go.id/wp-json/wp/v2/posts?categories=24&per_page=4&page=1&_embed",
+      "status": 200,
+      "transaction_id": "request-36"
+    },
+    {
+      "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=-2.2088&longitude=113.9213&hourly=us_aqi,pm2_5,pm10,ozone,nitrogen_dioxide,sulphur_dioxide,carbon_monoxide&past_days=1&forecast_days=3&timezone=Asia%2FJakarta&cell_selection=nearest",
+      "status": 200,
+      "transaction_id": "request-37"
+    },
+    {
+      "url": "https://air-quality-api.open-meteo.com/v1/air-quality?latitude=-1.9958,-2.0519,-1.9052,-2.0836,-1.9428,-1.9538,-2.0373,-2.2066,-2.2526,-2.2027,-2.1220,-2.2464,-2.1927,-2.1841,-2.2409,-2.2096,-2.1662,-1.6780,-1.7882,-1.6458,-1.7884,-1.7499,-1.7234,-1.8388,-2.2524,-2.2028,-2.2942,-2.2206,-2.3226,-2.3543&longitude=113.7268,113.7089,113.7720,113.8170,113.7374,113.6512,113.7832,113.7826,113.8960,113.8989,113.8574,113.9250,113.9560,113.9494,113.9413,113.9750,113.9230,113.6488,113.7327,113.7411,113.5932,113.7478,113.6518,113.6727,114.0171,114.0258,114.0066,114.0765,113.8285,113.9711&hourly=us_aqi,pm2_5&past_days=1&forecast_days=1&timezone=Asia%2FJakarta&cell_selection=nearest",
+      "status": 200,
+      "transaction_id": "request-38"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/pm25_pky.json",
+      "status": 200,
+      "transaction_id": "request-39"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/visibility_pky.json",
+      "status": 200,
+      "transaction_id": "request-40"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/puskesmas.json",
+      "status": 200,
+      "transaction_id": "request-42"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/ispa.json",
+      "status": 200,
+      "transaction_id": "request-43"
+    },
+    {
+      "url": "https://api.open-meteo.com/v1/forecast?latitude=-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.5,-1.6,-1.6,-1.6,-1.6,-1.6,-1.6,-1.6,-1.6,-1.7,-1.7,-1.7,-1.7,-1.7,-1.7,-1.7,-1.7,-1.8,-1.8,-1.8,-1.8,-1.8,-1.8,-1.8,-1.8,-1.9,-1.9,-1.9,-1.9,-1.9,-1.9,-1.9,-1.9,-2,-2,-2,-2,-2,-2,-2,-2,-2.1,-2.1,-2.1,-2.1,-2.1,-2.1,-2.1,-2.1,-2.2,-2.2,-2.2,-2.2,-2.2,-2.2,-2.2,-2.2,-2.3,-2.3,-2.3,-2.3,-2.3,-2.3,-2.3,-2.3,-2.4,-2.4,-2.4,-2.4,-2.4,-2.4,-2.4,-2.4,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.5,-2.6,-2.6,-2.6,-2.6,-2.6,-2.6,-2.6,-2.6&longitude=113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2,113.5,113.6,113.7,113.8,113.9,114,114.1,114.2&current=wind_speed_10m,wind_direction_10m&wind_speed_unit=ms&timezone=auto",
+      "status": 200,
+      "transaction_id": "request-44"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/index.json",
+      "status": 200,
+      "transaction_id": "request-45"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/ringkasan/harian-2026-10.json",
+      "status": 200,
+      "transaction_id": "request-48"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/ringkasan/harian-2026-08.json",
+      "status": 200,
+      "transaction_id": "request-46"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/ringkasan/harian-2026-09.json",
+      "status": 200,
+      "transaction_id": "request-47"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/index.json",
+      "status": 200,
+      "transaction_id": "request-49"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/ringkasan/harian-2026-08.json",
+      "status": 200,
+      "transaction_id": "request-50"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/ringkasan/harian-2026-09.json",
+      "status": 200,
+      "transaction_id": "request-51"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/ringkasan/harian-2026-10.json",
+      "status": 200,
+      "transaction_id": "request-52"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/aqi/aqi-2026-09.jsonl",
+      "status": 200,
+      "transaction_id": "request-54"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/aqi/aqi-2026-08.jsonl",
+      "status": 200,
+      "transaction_id": "request-53"
+    },
+    {
+      "url": "https://appscript.palangkaraya.go.id/hotspot/api/arsip/aqi/aqi-2026-10.jsonl",
+      "status": 200,
+      "transaction_id": "request-55"
+    }
+  ],
+  "limitations": [
+    "Artifact identity is unavailable for this observation.",
+    "Event sequence records provider receipt order; simultaneous browser causality is not inferred.",
+    "Network content is retained only when selected; Playwright response-body bytes are API results and are not guaranteed to match wire bytes.",
+    "Request bytes are limited to what Playwright exposes; not_exposed does not establish body absence or multipart file coverage.",
+    "Network content reads settle within 5 seconds each and the observer does not request bodies from unfinished responses.",
+    "Captured response-body bytes are the result of Playwright's Response.body() API. Playwright may satisfy that API with a credentialed follow-up load of the request URL when CDP has no body, so transaction and event links do not verify that retained bytes came from the original network transaction.",
+    "Playwright scenario events do not expose request initiator stacks; receipt order does not prove causality.",
+    "Storage values are hashed only after declared-secret redaction.",
+    "Some selected network content was unavailable; per-transaction content states retain the reason.",
+    "Browser host platform and architecture were not observed."
+  ]
+}
