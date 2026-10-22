@@ -36,7 +36,7 @@ async function hotspots(){
  replaceOptions('district',[...new Set([...DISTRICTS,...state.raw.map(x=>x.kec)])].sort(),'Semua kecamatan');
  $('sourceTimes').textContent='Waktu pembentukan feed (sesuai sumber): '+timestamps.join(' · ');
  const stale=results.some(r=>r.status==='fulfilled'&&r.value.generated_at&&(Date.now()-Date.parse(r.value.generated_at)>24*3600000));
- $('feedStatus').closest('.connection').hidden=good===3&&!stale; $('feedStatus').textContent=good===0?'Feed gagal dimuat · coba perbarui':state.partial?`Data parsial · ${good}/3 feed tersedia`:stale?'Feed tersedia · waktu sumber lebih dari 24 jam':'';
+
  $('hotMeta').textContent=state.loaded?(state.partial?'Jumlah parsial · tidak semua feed tersedia':'Deteksi satelit · sesuai filter aktif'):'Tidak tersedia · bukan berarti nol';
  state.page=0;render();if(typeof updateRegions==='function'){updateRegions();await loadVillagePM();}
 }

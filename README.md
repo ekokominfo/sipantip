@@ -1,5 +1,9 @@
 # Pantau Titik Panas
 
+Web publik: https://ekokominfo.github.io/sipantip/
+
+GitHub Pages menerbitkan branch `main` dari root. Berkas situs pada root dan `dist/` harus disinkronkan saat melakukan perubahan.
+
 Dashboard titik panas, kualitas udara, dan cuaca Kabupaten Pulang Pisau. Repositori: `ekokominfo/sipantip`. Nama antarmuka tetap Pantau Pulang Pisau sesuai keputusan pemilik.
 
 ## Menjalankan
