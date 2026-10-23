@@ -6,7 +6,7 @@ function setLoad(key,phase,message=''){
  el.hidden=phase==='ready';el.dataset.phase=phase;el.replaceChildren();
  if(phase==='ready')return;
  const text=document.createElement('span');text.textContent=message;el.append(text);
- if(phase==='error'){const b=document.createElement('button');b.className='subtle';b.textContent='Coba lagi';b.dataset.retry=key;el.append(b);}
+ if(phase==='error'){const b=document.createElement('button');b.className='subtle';b.textContent='Baca ulang salinan';b.dataset.retry=key;el.append(b);}
 }
 function sourceAge(t){const n=Date.parse(t);return Number.isFinite(n)?Date.now()-n:null;}
 function modelStamp(t){return t?t+':00+07:00':'';}
