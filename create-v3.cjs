@@ -1,0 +1,18 @@
+const fs = require('node:fs');
+const path = require('node:path');
+const root = __dirname;
+let html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+html = html.replace('<body class="design-v2">', '<body class="design-v3"><a class="skip-link" href="#beranda">Lewati navigasi</a>');
+html = html.replace('</head>', '<link rel="stylesheet" href="interface-v3.css"><script defer src="interface-v3.js"></script></head>');
+html = html.replace('<title>SIPANTIP', '<title>Versi 1.5 · SIPANTIP');
+html = html.replace('</header>', '<div class="version-switch" aria-label="Versi desain"><a href="index.html">Lihat V2 ↗</a><span>V3 · Pratinjau lokal</span></div></header><aside class="v3-sidebar"><div class="nav-caption">PUSAT PEMANTAUAN</div><nav aria-label="Navigasi dashboard"><a href="#beranda" aria-current="location"><span>01</span>Ringkasan</a><a href="#peta-section"><span>02</span>Peta sebaran</a><a href="#village-section"><span>03</span>Pantauan desa</a><a href="#daily-section"><span>04</span>Laporan & tren</a><a href="#data-section"><span>05</span>Data deteksi</a><a href="#regency-section"><span>06</span>Kalimantan Tengah</a><a href="#sources-section"><span>07</span>Sumber data</a></nav><div class="sidebar-foot"><span class="region-symbol" aria-hidden="true">PP</span><strong>Kabupaten<br>Pulang Pisau</strong><p>Informasi lingkungan<br>untuk wilayah kita.</p><small>DISKOMINFOSTANDI</small></div></aside>');
+html = html.replace('INFORMASI LINGKUNGAN · PULANG PISAU', 'PULANG PISAU / PEMANTAUAN LINGKUNGAN');
+html = html.replace('Kenali udara.<br><em>Pantau titik panas.</em>', 'Pantau wilayah.<br><em>Pahami kondisinya.</em>');
+html = html.replace('Informasi lingkungan dalam satu pandangan.<br>Untuk Pulang Pisau yang lebih tanggap.', 'Titik panas, kualitas udara, dan cuaca.<br>Satu tempat untuk mengikuti kondisi Pulang Pisau.');
+html = html.replace('Versi 2.0', 'Versi 1.5 · Desain pembanding');
+const paths = ['<path d="M3 8h12a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h5"/>', '<path d="M12 3c2 5-1 5 2 8 1-1 2-2 2-4 5 5 4 13-4 14-7-1-9-8-4-13 0 3 1 4 2 4 2-3 2-6 2-9Z"/>', '<circle cx="8" cy="8" r="3"/><circle cx="17" cy="15" r="4"/><circle cx="6" cy="18" r="2"/><path d="m16 4 3 3m0-3-3 3"/>', '<path d="M3 8h12a3 3 0 1 0-3-3M3 12h16a3 3 0 1 1-3 3M3 16h5"/>', '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>'];
+let n = 0;
+html = html.replace(/(<div class="label">[^<]*)<span[^>]*>[^<]*<\/span>/g, (_, start) => `${start}<span aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${paths[n++]}</svg></span>`);
+html = html.replace('V3 · Pratinjau lokal', 'V1.5 · Desain pembanding');
+fs.writeFileSync(path.join(root, 'v3.html'), html);
+for (const name of ['v3.html', 'interface-v3.css', 'interface-v3.js']) fs.copyFileSync(path.join(root, name), path.join(root, 'dist', name));
