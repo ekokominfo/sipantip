@@ -16,7 +16,7 @@
     return r.status===204?null:r.json();
   }
   async function totals(){
-    try{const t=await rpc('visitor_totals');document.getElementById('visitorTotal').textContent=Number(t.total).toLocaleString('id-ID');document.getElementById('visitorToday').textContent=Number(t.today).toLocaleString('id-ID');document.getElementById('visitorStatus').textContent='Perkiraan pengunjung unik · hari ini WIB';}
+    try{const t=await rpc('visitor_totals');document.getElementById('visitorTotal').textContent=Number(t.total).toLocaleString('id-ID');document.getElementById('visitorToday').textContent=Number(t.today).toLocaleString('id-ID');document.getElementById('visitorStatus').textContent='';}
     catch{document.getElementById('visitorStatus').textContent='Statistik sementara tidak tersedia';}
   }
   if(!config?.key){document.getElementById('visitorStatus').textContent='Statistik belum diaktifkan';return;}
