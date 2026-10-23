@@ -42,3 +42,8 @@ Migrasi ada di supabase/analytics.sql; pemeriksaan transaksi ada di supabase/ana
 Pengunjung unik adalah perkiraan ID browser acak, tersimpan lokal. Sesi baru setelah jeda 30 menit atau pergantian hari WIB. Request berulang dalam 10 detik tidak menambah pageview. Maksimal 200 pageview per sesi dan 48 sesi per ID per 24 jam. Tidak memakai fingerprint/IP/GPS. Browser dengan DNT/GPC tidak dicatat. Referrer hanya hostname tanpa path/query. Fitur dihitung satu kali per sesi saat masuk area pandang. Pelacakan berjalan hanya di hostname produksi, bukan localhost.
 
 Batasan: counter publik tidak dapat membuktikan pengunjung adalah manusia; penyerang yang mengganti ID masih dapat menaikkan hitungan. Jika trafik tidak wajar muncul, tambahkan gateway dengan rate limit server/anti-bot. Tidak ada data kunjungan sebelum fitur aktif; tanggal sebelumnya ditampilkan belum tercatat. Distribusi perangkat/browser/referrer berdasarkan sesi, bukan pengunjung unik. Pantau kuota Free Supabase dan atur retensi bila trafik bertambah.
+
+## SIPANTIP dan grafik udara
+Nama antarmuka: SIPANTIP — Sistem Informasi Pantau Titik Panas. Grafik udara menggabungkan PM 2.5 (biru, µg/m³, sumbu kiri) dan US AQI (ungu putus-putus, sumbu kanan), memakai timestamp yang sama dan mempertahankan celah data hilang.
+
+Atribusi hulu SiPongi diverifikasi dari bagian Sumber data halaman referensi pada 23 Oktober 2026; nama satelit pada feed cocok: NASA-SNPP, NASA-NOAA20, NASA-MODIS. Jalur pengambilan data aplikasi tetap feed perantara dan arsip publik appscript.palangkaraya.go.id, bukan koneksi langsung ke API SiPongi. Label publik menampilkan sumber hulu sesuai permintaan.

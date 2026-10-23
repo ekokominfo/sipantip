@@ -1,0 +1,4 @@
+const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const c={};vm.createContext(c);vm.runInContext(fs.readFileSync(require('node:path').join(__dirname,'../air-chart.js'),'utf8'),c);
+test('combined chart preserves timestamps when one pollutant value is missing',()=>{const rows=c.airChartRows(['01','02','03'],[0,null,20],[50,60,undefined]);assert.equal(rows.length,3);assert.equal(rows[0].pm,0);assert.equal(rows[1].pm,null);assert.equal(rows[1].aqi,60);assert.equal(rows[2].aqi,null);assert.equal(rows[2].time,'03');});
+test('line restarts across missing data instead of implying a measurement',()=>{const rows=c.airChartRows(['01','02','03'],[0,null,20],[]);assert.equal(c.airChartPath(rows,'pm',i=>i,v=>v),'M0,0  M2,20');assert.equal(c.airChartPath(rows,'aqi',i=>i,v=>v),'  ');});
