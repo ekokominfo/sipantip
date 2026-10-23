@@ -63,6 +63,14 @@ begin
  since_time:=((now() at time zone 'Asia/Jakarta')::date-(p_days-1))::timestamp at time zone 'Asia/Jakarta';
  select jsonb_build_object(
  'totals',public.visitor_totals(),
+ 'new_visitors',(select count(distinct s.visitor_id) from analytics_private.visits s join analytics_private.visitors v on v.id=s.visitor_id where s.started_at>=since_time and v.first_seen>=since_time),
+ 'returning_visitors',(select count(distinct s.visitor_id) from analytics_private.visits s join analytics_private.visitors v on v.id=s.visitor_id where s.started_at>=since_time and v.first_seen<since_time),
+ 'previous',jsonb_build_object(
+ 'sessions',(select count(*) from analytics_private.visits where started_at>=since_time-make_interval(days=>p_days) and started_at<since_time),
+ 'unique',(select count(distinct visitor_id) from analytics_private.visits where started_at>=since_time-make_interval(days=>p_days) and started_at<since_time),
+ 'views',(select coalesce(sum(views),0) from analytics_private.visits where started_at>=since_time-make_interval(days=>p_days) and started_at<since_time),
+ 'complete',coalesce((select min(first_seen)<=since_time-make_interval(days=>p_days) from analytics_private.visitors),false)
+ ),
  'unique',(select count(distinct visitor_id) from analytics_private.visits where started_at>=since_time),
  'sessions',(select count(*) from analytics_private.visits where started_at>=since_time),
  'views',(select coalesce(sum(views),0) from analytics_private.visits where started_at>=since_time),
