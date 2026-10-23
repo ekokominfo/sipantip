@@ -53,3 +53,13 @@ Admin dashboard v2: default 7 days, charts with accessible single tooltips, pagi
 ## Version 2.0
 
 Azure frontend theme and admin palette, selected 1C pin-and-flame logo, favicon, and visible version footer. Previous production code is preserved at Git tag v1.0 (5baceec63ea3d009a307277d4c110e495a3cef8c); design work is retained on branch desain-biru. Restore v1.0 by reverting the v2 change through a new commit and publishing main. Never erase the shared commit history to roll back.
+
+## Shared environmental data
+
+The public dashboard reads a manifest and immutable JSON objects from the data-cache branch via raw.githubusercontent.com. It never calls the hotspot, Open-Meteo weather or air-quality endpoints from a visitor browser. OSM base-map tiles and static font/library assets are still loaded from their providers. Boundaries stay bundled locally. Visitor tracking remains in Supabase and is not copied into public cache files.
+
+The refresh-data workflow runs at minutes 17 and 47 UTC each hour (GitHub schedules may be delayed or disabled after repository inactivity). Hotspot feeds refresh every 30 minutes. Air and weather refresh hourly; the current archive month refreshes hourly, older archive months daily. A multi-coordinate HTTP request is still counted by the provider's usage policy; batching is not a rate-limit bypass. The air collector performs approximately 100 location lookups per hourly cycle (reference plus 99 villages), rather than per visitor.
+
+Invalid responses and HTTP 429/5xx never overwrite a valid payload. Error type, last attempt, last successful collection, and source timestamp are recorded separately. On 429, remaining calls to the same provider stop for the cycle with a cooldown. Immutable object paths prevent mixing manifest versions. Unreferenced cache objects remain for 48 hours before cleanup; Git history remains available. No cached observation is replaced with zero or labeled with a new source time after a failure.
+
+For manual collection: node scripts/refresh-data.cjs --output <cache-directory>. The --force flag bypasses normal collection intervals but does not bypass an active quota cooldown. Test offline/quota behavior using node --test tests/*.test.cjs. The frontend refresh control only rereads the shared cache (one manifest request per minute at most), and never triggers upstream collection.

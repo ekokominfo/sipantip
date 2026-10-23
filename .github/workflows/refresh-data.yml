@@ -1,0 +1,42 @@
+name: Refresh shared environmental data
+on:
+  schedule:
+    - cron: '17,47 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-data.yml'
+      - 'scripts/cache-core.cjs'
+      - 'scripts/refresh-data.cjs'
+      - 'villages.geojson'
+permissions:
+  contents: write
+concurrency:
+  group: shared-environmental-data
+  cancel-in-progress: false
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/checkout@v4
+        with:
+          ref: data-cache
+          path: cache-store
+      - name: Collect due sources and preserve last valid data
+        run: node scripts/refresh-data.cjs --output cache-store/cache
+      - name: Publish data snapshot
+        working-directory: cache-store
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add cache
+          if ! git diff --cached --quiet; then
+            git commit -m 'Update shared environmental data'
+            git push origin HEAD:data-cache
+          fi
