@@ -32,3 +32,13 @@ Awan/hujan/angin berasal dari model Open-Meteo; area grid bukan citra satelit. P
 `dist/` berisi situs siap terbit. Audit dan halaman bukti menyimpan penelitian awal. `.openai/hosting.json` menghubungkan sumber ke Sites dan bukan kredensial. Jangan simpan token dalam repo.
 
 Jalankan `node --test tests/dashboard.test.cjs`. Pemeriksaan antarmuka meliputi pilihan desa, hapus pilihan, filter/reset, tooltip klik, warna, dan tata letak 390 piksel. Gestur dua jari fisik perlu pemeriksaan perangkat sentuh.
+
+## Statistik pengunjung
+
+Halaman admin: https://ekokominfo.github.io/sipantip/admin.html. Login Supabase memakai email/password. Hak baca laporan diperiksa oleh fungsi database terhadap tabel privat admins, bukan hanya menyembunyikan halaman. Token akses hanya berada dalam memori tab; muat ulang meminta login kembali. Tidak ada service-role key atau password di kode. analytics-config.js hanya berisi publishable key.
+
+Migrasi ada di supabase/analytics.sql; pemeriksaan transaksi ada di supabase/analytics-test.sql. RLS aktif di seluruh tabel privat, tanpa akses tabel langsung untuk anon/authenticated. API publik hanya menerima metadata yang dibatasi dan mengeluarkan total agregat. Tambahkan UID admin melalui SQL Editor hanya setelah memverifikasi pemilik akun.
+
+Pengunjung unik adalah perkiraan ID browser acak, tersimpan lokal. Sesi baru setelah jeda 30 menit atau pergantian hari WIB. Request berulang dalam 10 detik tidak menambah pageview. Maksimal 200 pageview per sesi dan 48 sesi per ID per 24 jam. Tidak memakai fingerprint/IP/GPS. Browser dengan DNT/GPC tidak dicatat. Referrer hanya hostname tanpa path/query. Fitur dihitung satu kali per sesi saat masuk area pandang. Pelacakan berjalan hanya di hostname produksi, bukan localhost.
+
+Batasan: counter publik tidak dapat membuktikan pengunjung adalah manusia; penyerang yang mengganti ID masih dapat menaikkan hitungan. Jika trafik tidak wajar muncul, tambahkan gateway dengan rate limit server/anti-bot. Tidak ada data kunjungan sebelum fitur aktif; tanggal sebelumnya ditampilkan belum tercatat. Distribusi perangkat/browser/referrer berdasarkan sesi, bukan pengunjung unik. Pantau kuota Free Supabase dan atur retensi bila trafik bertambah.
