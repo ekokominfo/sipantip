@@ -49,3 +49,7 @@ Nama antarmuka: SIPANTIP — Sistem Informasi Pantau Titik Panas. Grafik udara m
 Atribusi hulu SiPongi diverifikasi dari bagian Sumber data halaman referensi pada 23 Oktober 2026; nama satelit pada feed cocok: NASA-SNPP, NASA-NOAA20, NASA-MODIS. Jalur pengambilan data aplikasi tetap feed perantara dan arsip publik appscript.palangkaraya.go.id, bukan koneksi langsung ke API SiPongi. Label publik menampilkan sumber hulu sesuai permintaan.
 
 Admin dashboard v2: default 7 days, charts with accessible single tooltips, paginated daily table (7 rows), and color-coded metric cards. supabase/report-v2.sql extends the existing admin-only report with new/returning browser counts and prior-period totals. Comparison remains unavailable until the prior period has sufficient recorded history; the current day is incomplete. New means first_seen in the selected period, returning means first_seen before it. Frontend hotspot update time uses the oldest available source generation timestamp, not the current browser clock.
+
+## Version 2.0
+
+Azure frontend theme and admin palette, selected 1C pin-and-flame logo, favicon, and visible version footer. Previous production code is preserved at Git tag v1.0 (5baceec63ea3d009a307277d4c110e495a3cef8c); design work is retained on branch desain-biru. Restore v1.0 by reverting the v2 change through a new commit and publishing main. Never erase the shared commit history to roll back.
