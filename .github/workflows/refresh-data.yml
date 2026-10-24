@@ -34,7 +34,7 @@ jobs:
           ref: data-cache
           path: cache-store
       - name: Collect due sources and preserve last valid data
-        run: node scripts/refresh-data.cjs --output cache-store/cache
+        run: node scripts/refresh-data.cjs --output cache-store/cache ${{ github.event_name != 'schedule' && '--force' || '' }}
       - name: Publish data snapshot
         working-directory: cache-store
         run: |
