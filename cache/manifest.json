@@ -1,53 +1,53 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-24T18:47:28.439Z",
+  "updatedAt": "2026-10-24T19:39:37.059Z",
   "resources": {
     "hotspot-High": {
       "path": "objects/64453fab1686a918b2362ba9b8d0d441e6f5937b80012705f46ead5020f7c95b.json",
-      "lastAttempt": "2026-10-24T18:47:28.439Z",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:02:08Z",
       "ttlSeconds": 1800,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T18:47:28.439Z"
+        "at": "2026-10-24T19:39:37.059Z"
       }
     },
     "hotspot-Medium": {
       "path": "objects/a954c722992edddede61570e23f8339aabc0320f1092aa270f29b59e4e70d14c.json",
-      "lastAttempt": "2026-10-24T18:47:28.439Z",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:02:08Z",
       "ttlSeconds": 1800,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T18:47:28.439Z"
+        "at": "2026-10-24T19:39:37.059Z"
       }
     },
     "hotspot-Low": {
       "path": "objects/faf92bb609421dbd094ffe775771ed25d3e444a674471856c88ac3b768380cc8.json",
-      "lastAttempt": "2026-10-24T18:47:28.439Z",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:02:08Z",
       "ttlSeconds": 1800,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T18:47:28.439Z"
+        "at": "2026-10-24T19:39:37.059Z"
       }
     },
     "archive-index": {
       "path": "objects/781a281b374b071fcce3fe97ced4cae49e68b1a27e905d00b7a5b4cdd537d7f1.json",
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:15:03Z",
       "ttlSeconds": 3600,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T18:05:07.884Z"
+        "at": "2026-10-24T19:39:37.059Z"
       }
     },
     "archive-2026-08": {
@@ -68,80 +68,80 @@
     },
     "archive-2026-10": {
       "path": "objects/9af7744de1821d6245f8834130a796e28de207897eb1d3a5e7a014258f3fe68a.json",
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:15:03Z",
       "ttlSeconds": 3600,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T18:05:07.884Z"
+        "at": "2026-10-24T19:39:37.059Z"
       }
     },
     "weather-main": {
-      "path": "objects/758ada4338e4baab680d5d8139afb91268b413d5e977f1b72f8f9086b2bca892.json",
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
-      "lastSuccess": "2026-10-24T18:05:07.884Z",
-      "sourceTime": "2026-10-25T01:00:00+07:00",
+      "path": "objects/0d8beb32c50362ae8064db8945643c61cbdef473032083ce5631d5a3abe3afa9.json",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
+      "lastSuccess": "2026-10-24T19:39:37.059Z",
+      "sourceTime": "2026-10-25T02:30:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "weather-grid": {
-      "path": "objects/a789753021c54adcf72e3d5a107a6110ecbde88e179c13a402e7605b652586bb.json",
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
-      "lastSuccess": "2026-10-24T18:05:07.884Z",
-      "sourceTime": "2026-10-25T01:00:00+07:00",
+      "path": "objects/0e3804b3ba28e57326f36f4b07d4a0ce2b15fc2c44057bc6989e56d04ea08311.json",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
+      "lastSuccess": "2026-10-24T19:39:37.059Z",
+      "sourceTime": "2026-10-25T02:30:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "air-main": {
-      "path": "objects/37deea18e9445958af5558248ffcfbbf7d5bf982cc8d627a5c2c17fdac43ca0c.json",
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
-      "lastSuccess": "2026-10-24T18:05:07.884Z",
-      "sourceTime": "2026-10-25T01:00:00+07:00",
+      "path": "objects/1017e23b4b8a0ed5680cb060aa9cd60ba59822fb845702f77093b3bfc296cc37.json",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
+      "lastSuccess": "2026-10-24T19:39:37.059Z",
+      "sourceTime": "2026-10-25T02:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "air-villages": {
-      "path": "objects/6db00c432d3cecf9f95cd42696aba52b83d55ac334bf1efcecc8f7ce82513613.json",
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
-      "lastSuccess": "2026-10-24T18:05:07.884Z",
-      "sourceTime": "2026-10-25T01:00:00+07:00",
+      "path": "objects/cf0599c3e2db36cc4108549df41abe31e5d517bb8c226e60d4bf592110205cda.json",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
+      "lastSuccess": "2026-10-24T19:39:37.059Z",
+      "sourceTime": "2026-10-25T02:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "forecast-main": {
-      "path": "objects/9c1bc894b757c40f0f09472bb340e5230e303e431ea50f547326007de466b0c8.json",
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
-      "lastSuccess": "2026-10-24T18:05:07.884Z",
-      "sourceTime": "2026-10-24T18:05:07.884Z",
+      "path": "objects/b5afa26f38fd6b1bb235589948b494af2844942c101199e496cb0f27ba0c754a.json",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
+      "lastSuccess": "2026-10-24T19:39:37.059Z",
+      "sourceTime": "2026-10-24T19:39:37.059Z",
       "ttlSeconds": 3600,
       "error": null
     },
     "forecast-villages": {
-      "path": "objects/c8379473145cd6df11995e4a0c5c9772d8580ce0c1c17218e1fbbca4be538ce1.json",
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
-      "lastSuccess": "2026-10-24T18:05:07.884Z",
-      "sourceTime": "2026-10-24T18:05:07.884Z",
+      "path": "objects/2e468d80ff4b2e1c44d6066e1a5d293fc877d422f36de9c5b9e68080d1eeb296.json",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
+      "lastSuccess": "2026-10-24T19:39:37.059Z",
+      "sourceTime": "2026-10-24T19:39:37.059Z",
       "ttlSeconds": 3600,
       "error": null
     }
   },
   "providers": {
     "hotspot": {
-      "lastAttempt": "2026-10-24T18:47:28.439Z",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
       "error": null
     },
     "archive": {
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
       "error": null
     },
     "weather": {
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
       "error": null
     },
     "air": {
-      "lastAttempt": "2026-10-24T18:05:07.884Z",
+      "lastAttempt": "2026-10-24T19:39:37.059Z",
       "error": null
     }
   }
