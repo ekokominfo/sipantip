@@ -15,14 +15,9 @@
     if(!r.ok)throw new Error('Statistik belum tersedia');
     return r.status===204?null:r.json();
   }
-  async function totals(){
-    try{const t=await rpc('visitor_totals');document.getElementById('visitorTotal').textContent=Number(t.total).toLocaleString('id-ID');document.getElementById('visitorToday').textContent=Number(t.today).toLocaleString('id-ID');document.getElementById('visitorStatus').textContent='';}
-    catch{document.getElementById('visitorStatus').textContent='Statistik sementara tidak tersedia';}
-  }
-  if(!config?.key){document.getElementById('visitorStatus').textContent='Statistik belum diaktifkan';return;}
-  totals();
-  // Respect opt-out signals. Counts can still be viewed without being recorded.
+  // Reports are available in the admin dashboard only.
   if(navigator.doNotTrack==='1'||navigator.globalPrivacyControl||location.hostname!=='ekokominfo.github.io')return;
+  if(!config?.key)return;
   let visitor, session, seen=new Set();
   const meta=metadata(navigator.userAgent);
   function identity(){
@@ -37,7 +32,7 @@
   async function record(feature){
     identity();if(seen.has(session+feature))return;
     seen.add(session+feature);
-    try{await rpc('record_visit',{p_visitor:visitor,p_session:session,p_device:meta.device,p_browser:meta.browser,p_os:meta.os,p_referrer:referrer(document.referrer),p_feature:feature});if(feature==='pageview')totals();}
+    try{await rpc('record_visit',{p_visitor:visitor,p_session:session,p_device:meta.device,p_browser:meta.browser,p_os:meta.os,p_referrer:referrer(document.referrer),p_feature:feature});}
     catch{seen.delete(session+feature);}
   }
   record('pageview');

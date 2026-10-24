@@ -42,3 +42,10 @@ jobs:
             git commit -m 'Update shared environmental data'
             git push origin HEAD:data-cache
           fi
+      - name: Report failed hotspot collection after preserving the cache
+        run: |
+          node - <<'NODE'
+          const m=require('./cache-store/cache/manifest.json');
+          const failed=['High','Medium','Low'].filter(level=>m.resources['hotspot-'+level]?.error);
+          if(failed.length){console.error('::error::Hotspot collection failed: '+failed.join(', ')+'. Last valid data was preserved.');process.exitCode=1;}
+          NODE
