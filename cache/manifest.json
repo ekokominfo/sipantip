@@ -1,41 +1,41 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-24T17:11:24.830Z",
+  "updatedAt": "2026-10-24T17:41:51.386Z",
   "resources": {
     "hotspot-High": {
       "path": "objects/64453fab1686a918b2362ba9b8d0d441e6f5937b80012705f46ead5020f7c95b.json",
-      "lastAttempt": "2026-10-24T16:45:39.320Z",
+      "lastAttempt": "2026-10-24T17:41:51.386Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:02:08Z",
       "ttlSeconds": 1800,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T16:45:39.320Z"
+        "at": "2026-10-24T17:41:51.386Z"
       }
     },
     "hotspot-Medium": {
       "path": "objects/a954c722992edddede61570e23f8339aabc0320f1092aa270f29b59e4e70d14c.json",
-      "lastAttempt": "2026-10-24T16:45:39.320Z",
+      "lastAttempt": "2026-10-24T17:41:51.386Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:02:08Z",
       "ttlSeconds": 1800,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T16:45:39.320Z"
+        "at": "2026-10-24T17:41:51.386Z"
       }
     },
     "hotspot-Low": {
       "path": "objects/faf92bb609421dbd094ffe775771ed25d3e444a674471856c88ac3b768380cc8.json",
-      "lastAttempt": "2026-10-24T16:45:39.320Z",
+      "lastAttempt": "2026-10-24T17:41:51.386Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:02:08Z",
       "ttlSeconds": 1800,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T16:45:39.320Z"
+        "at": "2026-10-24T17:41:51.386Z"
       }
     },
     "archive-index": {
@@ -129,7 +129,7 @@
   },
   "providers": {
     "hotspot": {
-      "lastAttempt": "2026-10-24T16:45:39.320Z",
+      "lastAttempt": "2026-10-24T17:41:51.386Z",
       "error": null
     },
     "archive": {
