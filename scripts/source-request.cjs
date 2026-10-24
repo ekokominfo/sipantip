@@ -18,7 +18,7 @@ async function sourceRequest(fetcher,url,{sleep=ms=>new Promise(r=>setTimeout(r,
    const response=await fetcher(url,{signal:AbortSignal.timeout(40000),headers:{'User-Agent':'SIPANTIP-data-cache/3.0'}});
    if(response.status<500||attempt===2)return response;
    await response.body?.cancel();
-  }catch(e){const code=e.cause?.code||e.code||e.name;if(attempt===0&&fallback&&new URL(url).hostname==='appscript.palangkaraya.go.id'&&['UND_ERR_CONNECT_TIMEOUT','ETIMEDOUT','ECONNRESET','EAI_AGAIN','ENOTFOUND'].includes(code)){try{return await fallback(url);}catch{ /* retain the original diagnostics and normal retries */ }}if(attempt===2){const err=new Error('network');err.kind='network';err.detail=String(code||'fetch failed');throw err;}}
+  }catch(e){const code=e.cause?.code||e.code||e.name;if(attempt===0&&fallback&&new URL(url).hostname==='appscript.palangkaraya.go.id'&&['UND_ERR_CONNECT_TIMEOUT','ETIMEDOUT','ECONNRESET','EAI_AGAIN','ENOTFOUND'].includes(code)){try{return await fallback(url);}catch(curlError){console.error('Hotspot alternate transport failed: '+String(curlError.code||curlError.message).slice(0,180));}}if(attempt===2){const err=new Error('network');err.kind='network';err.detail=String(code||'fetch failed');throw err;}}
   await sleep(1000*2**attempt);
  }
 }
