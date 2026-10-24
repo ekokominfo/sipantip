@@ -16,10 +16,10 @@ permissions:
   contents: write
 concurrency:
   group: shared-environmental-data
-  cancel-in-progress: false
+  cancel-in-progress: true
 jobs:
   refresh:
-    runs-on: windows-latest
+    runs-on: macos-latest
     timeout-minutes: 20
     defaults:
       run:
