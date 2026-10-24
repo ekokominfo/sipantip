@@ -1,0 +1,12 @@
+'use strict';
+const {failure}=require('./cache-core.cjs');
+function forecastURL(points=[{lat:-2.75,lon:114.25}]){return 'https://api.open-meteo.com/v1/forecast?latitude='+points.map(p=>p.lat.toFixed(4)).join(',')+'&longitude='+points.map(p=>p.lon.toFixed(4)).join(',')+'&hourly=precipitation_probability,precipitation,visibility&past_days=1&forecast_days=3&timezone=Asia%2FJakarta';}
+const URL=forecastURL();
+function validate(data,now=new Date()){
+ const h=data?.hourly;
+ if(data?.utc_offset_seconds!==25200||!Array.isArray(h?.time)||!h.time.length||!h.time.every((t,i)=>typeof t==='string'&&/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(t)&&Number.isFinite(Date.parse(t+'+07:00'))&&(!i||t>h.time[i-1])))throw failure('invalid');
+ for(const key of ['precipitation_probability','precipitation','visibility'])if(!Array.isArray(h[key])||h[key].length!==h.time.length||!h[key].some(Number.isFinite)||h[key].some(v=>v!==null&&(!Number.isFinite(v)||v<0||(key==='precipitation_probability'&&v>100))))throw failure('invalid');
+ if(!h.time.some(t=>Date.parse(t+'+07:00')>+now))throw failure('invalid');
+ return {latitude:data.latitude,longitude:data.longitude,utc_offset_seconds:25200,collectedAt:now.toISOString(),hourly:h};
+}
+module.exports={URL,forecastURL,validate};

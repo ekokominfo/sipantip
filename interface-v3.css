@@ -15,3 +15,5 @@ button,a,input,select,summary{-webkit-tap-highlight-color:transparent}button,sum
 section{scroll-margin-top:0}.cache-health{padding:0;margin:8px 0 14px}.cache-health summary{padding:4px 0}.intro h1,.section-head h2,.metric .value b{font-family:Sora,Arial,sans-serif}
 @media print{.v3-sidebar,.version-switch,.skip-link{display:none}header{position:static}main{margin:0;padding:16px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+@media(max-width:900px){.v3-sidebar{display:none}html{scroll-padding-top:90px}section{scroll-margin-top:90px}}

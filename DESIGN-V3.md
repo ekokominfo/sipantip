@@ -1,15 +1,12 @@
-# SIPANTIP — versi 1.5 (desain pembanding)
+# SIPANTIP — versi 3.0
 
-Buka `/v3.html` untuk desain versi 1.5 dan `/index.html` untuk versi 2. Nama berkas eksplorasi `v3.html` dipertahankan agar tautan pratinjau yang ada tetap berfungsi. Tautan **Lihat V2** tersedia di header. Tidak ada perubahan pada entry utama, versi rilis utama, konfigurasi hosting, atau alur data.
+Versi 3 menggunakan desain biru versi 2 sebagai dasar dan seluruh fitur terbaru pada index.html. Tidak menggunakan sidebar atau tata letak desain pembanding versi 1.5. Alamat v3.html mengarah ke index.html sambil mempertahankan query dan bagian halaman.
 
-Arah desain memakai skill UI/UX Pro Max, dengan hasil pencarian `operational dashboard`: Data-Dense Dashboard. Rekomendasi landing page Enterprise Gateway dari pencarian awal tidak diterapkan karena tidak sesuai dashboard publik.
+- Enam kartu lingkungan, prakiraan hujan dan estimasi jarak pandang per desa, serta grafik hujan dan titik panas 24 jam.
+- Pembaruan umum tiga baris di bawah Refresh data; rincian waktu sumber berada pada Status data.
+- Data lingkungan dibaca dari cache bersama; collector terjadwal menjaga salinan valid terakhir saat sumber gagal dan mencoba ulang kegagalan koneksi sementara.
+- Sumber frontend di root dan salinan dist disinkronkan. GitHub Pages menerbitkan main dari root.
 
-- Sidebar desktop dan navigasi horizontal ponsel, dengan indikator bagian aktif.
-- Palet putih/abu dengan aksen biru merek, merah untuk deteksi, serta warna pembeda metrik.
-- Kartu metrik lebih tegas, ikon SVG, teks sekunder lebih terbaca, fokus keyboard, dan dukungan reduced motion.
-- Data, filter, grafik, sumber, dan penjelasan keterbatasan tetap memakai aplikasi yang sama.
+Cadangan versi 2 sebelum rilis: branch codex/backup-v2-2026-10-24, commit bc4565c82262f6d11a518a13b5ac6e55658caa50. Tag v2.0 yang sudah ada tetap dipertahankan.
 
-Jalankan `node preview.cjs .`, lalu buka `http://127.0.0.1:8765/v3.html`.
-Untuk menyusun ulang HTML V3 setelah perubahan sumber: `node create-v3.cjs`. Perintah ini juga menyinkronkan tiga berkas V3 ke `dist/`.
-
-Desain ini disimpan pada branch `codex/desain-v1.5` sebagai pembanding. Tidak digabung ke `main`. GitHub Pages utama tetap memakai branch `main`; mengunggah branch pembanding tidak menerbitkan desain ini ke situs utama.
+Jalankan node scripts/refresh-data.cjs --output dist/cache untuk mengisi cache lokal, lalu node preview.cjs dist. Uji dengan node --test tests/*.test.cjs.

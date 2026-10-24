@@ -8,6 +8,8 @@ on:
     paths:
       - '.github/workflows/refresh-data.yml'
       - 'scripts/cache-core.cjs'
+      - 'scripts/source-request.cjs'
+      - 'scripts/rain-core.cjs'
       - 'scripts/refresh-data.cjs'
       - 'villages.geojson'
 permissions:
