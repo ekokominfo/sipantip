@@ -1,0 +1,2 @@
+[functions.environment-refresh]
+verify_jwt = false
