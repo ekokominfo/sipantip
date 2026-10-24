@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-24T11:45:02.021Z",
+  "updatedAt": "2026-10-24T12:10:06.910Z",
   "resources": {
     "hotspot-High": {
       "path": "objects/424f53a387a33d1a243b1c034ca3139f32e8c11e71370bf758cb630a2217f094.json",
@@ -40,14 +40,14 @@
     },
     "archive-index": {
       "path": "objects/01006e994957c31b28e910525cbd531132279bbc3ab42f6e59464fad20314982.json",
-      "lastAttempt": "2026-10-24T10:45:13.945Z",
+      "lastAttempt": "2026-10-24T12:10:06.910Z",
       "lastSuccess": "2026-10-23T22:21:17.705Z",
       "sourceTime": "2026-10-23T22:15:02Z",
       "ttlSeconds": 3600,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T10:45:13.945Z"
+        "at": "2026-10-24T12:10:06.910Z"
       }
     },
     "archive-2026-08": {
@@ -68,45 +68,45 @@
     },
     "archive-2026-10": {
       "path": "objects/b68b66f268d0267868b679bee61125bf057636439894cee6df5fc3b38d1e5e09.json",
-      "lastAttempt": "2026-10-24T10:45:13.945Z",
+      "lastAttempt": "2026-10-24T12:10:06.910Z",
       "lastSuccess": "2026-10-23T22:21:17.705Z",
       "sourceTime": "2026-10-23T22:15:02Z",
       "ttlSeconds": 3600,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T10:45:13.945Z"
+        "at": "2026-10-24T12:10:06.910Z"
       }
     },
     "weather-main": {
-      "path": "objects/07c2aae1c19d43c4f2a50248e4f119a1c2d5b7a6c7845bd0067bf58e55bcb3d7.json",
-      "lastAttempt": "2026-10-24T10:45:13.945Z",
-      "lastSuccess": "2026-10-24T10:45:13.945Z",
-      "sourceTime": "2026-10-24T17:45:00+07:00",
+      "path": "objects/56c3de9f4905a5367c9040983c2d5122aa1d9a5fe200dad50028187f203b7d37.json",
+      "lastAttempt": "2026-10-24T12:10:06.910Z",
+      "lastSuccess": "2026-10-24T12:10:06.910Z",
+      "sourceTime": "2026-10-24T19:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "weather-grid": {
-      "path": "objects/937d0dfa63e3c4eb614ed4b1faf616f2222e1f3447bbc033767160506e0e8f43.json",
-      "lastAttempt": "2026-10-24T10:45:13.945Z",
-      "lastSuccess": "2026-10-24T10:45:13.945Z",
-      "sourceTime": "2026-10-24T17:45:00+07:00",
+      "path": "objects/00f9dea81567f6751f2e0b1bc6690c2b9af1a96f7a0931782ef10452f0950053.json",
+      "lastAttempt": "2026-10-24T12:10:06.910Z",
+      "lastSuccess": "2026-10-24T12:10:06.910Z",
+      "sourceTime": "2026-10-24T19:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "air-main": {
-      "path": "objects/6b8960369f5fed70728fb8b84f41bde54c975e234f61f5622e1e6eadbcedc597.json",
-      "lastAttempt": "2026-10-24T10:45:13.945Z",
-      "lastSuccess": "2026-10-24T10:45:13.945Z",
-      "sourceTime": "2026-10-24T17:00:00+07:00",
+      "path": "objects/95315d0d58da170c31b84cd83c4d58c4b1f8cfe7d8f962dd757e880a131da8d4.json",
+      "lastAttempt": "2026-10-24T12:10:06.910Z",
+      "lastSuccess": "2026-10-24T12:10:06.910Z",
+      "sourceTime": "2026-10-24T19:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "air-villages": {
-      "path": "objects/3e8810061ef6d45eccfa61df399b4a7ed9d87b20747e876dfc422f7862f5f8f8.json",
-      "lastAttempt": "2026-10-24T10:45:13.945Z",
-      "lastSuccess": "2026-10-24T10:45:13.945Z",
-      "sourceTime": "2026-10-24T17:00:00+07:00",
+      "path": "objects/e076906986781d33271586b31c6090453e5280d6b3abe840699be27f1afd4334.json",
+      "lastAttempt": "2026-10-24T12:10:06.910Z",
+      "lastSuccess": "2026-10-24T12:10:06.910Z",
+      "sourceTime": "2026-10-24T19:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     }
@@ -117,15 +117,15 @@
       "error": null
     },
     "archive": {
-      "lastAttempt": "2026-10-24T10:45:13.945Z",
+      "lastAttempt": "2026-10-24T12:10:06.910Z",
       "error": null
     },
     "weather": {
-      "lastAttempt": "2026-10-24T10:45:13.945Z",
+      "lastAttempt": "2026-10-24T12:10:06.910Z",
       "error": null
     },
     "air": {
-      "lastAttempt": "2026-10-24T10:45:13.945Z",
+      "lastAttempt": "2026-10-24T12:10:06.910Z",
       "error": null
     }
   }
