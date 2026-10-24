@@ -1,30 +1,45 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-24T22:42:49.077Z",
+  "updatedAt": "2026-10-24T23:06:09.942Z",
   "resources": {
     "hotspot-High": {
       "path": "objects/49cfa9af2221e04b1cddb827bf0f9d64a05f95ccfe39c9447b1c3b945a8ae350.json",
-      "lastAttempt": "2026-10-24T22:32:36.973Z",
+      "lastAttempt": "2026-10-24T23:06:09.942Z",
       "lastSuccess": "2026-10-24T22:32:36.973Z",
       "sourceTime": "2026-10-24T21:02:04Z",
       "ttlSeconds": 1800,
-      "error": null
+      "error": {
+        "kind": "network",
+        "status": null,
+        "detail": "UND_ERR_CONNECT_TIMEOUT",
+        "at": "2026-10-24T23:06:09.942Z"
+      }
     },
     "hotspot-Medium": {
       "path": "objects/5fd007d2e6ced59e1fb4c6319271521bbf04152e870187e4e65091a6cd668d6b.json",
-      "lastAttempt": "2026-10-24T22:32:36.973Z",
+      "lastAttempt": "2026-10-24T23:06:09.942Z",
       "lastSuccess": "2026-10-24T22:32:36.973Z",
       "sourceTime": "2026-10-24T21:02:04Z",
       "ttlSeconds": 1800,
-      "error": null
+      "error": {
+        "kind": "network",
+        "status": null,
+        "detail": "UND_ERR_CONNECT_TIMEOUT",
+        "at": "2026-10-24T23:06:09.942Z"
+      }
     },
     "hotspot-Low": {
       "path": "objects/509edbd733b3f084aaa25567dc50103b56a95b685c84af8fb7b9db0bbe9773da.json",
-      "lastAttempt": "2026-10-24T22:32:36.973Z",
+      "lastAttempt": "2026-10-24T23:06:09.942Z",
       "lastSuccess": "2026-10-24T22:32:36.973Z",
       "sourceTime": "2026-10-24T21:02:04Z",
       "ttlSeconds": 1800,
-      "error": null
+      "error": {
+        "kind": "network",
+        "status": null,
+        "detail": "UND_ERR_CONNECT_TIMEOUT",
+        "at": "2026-10-24T23:06:09.942Z"
+      }
     },
     "archive-index": {
       "path": "objects/7e6fa972033106584075991430085bce19a38cfed1dd8d09156436c521a1e5f0.json",
@@ -109,8 +124,13 @@
   },
   "providers": {
     "hotspot": {
-      "lastAttempt": "2026-10-24T22:32:36.973Z",
-      "error": null
+      "lastAttempt": "2026-10-24T23:06:09.942Z",
+      "error": {
+        "kind": "network",
+        "status": null,
+        "detail": "UND_ERR_CONNECT_TIMEOUT",
+        "at": "2026-10-24T23:06:09.942Z"
+      }
     },
     "archive": {
       "lastAttempt": "2026-10-24T22:32:36.973Z",
