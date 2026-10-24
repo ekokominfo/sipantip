@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-24T22:19:04.475Z",
+  "updatedAt": "2026-10-24T22:24:27.998Z",
   "resources": {
     "hotspot-High": {
       "path": "objects/64453fab1686a918b2362ba9b8d0d441e6f5937b80012705f46ead5020f7c95b.json",
-      "lastAttempt": "2026-10-24T22:14:22.065Z",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:02:08Z",
       "ttlSeconds": 1800,
@@ -12,12 +12,12 @@
         "kind": "network",
         "status": null,
         "detail": "UND_ERR_CONNECT_TIMEOUT",
-        "at": "2026-10-24T22:14:22.065Z"
+        "at": "2026-10-24T22:24:27.998Z"
       }
     },
     "hotspot-Medium": {
       "path": "objects/a954c722992edddede61570e23f8339aabc0320f1092aa270f29b59e4e70d14c.json",
-      "lastAttempt": "2026-10-24T22:14:22.065Z",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:02:08Z",
       "ttlSeconds": 1800,
@@ -25,12 +25,12 @@
         "kind": "network",
         "status": null,
         "detail": "UND_ERR_CONNECT_TIMEOUT",
-        "at": "2026-10-24T22:14:22.065Z"
+        "at": "2026-10-24T22:24:27.998Z"
       }
     },
     "hotspot-Low": {
       "path": "objects/faf92bb609421dbd094ffe775771ed25d3e444a674471856c88ac3b768380cc8.json",
-      "lastAttempt": "2026-10-24T22:14:22.065Z",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:02:08Z",
       "ttlSeconds": 1800,
@@ -38,114 +38,118 @@
         "kind": "network",
         "status": null,
         "detail": "UND_ERR_CONNECT_TIMEOUT",
-        "at": "2026-10-24T22:14:22.065Z"
+        "at": "2026-10-24T22:24:27.998Z"
       }
     },
     "archive-index": {
       "path": "objects/781a281b374b071fcce3fe97ced4cae49e68b1a27e905d00b7a5b4cdd537d7f1.json",
-      "lastAttempt": "2026-10-24T21:43:54.048Z",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:15:03Z",
       "ttlSeconds": 3600,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T21:43:54.048Z"
+        "detail": "UND_ERR_CONNECT_TIMEOUT",
+        "at": "2026-10-24T22:24:27.998Z"
       }
     },
     "archive-2026-08": {
       "path": "objects/bfcdbbfb80d968c62b145a0a579dc18b8f6cef53caa1c54f2949a75834d60849.json",
-      "lastAttempt": "2026-10-24T13:37:09.449Z",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:15:03Z",
       "ttlSeconds": 86400,
-      "error": null
+      "error": {
+        "kind": "network",
+        "status": null,
+        "detail": "UND_ERR_CONNECT_TIMEOUT",
+        "at": "2026-10-24T22:24:27.998Z"
+      }
     },
     "archive-2026-09": {
       "path": "objects/b1047f283b7aec552f3de8c9f604d55bbf415e274ef2622b4b30e06dc89e039b.json",
-      "lastAttempt": "2026-10-24T13:37:09.449Z",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:15:03Z",
       "ttlSeconds": 86400,
-      "error": null
+      "error": {
+        "kind": "network",
+        "status": null,
+        "detail": "UND_ERR_CONNECT_TIMEOUT",
+        "at": "2026-10-24T22:24:27.998Z"
+      }
     },
     "archive-2026-10": {
       "path": "objects/9af7744de1821d6245f8834130a796e28de207897eb1d3a5e7a014258f3fe68a.json",
-      "lastAttempt": "2026-10-24T21:43:54.048Z",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
       "lastSuccess": "2026-10-24T13:37:09.449Z",
       "sourceTime": "2026-10-24T13:15:03Z",
       "ttlSeconds": 3600,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T21:43:54.048Z"
+        "detail": "UND_ERR_CONNECT_TIMEOUT",
+        "at": "2026-10-24T22:24:27.998Z"
       }
     },
     "weather-main": {
-      "path": "objects/eb2d973ca93d417c4abb25f4cf403ca556128c6ddcfacb4f556670e2035d05e0.json",
-      "lastAttempt": "2026-10-24T21:43:54.048Z",
-      "lastSuccess": "2026-10-24T20:41:24.215Z",
-      "sourceTime": "2026-10-25T03:30:00+07:00",
+      "path": "objects/5998f80ff6b710f3329ee3e1f516c63d8ae9b8f8653c4e8a12f01700d1a28a90.json",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
+      "lastSuccess": "2026-10-24T22:24:27.998Z",
+      "sourceTime": "2026-10-25T05:15+07:00",
       "ttlSeconds": 3600,
-      "error": {
-        "kind": "invalid",
-        "status": null,
-        "at": "2026-10-24T21:43:54.048Z"
-      }
+      "error": null
     },
     "weather-grid": {
-      "path": "objects/52df01b9ea7c28fbb0ab5b3fa3a90be2e145a614a3b9dd632b17f0f7d398806c.json",
-      "lastAttempt": "2026-10-24T21:43:54.048Z",
-      "lastSuccess": "2026-10-24T21:43:54.048Z",
-      "sourceTime": "2026-10-25T03:30:00+07:00",
+      "path": "objects/51008e4226d416f979d3a616b5e63e988ea359276d82825def0935889db7b6c5.json",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
+      "lastSuccess": "2026-10-24T22:24:27.998Z",
+      "sourceTime": "2026-10-25T05:15+07:00",
       "ttlSeconds": 3600,
-      "error": {
-        "kind": "partial",
-        "status": null,
-        "at": "2026-10-24T21:43:54.048Z"
-      }
+      "error": null
     },
     "air-main": {
-      "path": "objects/9b9ece605c725f4a1d022883568106b0c60104637969a1d8c6d55e2f483abcdd.json",
-      "lastAttempt": "2026-10-24T21:43:54.048Z",
-      "lastSuccess": "2026-10-24T21:43:54.048Z",
-      "sourceTime": "2026-10-25T04:00:00+07:00",
+      "path": "objects/7a6f5ed7694f3d84b627ae8cb9fc0eca09f9528520e29b0b277831f4d265a9a1.json",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
+      "lastSuccess": "2026-10-24T22:24:27.998Z",
+      "sourceTime": "2026-10-25T05:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "air-villages": {
-      "path": "objects/b227697a73432fc5af78de2852977dff68fcc87fd35d21757805cf680cb91b45.json",
-      "lastAttempt": "2026-10-24T21:43:54.048Z",
-      "lastSuccess": "2026-10-24T21:43:54.048Z",
-      "sourceTime": "2026-10-25T04:00:00+07:00",
+      "path": "objects/d4276d80b55babae29b65bb55c8bc5a4525f5c39bf60286ae83c63c66b21d42b.json",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
+      "lastSuccess": "2026-10-24T22:24:27.998Z",
+      "sourceTime": "2026-10-25T05:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "forecast-main": {
-      "path": "objects/5dd30cd71c2b7c01e0bf44cedfdbe460e1a09f133bd41194e7c0c0a7fdd39379.json",
-      "lastAttempt": "2026-10-24T21:43:54.048Z",
-      "lastSuccess": "2026-10-24T21:43:54.048Z",
-      "sourceTime": "2026-10-24T21:43:54.048Z",
+      "path": "objects/4bce2e17296b45b212be595ee20baa994c02c22c4a161d81c213959649804929.json",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
+      "lastSuccess": "2026-10-24T22:24:27.998Z",
+      "sourceTime": "2026-10-24T22:24:27.998Z",
       "ttlSeconds": 3600,
       "error": null
     },
     "forecast-villages": {
-      "path": "objects/215e9e725d592b871af5d7a2a1ed5e3c4e430ac75d00aefd55dee99e76b69480.json",
-      "lastAttempt": "2026-10-24T21:43:54.048Z",
-      "lastSuccess": "2026-10-24T21:43:54.048Z",
-      "sourceTime": "2026-10-24T21:43:54.048Z",
+      "path": "objects/5c075ee84e0bbe05b9a7ab543f59c5062dac60f348d5de07137518da2f1f5ef9.json",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
+      "lastSuccess": "2026-10-24T22:24:27.998Z",
+      "sourceTime": "2026-10-24T22:24:27.998Z",
       "ttlSeconds": 3600,
       "error": null
     }
   },
   "providers": {
     "hotspot": {
-      "lastAttempt": "2026-10-24T22:14:22.065Z",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
       "error": {
         "kind": "network",
         "status": null,
         "detail": "UND_ERR_CONNECT_TIMEOUT",
-        "at": "2026-10-24T22:14:22.065Z"
+        "at": "2026-10-24T22:24:27.998Z"
       }
     },
     "archive": {
@@ -153,11 +157,11 @@
       "error": null
     },
     "weather": {
-      "lastAttempt": "2026-10-24T21:43:54.048Z",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
       "error": null
     },
     "air": {
-      "lastAttempt": "2026-10-24T21:43:54.048Z",
+      "lastAttempt": "2026-10-24T22:24:27.998Z",
       "error": null
     }
   }
