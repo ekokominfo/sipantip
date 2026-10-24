@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-24T04:45:29.157Z",
+  "updatedAt": "2026-10-24T05:12:54.882Z",
   "resources": {
     "hotspot-High": {
       "path": "objects/424f53a387a33d1a243b1c034ca3139f32e8c11e71370bf758cb630a2217f094.json",
@@ -40,14 +40,14 @@
     },
     "archive-index": {
       "path": "objects/01006e994957c31b28e910525cbd531132279bbc3ab42f6e59464fad20314982.json",
-      "lastAttempt": "2026-10-24T03:51:53.705Z",
+      "lastAttempt": "2026-10-24T05:12:54.882Z",
       "lastSuccess": "2026-10-23T22:21:17.705Z",
       "sourceTime": "2026-10-23T22:15:02Z",
       "ttlSeconds": 3600,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T03:51:53.705Z"
+        "at": "2026-10-24T05:12:54.882Z"
       }
     },
     "archive-2026-08": {
@@ -68,45 +68,45 @@
     },
     "archive-2026-10": {
       "path": "objects/b68b66f268d0267868b679bee61125bf057636439894cee6df5fc3b38d1e5e09.json",
-      "lastAttempt": "2026-10-24T03:51:53.705Z",
+      "lastAttempt": "2026-10-24T05:12:54.882Z",
       "lastSuccess": "2026-10-23T22:21:17.705Z",
       "sourceTime": "2026-10-23T22:15:02Z",
       "ttlSeconds": 3600,
       "error": {
         "kind": "network",
         "status": null,
-        "at": "2026-10-24T03:51:53.705Z"
+        "at": "2026-10-24T05:12:54.882Z"
       }
     },
     "weather-main": {
-      "path": "objects/8e6a096a48926742d224ab19d1f71439e1e1b050904f77f8dae8589c2d446e4d.json",
-      "lastAttempt": "2026-10-24T03:51:53.705Z",
-      "lastSuccess": "2026-10-24T03:51:53.705Z",
-      "sourceTime": "2026-10-24T10:45:00+07:00",
+      "path": "objects/53e81090aa63dc608285a021b6b9f7fc2d601b52a42e62aa9a79462e5dc4d242.json",
+      "lastAttempt": "2026-10-24T05:12:54.882Z",
+      "lastSuccess": "2026-10-24T05:12:54.882Z",
+      "sourceTime": "2026-10-24T12:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "weather-grid": {
-      "path": "objects/c99041e160c0164d9f77c11700c4ea76dc6ad595c3777ff40c5c54c54b79d046.json",
-      "lastAttempt": "2026-10-24T03:51:53.705Z",
-      "lastSuccess": "2026-10-24T03:51:53.705Z",
-      "sourceTime": "2026-10-24T10:45:00+07:00",
+      "path": "objects/cd894b132f030565bc58ea5fcff0d214336be587ab06abbd09d739b4e6c8090a.json",
+      "lastAttempt": "2026-10-24T05:12:54.882Z",
+      "lastSuccess": "2026-10-24T05:12:54.882Z",
+      "sourceTime": "2026-10-24T12:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "air-main": {
-      "path": "objects/d8f77497f62ecf080d6fcbd84ce45f460ef31aa1add09b6e7b0c0f1705834205.json",
-      "lastAttempt": "2026-10-24T03:51:53.705Z",
-      "lastSuccess": "2026-10-24T03:51:53.705Z",
-      "sourceTime": "2026-10-24T10:00:00+07:00",
+      "path": "objects/cfe2ef4d8482732d39773aa0ddd0d2d4bd32c99c4635ca6abbe9c7734106aac1.json",
+      "lastAttempt": "2026-10-24T05:12:54.882Z",
+      "lastSuccess": "2026-10-24T05:12:54.882Z",
+      "sourceTime": "2026-10-24T12:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     },
     "air-villages": {
-      "path": "objects/08c4b53e7795a9d630352e45f98e9f6528aae7b581647bc585685cb0d247acd0.json",
-      "lastAttempt": "2026-10-24T03:51:53.705Z",
-      "lastSuccess": "2026-10-24T03:51:53.705Z",
-      "sourceTime": "2026-10-24T10:00:00+07:00",
+      "path": "objects/62d56ba54ac8df77256215814beb793f8a34f3eca84f31ce4e6c0794b34a203e.json",
+      "lastAttempt": "2026-10-24T05:12:54.882Z",
+      "lastSuccess": "2026-10-24T05:12:54.882Z",
+      "sourceTime": "2026-10-24T12:00:00+07:00",
       "ttlSeconds": 3600,
       "error": null
     }
@@ -117,15 +117,15 @@
       "error": null
     },
     "archive": {
-      "lastAttempt": "2026-10-24T03:51:53.705Z",
+      "lastAttempt": "2026-10-24T05:12:54.882Z",
       "error": null
     },
     "weather": {
-      "lastAttempt": "2026-10-24T03:51:53.705Z",
+      "lastAttempt": "2026-10-24T05:12:54.882Z",
       "error": null
     },
     "air": {
-      "lastAttempt": "2026-10-24T03:51:53.705Z",
+      "lastAttempt": "2026-10-24T05:12:54.882Z",
       "error": null
     }
   }
