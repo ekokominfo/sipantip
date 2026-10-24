@@ -1,6 +1,6 @@
 import {createClient} from 'npm:@supabase/supabase-js@2.118.0';
 import {refreshData} from './collector.mjs';
-import {compactHotspots} from './validation.mjs';
+import SiPongiSource from './sipongi-source.mjs';
 
 // verify_jwt is disabled for pg_net; a server-only Vault secret is checked
 // through a service-role-only database RPC before any source request is made.
@@ -16,10 +16,11 @@ Deno.serve(async request=>{
  let result;let status=200;
  try{
   const body=await request.json().catch(()=>({}));
-  if(body.action==='probe'){
-   const response=await fetch('https://appscript.palangkaraya.go.id/hotspot/api/hotspot_high2.json',{signal:AbortSignal.timeout(20000)});
+  if(body.action==='probe'||body.action==='probe-official'){
+   const response=await fetch(SiPongiSource.url(),{signal:AbortSignal.timeout(20000)});
    if(!response.ok)throw Error('Source HTTP '+response.status);
-   const data=compactHotspots(await response.json());result={ok:true,probe:true,sourceTime:data.generated_at,features:data.data.features.length};
+   const payload=await response.json();
+   const feeds=SiPongiSource.normalize(payload);result={ok:true,probe:true,source:'SiPongi direct',features:Object.values(feeds).reduce((n,f)=>n+f.data.features.length,0),latestDetection:Object.values(feeds).map(f=>f.latest_detection).filter(Boolean).sort().at(-1)||null};
   }else{
    const manifest=await refreshData({output:client.storage.from('sipantip-environment'),force:body.force===true});
    const errors=Object.entries(manifest.resources).filter(([,e])=>e.error).map(([key,e])=>({key,kind:e.error.kind}));

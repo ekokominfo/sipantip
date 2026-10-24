@@ -11,7 +11,7 @@ function sourceAge(t){const n=Date.parse(t);return Number.isFinite(n)?Date.now()
 function modelStamp(t){return t?t+':00+07:00':'';}
 function updateFreshness(){
  const el=$('freshness');if(!el)return;const ts=(state.sourceDates||[]).map(t=>Date.parse(t)).filter(Number.isFinite),oldest=ts.length?Math.min(...ts):null;
- const parts=[oldest===null?'Waktu sumber titik panas belum tersedia':'Sumber titik panas: '+wib(new Date(oldest))+(Date.now()-oldest>24*3600000?' · data lebih dari 24 jam':'' )];
+ const parts=[oldest===null?'Waktu sumber titik panas belum tersedia':(state.hotspotTimestampKind==='retrieved'?'Diambil dari SiPongi: ':'Sumber titik panas: ')+wib(new Date(oldest))+(Date.now()-oldest>24*3600000?' · data lebih dari 24 jam':'' )];
  if(state.airSource){const age=sourceAge(modelStamp(state.airSource));parts.push('Sumber PM 2.5: '+state.airSource.replace('T',' ')+' WIB'+(age>3*3600000?' · data lebih dari 3 jam':''));}
  el.textContent=parts.join(' | ');el.classList.toggle('stale',Boolean(oldest&&Date.now()-oldest>24*3600000)||sourceAge(modelStamp(state.airSource))>3*3600000);
 }

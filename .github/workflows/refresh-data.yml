@@ -1,17 +1,6 @@
 name: Refresh shared environmental data
 on:
-  schedule:
-    - cron: '17,47 * * * *'
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/refresh-data.yml'
-      - 'scripts/cache-core.cjs'
-      - 'scripts/source-request.cjs'
-      - 'scripts/rain-core.cjs'
-      - 'scripts/refresh-data.cjs'
-      - 'villages.geojson'
 permissions:
   contents: write
 concurrency:

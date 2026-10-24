@@ -1,7 +1,7 @@
 /* Explicit visitor refresh. Automatic reads continue to use the shared cache. */
 (function(scope){
  'use strict';
- const API='https://appscript.palangkaraya.go.id/hotspot/api/';
+
  let pending=null,lastAttempt=0;
  const invalid=()=>Object.assign(new Error('Respons sumber tidak valid.'),{kind:'invalid'});
  function validHotspot(j){
@@ -31,9 +31,11 @@
   }
   async function resource(key,fn){try{const {data,time}=await fn();cache.publishSource(key,data,time);success++;if(key.startsWith('hotspot-'))hotspotOK++;}catch(e){cache.failSource(key,e);failed++;}finally{done++;report('Mengambil dari sumber… '+done+' kelompok data diperiksa.');}}
   // Small batches and a per-tab cooldown avoid a burst of requests on repeated clicks.
-  for(const level of ['High','Medium','Low'])await resource('hotspot-'+level,async()=>{const data=validHotspot(await request(API+'hotspot_'+level.toLowerCase()+'2.json','hotspot'));return {data,time:data.generated_at};});
-  await resource('archive-index',async()=>{const data=await request(API+'arsip/index.json','hotspot');if(!Array.isArray(data.hotspot)||!data.hotspot.some(d=>/^\d{4}-\d{2}-\d{2}$/.test(d)))throw invalid();return {data,time:data.diperbarui};});
-  try{const index=await cache.get('archive-index'),months=[...new Set(index.hotspot.filter(d=>/^\d{4}-\d{2}-\d{2}$/.test(d)&&Date.parse(d+'T00:00:00+07:00')<=Date.now()).sort().map(d=>d.slice(0,7)))].slice(-4);for(const month of months)await resource('archive-'+month,async()=>{const data=await request(API+'arsip/ringkasan/harian-'+month+'.json','hotspot'),dates=Object.keys(data).filter(d=>/^\d{4}-\d{2}-\d{2}$/.test(d)&&d.startsWith(month));if(!dates.length||!dates.every(d=>data[d]?.kab&&typeof data[d].kab==='object'&&Object.values(data[d].kab).every(n=>Number.isFinite(n)&&n>=0)))throw invalid();return {data:Object.fromEntries(dates.map(d=>[d,data[d]])),time:index.diperbarui};});}catch{ /* unavailable archive is already reported */ }
+  let directPromise;const directFeeds=()=>directPromise||(directPromise=request(scope.SiPongiSource.url(),'hotspot').then(j=>scope.SiPongiSource.normalize(j)));
+  for(const level of ['High','Medium','Low'])await resource('hotspot-'+level,async()=>{const data=(await directFeeds())[level];return {data,time:data.generated_at};});
+  const current=new Date(),days=[new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(+current-86400000)),new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(current)];
+  for(const month of [...new Set(days.map(d=>d.slice(0,7)))])await resource('archive-'+month,async()=>{const rows=scope.SiPongiSource.recentArchive(await directFeeds(),current),old=await cache.get('archive-'+month).catch(()=>({}));return {data:{...old,...Object.fromEntries(Object.entries(rows).filter(([day])=>day.startsWith(month)))},time:current.toISOString()};});
+  await resource('archive-index',async()=>{await directFeeds();const old=await cache.get('archive-index').catch(()=>({}));return {data:{...old,hotspot:[...new Set([...(old.hotspot||[]),...days])].sort(),diperbarui:current.toISOString(),recentCoverage:days},time:current.toISOString()};});
   const modelURL=(provider,points,params)=>provider+'?latitude='+points.map(p=>p.lat.toFixed(4)).join(',')+'&longitude='+points.map(p=>p.lon.toFixed(4)).join(',')+'&'+params+'&timezone=Asia%2FJakarta';
   const main={key:'main',lat:-2.75,lon:114.25};
   let villages=[];try{villages=(await cache.get('air-villages')).points||[];}catch{}
@@ -52,7 +54,7 @@
   await modelGroup('weather-grid',grid,weather,weatherParams,['precipitation','visibility'],false,true);
   await modelGroup('forecast-main',[main],weather,rainParams,['precipitation_probability','precipitation','visibility'],true);
   await modelGroup('forecast-villages',villages,weather,rainParams,['precipitation_probability','precipitation','visibility'],true);
-  const text=(hotspotOK===3?'Titik panas berhasil diambil dari sumber. ':hotspotOK?'Sebagian feed titik panas gagal. ':'Sumber titik panas gagal dihubungi. ')+success+' kelompok data berhasil'+(failed?', '+failed+' gagal; data terakhir dipertahankan.':'.')+' Waktu sumber tetap mengikuti pembaruan penyedia.';
+  const text=(hotspotOK===3?'Titik panas berhasil diambil dari sumber. ':hotspotOK?'Sebagian feed titik panas gagal. ':'Sumber titik panas gagal dihubungi. ')+success+' kelompok data berhasil'+(failed?', '+failed+' gagal; data terakhir dipertahankan.':'.')+' Waktu pengambilan dan waktu deteksi ditampilkan terpisah.';
   report(text,failed>0);return {success,failed,hotspotOK};
  }
  async function run(){if(pending)return pending;if(lastAttempt&&Date.now()-lastAttempt<60000)throw new Error('Tunggu satu menit sebelum mengambil ulang dari sumber.');lastAttempt=Date.now();pending=collect();try{return await pending;}finally{pending=null;}}
