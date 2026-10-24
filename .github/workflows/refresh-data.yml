@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   refresh:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 20
     defaults:
       run:
@@ -34,7 +34,7 @@ jobs:
           ref: data-cache
           path: cache-store
       - name: Collect due sources and preserve last valid data
-        run: node scripts/refresh-data.cjs --output cache-store/cache ${{ github.event_name != 'schedule' && '--force' || '' }}
+        run: node scripts/refresh-data.cjs --output cache-store/cache ${{ github.event_name == 'workflow_dispatch' && '--force' || '' }}
       - name: Publish data snapshot
         working-directory: cache-store
         run: |
