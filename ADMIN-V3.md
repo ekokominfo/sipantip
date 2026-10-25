@@ -1,6 +1,6 @@
-# Admin / BE 3.0
+# Admin / BE 3.5
 
-Versi admin: 3.0 (`ADMIN_VERSION`). Versi halaman publik tetap 4.0.
+Versi admin: 3.5 (`ADMIN_VERSION`). Versi halaman publik tetap 4.0.
 
 ## Backup sebelum perubahan
 
@@ -99,3 +99,18 @@ melalui commit baru; jangan reset riwayat bersama. Untuk laporan database v2,
 terapkan kembali `supabase/report-v2.sql`. Tabel interaksi tambahan dapat
 dipertahankan agar riwayat v3 tidak hilang. Pelacakan frontend v3 harus ikut
 dipulihkan bila hendak menghentikan pencatatan interaksi baru.
+
+## Revisi desain admin 3.5
+
+Palet mengikuti interface-v2.css halaman publik: biru, peach, lavender, mint,
+dan krem diterapkan pada seluruh permukaan kartu. Kartu metrik memiliki tinggi
+seimbang; metrik terakhir melebar pada ponsel. Grafik tren dan jam ramai
+berdampingan di desktop, lalu menjadi satu kolom di layar kecil. ViewBox grafik
+mengikuti lebar wadah melalui ResizeObserver agar label tetap terbaca.
+Perangkat, pengunjung baru/kembali, dan perbandingan memakai baris ringkasan
+tersendiri. Tidak ada perubahan rumus metrik atau migrasi database tambahan.
+Skema laporan tetap versi 3; versi tampilan admin 3.5, halaman publik 4.0.
+
+Validasi desain: tes admin-charts serta QA browser warna kartu, tinggi metrik,
+ukuran plot, tooltip keyboard, 7/30/90 hari, kondisi kosong/gagal, dan lebar
+360, 375, 390, 768, 1440 piksel. Screenshot admin-v35 memakai data simulasi.

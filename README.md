@@ -35,7 +35,7 @@ Jalankan `node --test tests/dashboard.test.cjs`. Pemeriksaan antarmuka meliputi 
 
 ## Statistik pengunjung
 
-Admin versi **3.0**: lihat [ADMIN-V3.md](ADMIN-V3.md) untuk backup v2,
+Admin versi **3.5**: lihat [ADMIN-V3.md](ADMIN-V3.md) untuk backup v2,
 migrasi `supabase/report-v3.sql`, arti metrik, pelacakan fitur peta, validasi,
 dan pemulihan. Versi halaman publik tetap 4.0. Deploy SQL sebelum file `dist/`.
 
