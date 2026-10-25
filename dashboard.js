@@ -13,6 +13,7 @@ function updateHotspotCard(now=Date.now()){
  const time=$('hotspotDataTime'),warning=$('hotspotDataWarning');if(!time||!warning)return;
  const times=(state.raw||[]).map(r=>detectionTime(r.when)).filter(t=>Number.isFinite(t)&&t<=now),latest=times.length?Math.max(...times):null;
  time.textContent=latest===null?'Waktu deteksi terbaru belum tersedia':'Deteksi terbaru: '+new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(latest))+' WIB ('+(now-latest<3600000?'kurang dari 1 jam lalu':'sekitar '+Math.floor((now-latest)/3600000)+' jam lalu')+')';
+ const compact=$('hotspotDataTimeCompact');if(compact){compact.textContent=latest===null?'Waktu belum tersedia':new Intl.DateTimeFormat('id-ID',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(latest))+' WIB · '+(now-latest<3600000?'baru saja':Math.floor((now-latest)/3600000)+' jam lalu');compact.setAttribute('aria-label',time.textContent);}
  const status=typeof CachedData!=='undefined'?CachedData.status(['hotspot-High','hotspot-Medium','hotspot-Low']):null;
  const failed=!!status?.items?.some(item=>item.error),connection=!!status?.transportError,oldDetection=latest!==null&&now-latest>6*3600000;
  warning.hidden=!failed&&!connection&&!oldDetection;

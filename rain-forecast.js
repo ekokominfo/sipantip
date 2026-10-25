@@ -50,25 +50,37 @@
   const labels=[0,23,last].map(i=>`<text x="${x(i)}" y="239" text-anchor="${i===0?'start':i===last?'end':'middle'}" fill="#52677d" font-size="11">${stamp(list[i].end).replace(' WIB','')}</text>`).join('');
   return `<svg viewBox="0 0 ${width} 250" role="group" aria-label="Grafik gabungan titik panas dan peluang hujan: 24 jam terakhir dan 24 jam ke depan"><text x="${left}" y="14" fill="#c4414d" font-size="11">deteksi/jam</text><text x="${right}" y="14" text-anchor="end" fill="#2563b6" font-size="11">peluang hujan (%)</text><text x="${left}" y="32" fill="#52677d" font-size="10">24 jam terakhir</text><text x="${right}" y="32" text-anchor="end" fill="#52677d" font-size="10">24 jam ke depan</text>${backdrop}${missing}${ticks}${paths}${dots}${hits}${labels}</svg>`;
  }
- if(typeof module!=='undefined')module.exports={rows,summary,hourlyRows,detectionStamp,rainBrief,hotspotSVG,rainSVG,headerRainForecast,combinedSVG};
+ function historySVG(list,width=600){
+  const left=45,right=width-45,top=35,bottom=210,maxHot=Math.max(2,Math.ceil(Math.max(...list.map(r=>r.hotspots||0))*1.1/2)*2),x=i=>left+i/23*(right-left),yr=v=>bottom-v/100*(bottom-top),yh=v=>bottom-v/maxHot*(bottom-top),bar=Math.min(24,(right-left)/23*.65),stamp=t=>new Date(t).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+' WIB';
+  const ticks=[0,.5,1].map(f=>`<line x1="${left}" y1="${bottom-f*(bottom-top)}" x2="${right}" y2="${bottom-f*(bottom-top)}" stroke="#e0e8f2"/><text x="${left-7}" y="${bottom-f*(bottom-top)+4}" text-anchor="end" fill="#c4414d" font-size="11">${(maxHot*f).toLocaleString('id-ID')}</text><text x="${right+7}" y="${bottom-f*(bottom-top)+4}" fill="#2563b6" font-size="11">${f*100}%</text>`).join('');
+  const bars=list.map((r,i)=>r.hotspots===null?`<rect x="${Math.max(left,x(i)-(right-left)/46)}" y="${top}" width="${Math.min(right,x(i)+(right-left)/46)-Math.max(left,x(i)-(right-left)/46)}" height="${bottom-top}" fill="#94a3b826"/>`:`<rect class="hotspot-bar" x="${Math.max(left,x(i)-bar/2)}" y="${yh(r.hotspots)}" width="${Math.min(right,x(i)+bar/2)-Math.max(left,x(i)-bar/2)}" height="${bottom-yh(r.hotspots)}" rx="1" fill="#c4414d"/>`).join('');
+  const line=`<path d="${pathFor(list,'probability',x,yr)}" fill="none" stroke="#2563b6" stroke-width="2.5"/>`,dots=list.map((r,i)=>r.probability===null?'':`<circle cx="${x(i)}" cy="${yr(r.probability)}" r="2.5" fill="#2563b6"/>`).join('');
+  const hits=list.map((r,i)=>{const title=stamp(r.end)+' · Titik panas: '+(r.hotspots===null?'Belum tersedia':r.hotspots)+' · Peluang hujan model: '+(r.probability===null?'Belum tersedia':r.probability+'%');return `<rect x="${Math.max(left,x(i)-(right-left)/46)}" y="${top}" width="${Math.min(right,x(i)+(right-left)/46)-Math.max(left,x(i)-(right-left)/46)}" height="${bottom-top}" fill="transparent" tabindex="0" role="button" data-tooltip="${title}" aria-label="${title}"/>`;}).join('');
+  const labels=[0,12,23].map(i=>`<text x="${x(i)}" y="239" text-anchor="${i===0?'start':i===23?'end':'middle'}" fill="#52677d" font-size="11">${stamp(list[i].end).replace(' WIB','')}</text>`).join('');
+  return `<svg viewBox="0 0 ${width} 250" role="group" aria-label="Riwayat 24 jam terakhir: batang titik panas dan garis peluang hujan model"><text x="${left}" y="16" fill="#c4414d" font-size="11">deteksi/jam</text><text x="${right}" y="16" text-anchor="end" fill="#2563b6" font-size="11">peluang hujan (%)</text>${ticks}${bars}${line}${dots}${hits}${labels}</svg>`;
+ }
+ if(typeof module!=='undefined')module.exports={rows,summary,hourlyRows,detectionStamp,rainBrief,hotspotSVG,rainSVG,headerRainForecast,combinedSVG,historySVG};
  if(!scope.document)return;
  const $=id=>document.getElementById(id),num=v=>v===null?'Belum tersedia':v.toLocaleString('id-ID',{maximumFractionDigits:1});
  const stamp=t=>new Date(t).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' WIB';
- let busy=false,main=null,points=[];
+ let busy=false,main=null,points=[],mode='history';
  const clock=t=>new Date(t).toLocaleTimeString('id-ID',{timeZone:'Asia/Jakarta',hour:'2-digit',minute:'2-digit'})+' WIB';
  function interval(r){return clock(r.end-hour).replace(' WIB','')+'–'+clock(r.end);}
  function villageHTML(key){const data=points.find(p=>p.key===key),s=rainBrief(data),v=WeatherUI.visibilityAt(data),info=WeatherUI.visibilityInfo(v?.meters);return '<span class="village-rain-line">'+(s.peak===null?'Prakiraan hujan belum tersedia':'Peluang hujan hingga '+'<strong>'+num(s.peak)+'%</strong>')+'</span><span class="village-visibility">Estimasi jarak pandang: '+(info?'<strong>'+num(info.value)+' '+info.unit+'</strong> · <strong style="color:'+info.color+'">'+info.label+'</strong>':'belum tersedia')+'</span>';}
  function updateCards(){const s=rainBrief(main);$('forecastChance').textContent=s.peak===null?'—':num(s.peak)+'%';$('forecastCondition').textContent=s.peakAt?'Puncak sekitar '+stamp(s.peakAt.end):'Prakiraan belum tersedia';$('forecastTime').textContent=WeatherUI.updateText(main?.collectedAt);for(const el of document.querySelectorAll('[data-rain-village]'))el.innerHTML=villageHTML(el.dataset.rainVillage);}
- scope.RainForecast={villageHTML,load};
+ scope.RainForecast={villageHTML,load,setMode};
+ function setMode(next,scroll=false){if(!['history','future'].includes(next))return;mode=next;render();if(scroll)$('rain-section').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}
  function render(){
-  const host=$('rainChart'),now=Date.now();updateCards();$('rainTitle').textContent='Titik panas & peluang hujan';$('hotspotChartLegend').hidden=false;$('rainGuide').textContent='Merah: deteksi titik panas Pulang Pisau (sumbu kiri). Biru: peluang hujan model Kelurahan Pulang Pisau (sumbu kanan, %). Latar biru muda: 24 jam ke depan, tanpa prakiraan titik panas. Kartu hujan menampilkan peluang tertinggi pada bagian masa depan. Area abu-abu: data titik panas belum tersedia. Sentuh atau sorot grafik untuk rincian. Sumber: NASA FIRMS dan Open-Meteo.';
+  const host=$('rainChart'),now=Date.now(),futureMode=mode==='future';updateCards();$('rainTitle').textContent=futureMode?'Prakiraan peluang hujan':'Titik panas & peluang hujan';$('hotspotChartLegend').hidden=futureMode;
+  $('rainHistory').setAttribute('aria-pressed',String(!futureMode));$('rainFuture').setAttribute('aria-pressed',String(futureMode));
+  $('rainGuide').textContent=futureMode?'Prakiraan Kelurahan Pulang Pisau. Angka kartu adalah peluang tertinggi dalam grafik ini. Titik panas tidak diprakirakan.':'Batang merah: deteksi/jam (kiri). Garis biru: peluang hujan model % (kanan). Kartu hujan memakai periode prakiraan.';
   const records=typeof state==='undefined'?[]:state.raw.filter(r=>(!$('confidence').value||r.level===$('confidence').value)),sourceTimes=typeof state==='undefined'?[]:(state.sourceDates||[]).map(Date.parse).filter(Number.isFinite);
-  const past=hourlyRows(main,records,{now,future:false,loaded:typeof state!=='undefined'&&state.loaded,coverageEnd:sourceTimes.length?Math.min(...sourceTimes):0}),future=hourlyRows(main,[],{now,future:true}),list=past.concat(future);
-  host.innerHTML=combinedSVG(list,Math.max(320,Math.round(host.clientWidth||600)),now);
-  const missing=past.filter(r=>r.hotspots===null).length;$('missingChartLegend').hidden=missing===0;
-  $('rainStatus').textContent=missing?'Area abu-abu: '+missing+' jam data titik panas belum tersedia (bukan nol deteksi)'+(sourceTimes.length?' (feed hingga '+stamp(Math.min(...sourceTimes))+')':'')+'.':'';
-  const unavailable=future.filter(r=>r.probability===null).length;
-  if(unavailable)$('rainStatus').textContent+=' Prakiraan hujan belum lengkap: '+unavailable+' jam belum tersedia (bukan peluang 0%).';
+  const list=hourlyRows(main,records,{now,future:futureMode,loaded:typeof state!=='undefined'&&state.loaded,coverageEnd:sourceTimes.length?Math.min(...sourceTimes):0});
+  host.innerHTML=(futureMode?rainSVG:historySVG)(list,Math.max(320,Math.round(host.clientWidth||600)));
+  const missing=futureMode?0:list.filter(r=>r.hotspots===null).length;$('missingChartLegend').hidden=missing===0;
+  $('rainStatus').textContent=missing?'Area abu-abu: '+missing+' jam data titik panas belum tersedia (bukan nol deteksi).':'';
+  const unavailable=list.filter(r=>r.probability===null).length;
+  if(unavailable)$('rainStatus').textContent+=' Peluang hujan '+unavailable+' jam belum tersedia (bukan peluang 0%).';
  }
 
  async function load(){
@@ -80,5 +92,8 @@
   finally{busy=false;render();$('rain-section').setAttribute('aria-busy','false');}
  }
  document.addEventListener('sipantip:hotspots',render);
+ $('rainHistory').addEventListener('click',()=>setMode('history'));
+ $('rainFuture').addEventListener('click',()=>setMode('future'));
+ $('forecastOpen').addEventListener('click',()=>setMode('future',true));
  let frame;addEventListener('resize',()=>{cancelAnimationFrame(frame);frame=requestAnimationFrame(render);});setInterval(()=>{if(!document.hidden)render();},60000);setInterval(()=>{if(!document.hidden)load();},600000);load();
 })(typeof window!=='undefined'?window:globalThis);

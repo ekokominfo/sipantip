@@ -33,3 +33,11 @@ test('combined chart uses actual hours, separate units and no future hotspot pre
  assert.match(svg,/Peluang hujan model: 47% · Titik panas: 1/);assert.match(svg,/Prakiraan peluang hujan: 80% · Titik panas: Belum tersedia \(waktu mendatang\)/);assert.match(svg,/deteksi\/jam/);assert.match(svg,/100%/);assert.doesNotMatch(svg,/\bmm\b|Prakiraan peluang hujan:[^"<>]*Titik panas: 0/);assert.equal((svg.match(/data-tooltip=/g)||[]).length,48);
  assert.equal(Math.max(...future.map(r=>r.probability??-1)),rainBrief(d,clock).peak);
 });
+
+test('history view uses red bars, a blue percent line and distinguishes missing from zero',()=>{
+ const {historySVG}=require('../rain-forecast.js'),list=hourlyRows(data(),[{when:'2026-10-24 22:59 WIB'}],{now:+now,loaded:true});
+ list[0].hotspots=null;const svg=historySVG(list,360);
+ assert.match(svg,/class="hotspot-bar"/);assert.match(svg,/fill="#c4414d"/);assert.match(svg,/stroke="#2563b6"/);assert.match(svg,/100%/);
+ assert.match(svg,/Titik panas: 0/);assert.match(svg,/Titik panas: Belum tersedia/);assert.equal((svg.match(/data-tooltip=/g)||[]).length,24);
+ assert.doesNotMatch(svg,/waktu mendatang|48 jam|\bmm\b/);
+});

@@ -36,3 +36,17 @@ Pengujian browser lokal lulus pada lebar 1440, 390 dan 360 piksel: kartu dan gra
 Atas permintaan pengguna, grafik titik panas dan peluang hujan digabung menjadi satu panel. Sumbu waktu mencakup 24 jam terakhir dan 24 jam ke depan. Garis merah memakai sumbu kiri deteksi/jam; peluang hujan biru memakai sumbu kanan 0–100%, dengan garis titik-titik untuk periode lalu dan putus-putus untuk prakiraan. Latar biru muda membedakan masa depan. Tidak ada prediksi atau nilai nol buatan untuk titik panas masa depan. Tooltip menyatakan status waktu mendatang dengan jelas. Kartu tetap menunjukkan peluang tertinggi pada 24 jam ke depan yang sama dengan bagian prakiraan grafik. Grafik PM2.5/AQI dan sumber backend tidak berubah. Versi publik tetap 4.8te.
 
 Validasi revisi gabungan: 11 pengujian hujan lulus. Pengujian browser pada 1440/390/360 piksel lulus untuk sumbu waktu, kedua satuan, tooltip, data hilang, puncak kartu yang sama dengan prakiraan, ketiadaan prediksi titik panas, grafik PM2.5/AQI dan pemilihan desa.
+
+## Revisi kartu HP dan pilihan periode — aset 4.8te.2 (tampilan terkini)
+
+- Ringkasan menjadi dua kolom dan tiga baris di HP: titik panas–peluang hujan, kualitas udara–partikel halus, jarak pandang–angin. Tinggi kartu mengikuti isi dengan ruang minimum yang lebih kecil; angka tetap besar, label lebih mudah dibaca dan unit dapat membungkus tanpa meluap.
+- Waktu deteksi di HP diringkas menjadi jam WIB dan umur data. Tanggal lengkap tetap ada pada label aksesibel dan tampilan desktop. Peringatan data tetap memakai teks/status yang sama dan bayangan penekanan, pada satu banner di bawah ringkasan.
+- Deskripsi tambahan PM2.5/angin dan skala dekoratif tidak ditampilkan pada kartu HP; penjelasan sumber tetap tersedia dalam Status data & sumber pembaruan. Keterangan estimasi jarak pandang -4 km tetap terlihat.
+- Grafik berada dalam satu panel dengan tombol native 24 jam terakhir dan 24 jam ke depan. Pilihan aktif menggunakan aria-pressed dan bertahan ketika data/ukuran layar diperbarui.
+- Riwayat menampilkan batang merah untuk deteksi/jam (sumbu kiri) dan garis biru peluang hujan model dalam persen (sumbu kanan). Prakiraan menampilkan peluang hujan saja untuk 24 jam ke depan. Tidak ada angka titik panas masa depan yang dibuat.
+- Kartu peluang hujan memiliki tombol yang mencakup seluruh kartu dan petunjuk Lihat prakiraan. Klik atau aktivasi keyboard membuka pilihan prakiraan dan menggulir ke panel grafik; gerakan menghormati preferensi reduced motion. Nilai tertinggi grafik prakiraan sama dengan kartu pada periode yang sama.
+- Penjelasan grafik dipadatkan, dengan tooltip yang sesuai periode. Data hilang tetap belum tersedia, bukan nol. Grafik PM2.5/AQI, angka sumber, kolektor, sumber aktif dan jadwal tidak berubah. Nomor publik tetap 4.8te.
+
+Validasi: 76 pengujian otomatis lulus. Pemeriksaan browser meliputi susunan 2×3 pada 390/360/320 piksel, waktu ringkas dan label lengkap, kedua periode melalui klik/keyboard, pintasan kartu, tooltip, data hilang dan kecocokan puncak prakiraan. Pada 390 piksel, tinggi ringkasan berkurang sekitar sepertiga dibanding tampilan sebelumnya.
+
+Pemulihan revisi antarmuka ini: kembalikan berkas frontend terkait dari commit 4f04b6e melalui commit baru, sinkronkan root/dist dan publikasikan main. Tidak perlu mengubah backend Supabase.
