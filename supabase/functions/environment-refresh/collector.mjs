@@ -7,6 +7,7 @@ import {POINTS} from './locations.mjs';
 import {URL,forecastURL,validate} from './rain-core.mjs';
 import {sourceRequest} from './source-request.mjs';
 import {collectSiPongi} from './sipongi-collection.mjs';
+import {collectBMKG} from './bmkg-collection.mjs';
 async function refreshData({output,now=new Date(),fetcher=fetch,force=false,root=''}={}){
  const store=await new Store(output,now).init(),blocked=new Map();
  for(const [provider,p]of Object.entries(store.manifest.providers))if(p.error?.kind==='quota'&&now-Date.parse(p.lastAttempt)<3600000)blocked.set(provider,failure('quota',429));
@@ -32,6 +33,7 @@ async function refreshData({output,now=new Date(),fetcher=fetch,force=false,root
   for(let start=0;start<points.length;start+=20){const batch=points.slice(start,start+20);try{let models=await request(forecastURL(batch),'weather');if(!Array.isArray(models))models=[models];for(let i=0;i<batch.length;i++){try{const p=batch[i];saved.set(p.key,{...p,...validate(models[i],now)});updated++;}catch(e){issue=e;}}}catch(e){issue=e;if(e.kind==='quota')break;}}
   if(updated){const data={points:points.map(p=>saved.get(p.key)).filter(Boolean)};await store.put('forecast-villages',data,3600,data.points.map(p=>p.collectedAt).sort()[0]);if(issue||updated<points.length)store.fail('forecast-villages',issue||failure('partial'),3600);}else store.fail('forecast-villages',issue||failure('invalid'),3600);
  }
+ await collectBMKG(store,points,fetcher,now);
  await store.save();console.log(JSON.stringify({updatedAt:store.iso,resources:Object.fromEntries(Object.entries(store.manifest.resources).map(([k,v])=>[k,{available:!!v.path,error:v.error?.kind||null}]))}));return store.manifest;
 }
 

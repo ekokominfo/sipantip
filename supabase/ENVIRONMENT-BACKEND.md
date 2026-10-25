@@ -21,3 +21,5 @@ Daily archives retain older SiPongi-derived snapshots. Only yesterday and elapse
 For rollback, restore the GitHub cache URL in shared-data.js and dist/shared-data.js and unschedule sipantip-environment-refresh. Preserve valid snapshots. Re-enable the GitHub schedule only after checking source reachability. Do not expose the Vault secret in diagnostics.
 
 References: https://supabase.com/docs/guides/functions/schedule-functions and https://supabase.com/docs/guides/functions/auth .
+
+The collector also caches BMKG village weather descriptions as bmkg-villages. It requests at most 50 villages per invocation and enforces a 60-second provider cooldown. With the existing half-hour cron, all 99 villages normally refresh hourly. Forecast rows retain their source production and valid times. Frontend requests only the shared cache; no BMKG API call is made per visitor.

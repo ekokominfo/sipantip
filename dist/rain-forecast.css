@@ -24,7 +24,7 @@
 .rain-chart-legend .rain-line{border-top-style:dotted}.rain-chart-legend .hotspot-line{border-top-style:solid}
 
 /* Distinguish table headings from the highlighted home region. */
-#regency-section th{background:#dce8f7;color:#31557f}#regencyRows .home-region{background:#fbe5e7!important;color:#9b2937;box-shadow:inset 3px 0 #c4414d}#regencyRows .home-region td{color:#9b2937;font-weight:600}.metrics .forecast-card{border:1px solid #ffffff9c}
+#regency-section th{background:#dce8f7;color:#31557f}#regencyRows .home-region{background:#e4f3fa!important;color:#205b76;box-shadow:inset 3px 0 #3685a6}#regencyRows .home-region td{color:#205b76;font-weight:600}.metrics .forecast-card{border:1px solid #ffffff9c}
 
 .rain-chart-legend #missingChartLegend[hidden]{display:none}.rain-chart-legend .missing-swatch{width:18px;height:12px;border:1px solid #94a3b866;border-radius:2px;background:#94a3b826;vertical-align:middle}#rainStatus:not(:empty){margin:0 24px 12px;padding:8px 12px;background:#f1f4f7;border-radius:6px;color:#475569}
 
@@ -41,3 +41,5 @@ footer{grid-template-columns:1fr auto}
 @media(max-width:1200px){.design-v2 .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){#dailyChart{margin-inline:16px}.design-v2 .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics .metric{aspect-ratio:auto;min-height:190px;padding:14px}.village-cards{grid-template-columns:1fr;gap:10px}.village-card{aspect-ratio:auto;min-height:0;padding:16px}.village-card strong{overflow-wrap:anywhere}.village-visibility{white-space:normal}#refreshResult{max-width:150px;font-size:10px}}
 @media(max-width:370px){.village-cards{grid-template-columns:1fr}.village-card{min-height:0}}
+
+.village-bmkg{display:flex;flex-direction:column;gap:4px;margin-top:4px;padding-top:10px;border-top:1px solid #d9e5ed;font-size:12px;line-height:1.5;color:#315570}.village-bmkg b{font-weight:600}.village-bmkg>span{font-size:11px;color:#526b80}

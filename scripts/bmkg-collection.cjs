@@ -1,0 +1,22 @@
+'use strict';
+const {normalizeBMKG}=require('../bmkg-villages.js');
+async function collectBMKG(store,points,fetcher,now){
+ if(+now-Date.parse(store.manifest.providers.bmkg?.lastAttempt)<60000)return;
+ const locations=points.filter(p=>p.adm4),old=await store.old('bmkg-villages'),saved=new Map((old?.points||[]).map(p=>[p.key,p]));
+ if(!locations.length)return;
+ // At most 50 single-attempt requests per 30-minute run, below BMKG's 60/min/IP cap.
+ // Oldest or missing villages go first; each village is normally refreshed hourly.
+ const due=locations.filter(p=>!saved.has(p.key)||+now-Date.parse(saved.get(p.key).lastAttempt||saved.get(p.key).collectedAt)>=3600000).sort((a,b)=>(Date.parse(saved.get(a.key)?.lastAttempt||0)||0)-(Date.parse(saved.get(b.key)?.lastAttempt||0)||0)||a.key.localeCompare(b.key)).slice(0,50);
+ if(!due.length)return;
+ let issue=null,updated=0;
+ for(const p of due){try{
+  const r=await fetcher('https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4='+p.adm4,{signal:AbortSignal.timeout(10000)});if(!r.ok)throw Object.assign(new Error('BMKG HTTP '+r.status),{kind:r.status===429?'quota':'upstream',status:r.status});
+  const forecasts=normalizeBMKG(await r.json(),p.adm4,now);saved.set(p.key,{key:p.key,adm4:p.adm4,forecasts,collectedAt:now.toISOString(),lastAttempt:now.toISOString(),error:null});updated++;
+ }catch(e){issue=e;const prior=saved.get(p.key);saved.set(p.key,{...prior,key:p.key,adm4:p.adm4,lastAttempt:now.toISOString(),error:{kind:e.kind||'invalid'}});if(e.status===429||e.name==='TimeoutError'||e instanceof TypeError)break;}}
+ const data={source:'BMKG',points:locations.map(p=>saved.get(p.key)).filter(Boolean),expected:locations.length};
+ if(updated){await store.put('bmkg-villages',data,3600,null);}
+ else if(old){await store.put('bmkg-villages',data,3600,null);store.fail('bmkg-villages',issue||{kind:'network'},3600);}
+ else store.fail('bmkg-villages',issue||{kind:'pending'},3600);
+ store.manifest.providers.bmkg={lastAttempt:now.toISOString(),error:issue?{kind:issue.kind||'invalid'}:null};
+}
+module.exports={collectBMKG};

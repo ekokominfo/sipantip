@@ -75,3 +75,7 @@ The legacy Palangkaraya proxy timed out from GitHub and Supabase. The official S
 Weather validation compares parsed instants, accepts valid seconds, and rejects future observations. Cards use compact responsive columns. Daily chart padding balances the visible left/right whitespace.
 
 See supabase/ENVIRONMENT-BACKEND.md for deployment, verification and rollback. Regenerate portable modules and the dashboard bundle after collector changes.
+
+## Village cards, release 3.5
+
+Village cards hide Open-Meteo rain forecast summaries and show BMKG weather descriptions with their explicit forecast valid time. Missing or expired forecasts display Belum tersedia. BMKG is collected server-side by exact adm4 code: at most 50 single-attempt requests per run, with a 60-second provider cooldown and one-hour per-village refresh target. The existing 30-minute schedule rotates oldest/missing villages across all 99 locations. Initial population needs two runs at least one minute apart. Current payloads and future rows remain distinct from observations; this change does not add a warning banner or replace wind/air sources.

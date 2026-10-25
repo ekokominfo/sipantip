@@ -4,7 +4,7 @@
  const BASE=scope.SIPANTIP_DATA_URL||(['localhost','127.0.0.1','::1','[::1]'].includes(scope.location?.hostname)?'cache/':'https://ltcnoaqibnxsyjouzyxw.supabase.co/storage/v1/object/public/sipantip-environment/');
  const direct=new Map(),sourceErrors=new Map();
  const entries=new Map(),objects=new Map(),objectRequests=new Map(),errors=new Map();let manifest=null,pending=null,lastCheck=0,transportError=false,lastFailure=null;
- const labels={hotspot:'Titik panas & rekap',archive:'Laporan harian',air:'PM 2.5 & kualitas udara',weather:'Cuaca & jarak pandang',forecast:'Prakiraan hujan desa'};
+ const labels={bmkg:'Cuaca desa BMKG',hotspot:'Titik panas & rekap',archive:'Laporan harian',air:'PM 2.5 & kualitas udara',weather:'Cuaca & jarak pandang',forecast:'Prakiraan hujan desa'};
  const iso=n=>new Date(n).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',dateStyle:'medium',timeStyle:'short'})+' WIB';
  const error=(kind,status)=>Object.assign(new Error(kind),{kind,status});
  async function read(url){let r;try{r=await scope.fetch(url,{cache:'no-store',signal:AbortSignal.timeout(20000)});}catch{throw error('network');}if(!r.ok)throw error(r.status===429?'quota':r.status===404?'pending':'network',r.status);try{return await r.json();}catch{throw error('invalid');}}

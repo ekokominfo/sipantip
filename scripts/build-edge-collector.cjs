@@ -16,10 +16,15 @@ const sipongi=fs.readFileSync(path.join(root,'sipongi-source.js'),'utf8').replac
 fs.writeFileSync(path.join(out,'sipongi-source.mjs'),sipongi+'\nexport default globalThis.SiPongiSource;\n');
 const collection=fs.readFileSync(path.join(root,'scripts/sipongi-collection.cjs'),'utf8').replace("'use strict';",'').replace("const SiPongiSource=require('../sipongi-source.js');","import SiPongiSource from './sipongi-source.mjs';").replace('module.exports={collectSiPongi};','export {collectSiPongi};');
 fs.writeFileSync(path.join(out,'sipongi-collection.mjs'),header+collection);
+const bmkg=fs.readFileSync(path.join(root,'bmkg-villages.js'),'utf8').replace("if(typeof module!=='undefined')module.exports=api;",'');
+fs.writeFileSync(path.join(out,'bmkg-villages.mjs'),bmkg+'\nexport const {normalizeBMKG}=globalThis.BMKGVillages;\n');
+const bmkgCollection=fs.readFileSync(path.join(root,'scripts/bmkg-collection.cjs'),'utf8').replace("'use strict';",'').replace("const {normalizeBMKG}=require('../bmkg-villages.js');","import {normalizeBMKG} from './bmkg-villages.mjs';").replace('module.exports={collectBMKG};','export {collectBMKG};');
+fs.writeFileSync(path.join(out,'bmkg-collection.mjs'),header+bmkgCollection);
 let collector=fs.readFileSync(path.join(root,'scripts/refresh-data.cjs'),'utf8');
 collector=collector.slice(0,collector.indexOf('if(require.main===module)'));
 collector=collector.replace("'use strict';",'').replace("const fs=require('node:fs/promises'),path=require('node:path');",'');
 collector=collector.replace("const {Store,compactHotspots,trimModel,villagePoints,wibTime,failure}=require('./cache-core.cjs');","import {Store} from './storage-store.mjs';\nimport {compactHotspots,trimModel,wibTime,failure} from './validation.mjs';\nimport {POINTS} from './locations.mjs';\nimport {URL,forecastURL,validate} from './rain-core.mjs';");
+collector=collector.replace("const {collectBMKG}=require('./bmkg-collection.cjs');","import {collectBMKG} from './bmkg-collection.mjs';");
 collector=collector.replace("const {collectSiPongi}=require('./sipongi-collection.cjs');","import {collectSiPongi} from './sipongi-collection.mjs';");
 collector=collector.replace("const {sourceRequest}=require('./source-request.cjs');","import {sourceRequest} from './source-request.mjs';");
 collector=collector.replace("root=path.resolve(__dirname,'..')","root=''");
@@ -30,7 +35,7 @@ fs.writeFileSync(path.join(out,'collector.mjs'),header+collector+'\nexport {refr
 console.log('Generated Edge collector and '+points.length+' reference locations.');
 if(process.argv[2]==='--bundle'){
  const target=path.resolve(process.argv[3]||path.join(out,'bundle.ts'));
- const names=['validation.mjs','rain-core.mjs','storage-store.mjs','source-request.mjs','locations.mjs','sipongi-source.mjs','sipongi-collection.mjs','collector.mjs','index.ts'];
+ const names=['validation.mjs','rain-core.mjs','storage-store.mjs','source-request.mjs','locations.mjs','sipongi-source.mjs','sipongi-collection.mjs','bmkg-villages.mjs','bmkg-collection.mjs','collector.mjs','index.ts'];
  const entry=fs.readFileSync(path.join(out,'index.ts'),'utf8').split('\n')[0];
  const bundle=entry+'\n'+names.map(name=>fs.readFileSync(path.join(out,name),'utf8').replace(/^import[^\n]*\n/gm,'').replace('export default globalThis.SiPongiSource;','const SiPongiSource=globalThis.SiPongiSource;').replace(/^export\s*\{[^}]*\};?\s*$/gm,'').replace(/^export /gm,'')).join('\n');
  fs.writeFileSync(target,bundle);console.log('Wrote dashboard bundle: '+target);
