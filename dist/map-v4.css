@@ -9,3 +9,13 @@
 .village-card .village-aqi-value{font-size:26px;font-weight:700;line-height:1.3;font-variant-numeric:tabular-nums}
 
 .metrics .visibility-estimate-note{display:block;font-size:11px;line-height:1.6;color:#52677d;margin:8px 0;white-space:normal}
+
+/* Release 4.2te: tighter explanatory text within hotspot and visibility cards. */
+.metrics .hotspot-card,.metrics .visibility-card{display:flex;flex-direction:column;justify-content:flex-start;gap:0}
+.metrics .hotspot-card .value,.metrics .visibility-card .value{margin:6px 0 4px}
+.metrics .hotspot-card>p:not(.hotspot-data-warning){margin:4px 0;line-height:1.45}
+#hotspotDataTime{margin-top:5px;line-height:1.45}
+.metrics .hotspot-data-warning{margin-top:6px;padding:8px 10px;line-height:1.45}
+.metrics .visibility-card .visibility-condition{margin:2px 0 4px;padding:4px 8px;align-self:flex-start;line-height:1.4}
+.metrics .visibility-estimate-note{margin:4px 0;line-height:1.45}
+.metrics .visibility-scale{margin:8px 0 4px}.metrics .visibility-ticks{margin-top:6px}
