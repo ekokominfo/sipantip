@@ -28,3 +28,5 @@ Setiap branch berikut memiliki BACKUP.md yang menjelaskan isi, sumber, batasan, 
 ## Versi terkini
 
 4.4te merapikan kartu desa: PM2.5 dan AQI berdampingan, kategori udara terpisah, periode deteksi dan waktu udara jelas, serta aksi tampilkan di peta. Grafik gabungan sederhana dari revisi 4.3te tetap digunakan, dengan nilai per jam asli dan tooltip kedua nilai. PM2.5 dan AQI tidak ditambah/dikurangi. Prakiraan hujan tetap disembunyikan, grafik titik panas tetap tampil, dan koreksi jarak pandang -4 km dari 4.2te dipertahankan. Dokumentasi rilis ada di [RELEASE-4.4te.md](RELEASE-4.4te.md); daftar backup di atas tetap historis.
+
+Rilis aktif berikutnya: **4.6te**, dengan NOAA-21, daftar sumber diperbarui dan pesan deteksi lama dibedakan dari penarikan gagal. Grafik tetap. Lihat [RELEASE-4.6te.md](RELEASE-4.6te.md). Tidak ada branch backup historis yang ditimpa.

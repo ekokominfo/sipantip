@@ -1,7 +1,7 @@
 /* NASA FIRMS regional CSVs; administrative labels are spatial joins, not FIRMS fields. */
 (function(scope){
  'use strict';
- const SOURCES=[['modis-c6.1','MODIS_C6_1','NASA-MODIS'],['suomi-npp-viirs-c2','SUOMI_VIIRS_C2','NASA-SNPP'],['noaa-20-viirs-c2','J1_VIIRS_C2','NASA-NOAA20']].map(([folder,prefix,satellite])=>({satellite,url:'https://firms2.modaps.eosdis.nasa.gov/data/active_fire/'+folder+'/csv/'+prefix+'_SouthEast_Asia_48h.csv'}));
+ const SOURCES=[['modis-c6.1','MODIS_C6_1','NASA-MODIS'],['suomi-npp-viirs-c2','SUOMI_VIIRS_C2','NASA-SNPP'],['noaa-20-viirs-c2','J1_VIIRS_C2','NASA-NOAA20'],['noaa-21-viirs-c2','J2_VIIRS_C2','NASA-NOAA21']].map(([folder,prefix,satellite])=>({satellite,url:'https://firms2.modaps.eosdis.nasa.gov/data/active_fire/'+folder+'/csv/'+prefix+'_SouthEast_Asia_48h.csv'}));
  const invalid=()=>Object.assign(new Error('Invalid or stale NASA FIRMS response'),{kind:'invalid'});
  // WIB is UTC+07:00; format once per detection without constructing Intl formatters.
  const stamp=d=>new Date(+d+25200000).toISOString().slice(0,19).replace('T',' ');
@@ -11,16 +11,16 @@
  const find=(features,x,y)=>features.find(({f,b})=>x>=b[0]&&x<=b[2]&&y>=b[1]&&y<=b[3]&&contains(f.geometry,x,y))?.f;
  function csvRows(text){const lines=text.trim().replace(/^\uFEFF/,'').split(/\r?\n/),header=lines.shift()?.split(',');for(const k of ['latitude','longitude','acq_date','acq_time','satellite','confidence'])if(!header?.includes(k))throw invalid();return lines.filter(Boolean).map(line=>{const values=line.split(',');if(values.length!==header.length)throw invalid();return Object.fromEntries(header.map((k,i)=>[k,values[i]]));});}
  function normalize(files,geo,now=new Date()){
-  if(files.length!==3||geo.regencies?.length!==14||!geo.districts?.length||!geo.villages?.length)throw invalid();
+  if(files.length!==SOURCES.length||geo.regencies?.length!==14||!geo.districts?.length||!geo.villages?.length)throw invalid();
   const regions=index(geo.regencies),villages=index(geo.villages),districts=index(geo.districts),seen=new Set();
   const feeds=Object.fromEntries(['High','Medium','Low'].map(l=>[l,{statusCode:200,source:'NASA FIRMS',generated_at:now.toISOString(),retrieved_at:now.toISOString(),timestamp_kind:'retrieved',latest_detection:null,coverage_hours:48,data:{type:'FeatureCollection',features:[]}}]));
-  for(let i=0;i<3;i++){
+  for(let i=0;i<SOURCES.length;i++){
    const file=files[i],modified=Date.parse(file.modifiedAt);if(!Number.isFinite(modified)||+now-modified>6*3600000||modified>+now+300000)throw invalid();
    for(const p of csvRows(file.csv)){
     const x=Number(p.longitude),y=Number(p.latitude),clock=p.acq_time.padStart(4,'0');
     if(!p.longitude||!p.latitude||!Number.isFinite(x)||!Number.isFinite(y)||Math.abs(x)>180||Math.abs(y)>90||!/^\d{4}-\d{2}-\d{2}$/.test(p.acq_date)||!/^([01]\d|2[0-3])[0-5]\d$/.test(clock))throw invalid();
     const t=Date.parse(p.acq_date+'T'+clock.slice(0,2)+':'+clock.slice(2)+':00Z');if(!Number.isFinite(t)||new Date(t).toISOString().slice(0,10)!==p.acq_date||t>+now+300000)throw invalid();
-    const conf=p.confidence.toLowerCase();let level;if(i===0){const n=Number(conf);if(!conf||!Number.isFinite(n)||n<0||n>100)throw invalid();level=n<30?'Low':n<80?'Medium':'High';if(!['T','A'].includes(p.satellite))throw invalid();}else{level={low:'Low',l:'Low',nominal:'Medium',n:'Medium',high:'High',h:'High'}[conf];if(!level||(i===1&&!['N','SNPP'].includes(p.satellite))||(i===2&&!['N20','NOAA-20'].includes(p.satellite)))throw invalid();}
+    const conf=p.confidence.toLowerCase();let level;if(i===0){const n=Number(conf);if(!conf||!Number.isFinite(n)||n<0||n>100)throw invalid();level=n<30?'Low':n<80?'Medium':'High';if(!['T','A'].includes(p.satellite))throw invalid();}else{level={low:'Low',l:'Low',nominal:'Medium',n:'Medium',high:'High',h:'High'}[conf];if(!level||(i===1&&!['N','SNPP'].includes(p.satellite))||(i===2&&!['N20','NOAA-20'].includes(p.satellite))||(i===3&&!['N21','NOAA-21'].includes(p.satellite)))throw invalid();}
     if(t<+now-48*3600000)continue;
     const village=find(villages,x,y),region=village?{properties:{name:'Pulang Pisau'}}:find(regions,x,y);if(!region)continue;
     const district=village?null:region.properties.name==='Pulang Pisau'?find(districts,x,y):null;
@@ -32,7 +32,19 @@
   return feeds;
  }
  async function load(fetcher,geo,now=new Date()){
-  const files=await Promise.all(SOURCES.map(async s=>{const r=await fetcher(s.url,{signal:AbortSignal.timeout(30000),cache:'no-store'});if(!r.ok)throw Object.assign(new Error('FIRMS HTTP '+r.status),{kind:r.status===429?'quota':'upstream',status:r.status});return {csv:await r.text(),modifiedAt:r.headers.get('last-modified')};}));
+  const files=await Promise.all(SOURCES.map(async s=>{
+   // Both hosts are official NASA FIRMS mirrors. Retry connection/5xx failures,
+   // but never bypass rate limits or relax validation of the returned data.
+   const urls=[s.url,s.url.replace('firms2.modaps.eosdis.nasa.gov','firms.modaps.eosdis.nasa.gov')];
+   for(let attempt=0;attempt<urls.length;attempt++)try{
+    const r=await fetcher(urls[attempt],{signal:AbortSignal.timeout(30000),cache:'no-store'});
+    if(!r.ok){await r.body?.cancel();throw Object.assign(new Error('FIRMS HTTP '+r.status),{kind:r.status===429?'quota':'upstream',status:r.status});}
+    return {csv:await r.text(),modifiedAt:r.headers.get('last-modified')};
+   }catch(e){
+    if(attempt===0&&(!e.status||e.status>=500))continue;
+    throw Object.assign(new Error('FIRMS '+s.satellite+': '+e.message),{kind:e.kind||'network',status:e.status,detail:s.satellite+': '+(e.name||'Error')});
+   }
+  }));
   return normalize(files,geo,now);
  }
  function recentArchive(feeds,now=new Date()){
