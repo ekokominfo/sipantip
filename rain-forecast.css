@@ -24,7 +24,7 @@
 .rain-chart-legend .rain-line{border-top-style:dotted}.rain-chart-legend .hotspot-line{border-top-style:solid}
 
 /* Distinguish table headings from the highlighted home region. */
-#regency-section th{background:#dce8f7;color:#31557f}#regencyRows .home-region{background:#e4f3fa!important;color:#205b76;box-shadow:inset 3px 0 #3685a6}#regencyRows .home-region td{color:#205b76;font-weight:600}.metrics .forecast-card{border:1px solid #ffffff9c}
+#regency-section th{background:#dce8f7;color:#31557f}#regencyRows .home-region{background:#fbe5e7!important;color:#9b2937;box-shadow:inset 3px 0 #c4414d}#regencyRows .home-region td{color:#9b2937;font-weight:600}.metrics .forecast-card{border:1px solid #ffffff9c}
 
 .rain-chart-legend #missingChartLegend[hidden]{display:none}.rain-chart-legend .missing-swatch{width:18px;height:12px;border:1px solid #94a3b866;border-radius:2px;background:#94a3b826;vertical-align:middle}#rainStatus:not(:empty){margin:0 24px 12px;padding:8px 12px;background:#f1f4f7;border-radius:6px;color:#475569}
 

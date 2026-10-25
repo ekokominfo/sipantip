@@ -1,6 +1,7 @@
 import {createClient} from 'npm:@supabase/supabase-js@2.118.0';
 import {refreshData} from './collector.mjs';
-import SiPongiSource from './sipongi-source.mjs';
+import FirmsSource from './firms-source.mjs';
+import {FIRMS_GEO} from './firms-geography.mjs';
 
 // verify_jwt is disabled for pg_net; a server-only Vault secret is checked
 // through a service-role-only database RPC before any source request is made.
@@ -17,10 +18,7 @@ Deno.serve(async request=>{
  try{
   const body=await request.json().catch(()=>({}));
   if(body.action==='probe'||body.action==='probe-official'){
-   const response=await fetch(SiPongiSource.url(),{signal:AbortSignal.timeout(20000)});
-   if(!response.ok)throw Error('Source HTTP '+response.status);
-   const payload=await response.json();
-   const feeds=SiPongiSource.normalize(payload);result={ok:true,probe:true,source:'SiPongi direct',features:Object.values(feeds).reduce((n,f)=>n+f.data.features.length,0),latestDetection:Object.values(feeds).map(f=>f.latest_detection).filter(Boolean).sort().at(-1)||null};
+   const feeds=await FirmsSource.load(fetch,FIRMS_GEO);result={ok:true,probe:true,source:'NASA FIRMS',features:Object.values(feeds).reduce((n,f)=>n+f.data.features.length,0),latestDetection:Object.values(feeds).map(f=>f.latest_detection).filter(Boolean).sort().at(-1)||null};
   }else{
    const manifest=await refreshData({output:client.storage.from('sipantip-environment'),force:body.force===true});
    const errors=Object.entries(manifest.resources).filter(([,e])=>e.error).map(([key,e])=>({key,kind:e.error.kind}));

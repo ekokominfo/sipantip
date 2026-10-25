@@ -31,10 +31,10 @@
   }
   async function resource(key,fn){try{const {data,time}=await fn();cache.publishSource(key,data,time);success++;if(key.startsWith('hotspot-'))hotspotOK++;}catch(e){cache.failSource(key,e);failed++;}finally{done++;report('Mengambil dari sumber… '+done+' kelompok data diperiksa.');}}
   // Small batches and a per-tab cooldown avoid a burst of requests on repeated clicks.
-  let directPromise;const directFeeds=()=>directPromise||(directPromise=request(scope.SiPongiSource.url(),'hotspot').then(j=>scope.SiPongiSource.normalize(j)));
+  let directPromise;const directFeeds=()=>directPromise||(directPromise=(scope.firmsGeography?Promise.resolve(scope.firmsGeography):request('firms-geography.json','static').then(g=>(scope.firmsGeography=g))).then(g=>scope.FirmsSource.load(scope.fetch.bind(scope),g)));
   for(const level of ['High','Medium','Low'])await resource('hotspot-'+level,async()=>{const data=(await directFeeds())[level];return {data,time:data.generated_at};});
   const current=new Date(),days=[new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(+current-86400000)),new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit'}).format(current)];
-  for(const month of [...new Set(days.map(d=>d.slice(0,7)))])await resource('archive-'+month,async()=>{const rows=scope.SiPongiSource.recentArchive(await directFeeds(),current),old=await cache.get('archive-'+month).catch(()=>({}));return {data:{...old,...Object.fromEntries(Object.entries(rows).filter(([day])=>day.startsWith(month)))},time:current.toISOString()};});
+  for(const month of [...new Set(days.map(d=>d.slice(0,7)))])await resource('archive-'+month,async()=>{const rows=scope.FirmsSource.recentArchive(await directFeeds(),current),old=await cache.get('archive-'+month).catch(()=>({}));return {data:{...old,...Object.fromEntries(Object.entries(rows).filter(([day])=>day.startsWith(month)))},time:current.toISOString()};});
   await resource('archive-index',async()=>{await directFeeds();const old=await cache.get('archive-index').catch(()=>({}));return {data:{...old,hotspot:[...new Set([...(old.hotspot||[]),...days])].sort(),diperbarui:current.toISOString(),recentCoverage:days},time:current.toISOString()};});
   const modelURL=(provider,points,params)=>provider+'?latitude='+points.map(p=>p.lat.toFixed(4)).join(',')+'&longitude='+points.map(p=>p.lon.toFixed(4)).join(',')+'&'+params+'&timezone=Asia%2FJakarta';
   const main={key:'main',lat:-2.75,lon:114.25};

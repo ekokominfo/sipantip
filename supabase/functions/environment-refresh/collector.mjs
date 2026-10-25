@@ -6,7 +6,8 @@ import {compactHotspots,trimModel,wibTime,failure} from './validation.mjs';
 import {POINTS} from './locations.mjs';
 import {URL,forecastURL,validate} from './rain-core.mjs';
 import {sourceRequest} from './source-request.mjs';
-import {collectSiPongi} from './sipongi-collection.mjs';
+import {collectFIRMS} from './firms-collection.mjs';
+import {FIRMS_GEO} from './firms-geography.mjs';
 import {collectBMKG} from './bmkg-collection.mjs';
 async function refreshData({output,now=new Date(),fetcher=fetch,force=false,root=''}={}){
  const store=await new Store(output,now).init(),blocked=new Map();
@@ -14,7 +15,8 @@ async function refreshData({output,now=new Date(),fetcher=fetch,force=false,root
  async function request(url,provider){if(blocked.has(provider))throw blocked.get(provider);store.manifest.providers[provider]={lastAttempt:store.iso,error:null};let response;try{response=await sourceRequest(fetcher,url);}catch(e){if(e.kind==='network')blocked.set(provider,e);store.manifest.providers[provider]={lastAttempt:store.iso,error:{kind:e.kind||'network',status:e.status||null,detail:e.detail||null,at:store.iso}};console.error(provider+': '+(e.detail||e.message));throw e;}if(!response.ok){const kind=response.status===429?'quota':response.status>=500?'upstream':'http',e=failure(kind,response.status);if(kind==='quota')blocked.set(provider,e);store.manifest.providers[provider]={lastAttempt:store.iso,error:{kind,status:response.status,at:store.iso}};throw e;}let j;try{j=await response.json();}catch{throw failure('invalid');}if(j?.error)throw failure('invalid');return j;}
  const sourceTime=j=>j.current?.time?j.current.time+'+07:00':j.hourly?.time?.at(-1)?j.hourly.time.at(-1)+':00+07:00':null;
  async function resource(key,ttl,fn){if(!force&&!store.due(key,ttl))return;try{const {data,time}=await fn();await store.put(key,data,ttl,time);}catch(e){store.fail(key,e,ttl);console.log(key+': '+(e.kind||'network')+'; previous valid data retained.');}}
- await collectSiPongi(store,request,now,force);
+ const geography=FIRMS_GEO;
+ await collectFIRMS(store,fetcher,geography,now,force);
  const points=POINTS,airTTL=3600;
  if(force||store.due('air-main',airTTL)||store.due('air-villages',airTTL)){
   const old=await store.old('air-villages'),saved=new Map((old?.points||[]).map(p=>[p.key,p])),all=[{key:'main',lat:-2.75,lon:114.25},...points];let count=0,failed=false;

@@ -1,0 +1,15 @@
+{
+  "source": "BNPB InaRISK",
+  "regencyService": "https://gis.bnpb.go.id/server/rest/services/inarisk/batas_administrasi/MapServer/2",
+  "query": {
+    "where": "KDPBPS='62'",
+    "outFields": "WADMKK,WADMPR,KDPKAB",
+    "outSR": 4326,
+    "geometryPrecision": 5,
+    "maxAllowableOffset": 0.0001,
+    "f": "geojson"
+  },
+  "retrieved": "2026-10-25",
+  "regencies": 14,
+  "notes": "Village and district geometries reuse the existing BNPB reference files. Boundaries are references, not legal determinations. No nearest-village assignment is made for unmatched coordinates."
+}

@@ -12,12 +12,12 @@ test('manual source validation rejects malformed hotspots and mismatched model a
 });
 test('manual refresh really contacts sources, preserves failed data, and stops a quota provider',async()=>{
  const published=[],failed=[],calls=[];
- const context={Date,Intl,URL,Map,Set,AbortSignal,console,SiPongiSource:require('../sipongi-source.js'),CachedData:{publishSource:(...args)=>published.push(args),failSource:(key)=>failed.push(key),get:async key=>key==='archive-index'?{hotspot:['2026-10-01']}:{points:[{key:'v',lat:-2,lon:114}]}},fetch:async url=>{
- calls.push(url);if(url.includes('/indoHotspot'))return {ok:true,json:async()=>({type:'FeatureCollection',features:[]})};
+ const context={Date,Intl,URL,Map,Set,AbortSignal,console,FirmsSource:require('../firms-source.js'),CachedData:{publishSource:(...args)=>published.push(args),failSource:(key)=>failed.push(key),get:async key=>key==='archive-index'?{hotspot:['2026-10-01']}:{points:[{key:'v',lat:-2,lon:114}]}},fetch:async url=>{
+ calls.push(url);if(url==='firms-geography.json')return {ok:true,json:async()=>JSON.parse(require('fs').readFileSync(require('path').join(__dirname,'../firms-geography.json')))};if(url.includes('/data/active_fire/'))return {ok:true,headers:{get:()=>new Date().toUTCString()},text:async()=> 'latitude,longitude,acq_date,acq_time,satellite,confidence\n'};
  return {ok:false,status:429};
  }};
  vm.createContext(context);vm.runInContext(await fs.readFile(require.resolve('../source-refresh.js'),'utf8'),context);
- const result=await context.SourceRefresh.run();assert.equal(result.hotspotOK,3);assert.deepEqual(published.filter(p=>p[0].startsWith('hotspot-')).map(p=>p[0]),['hotspot-High','hotspot-Medium','hotspot-Low']);assert.equal(calls.filter(u=>u.includes('/indoHotspot')).length,1);
+ const result=await context.SourceRefresh.run();assert.equal(result.hotspotOK,3);assert.deepEqual(published.filter(p=>p[0].startsWith('hotspot-')).map(p=>p[0]),['hotspot-High','hotspot-Medium','hotspot-Low']);assert.equal(calls.filter(u=>u.includes('/data/active_fire/')).length,3);
  assert.equal(calls.filter(u=>u.startsWith('https://api.open-meteo.com')).length,1);
  assert.equal(calls.filter(u=>u.startsWith('https://air-quality-api.open-meteo.com')).length,1);
  await assert.rejects(context.SourceRefresh.run(),/satu menit/);

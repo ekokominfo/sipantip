@@ -14,7 +14,6 @@ async function loadVillagePM(){
  const status=CachedData.mark('villages',['air-villages']);if(count<extras.villages.length&&status.fresh)setLoad('villages','error','Sebagian desa belum memiliki estimasi tersimpan.');
  }catch(e){setLoad('villages','error',CachedData.errorText(e));}finally{extras.pmBusy=false;updateVillageTime();renderVillage();renderMapExtras();renderVillageSelection();}
 }
-async function loadVillageBMKG(){try{const data=await CachedData.get('bmkg-villages');extras.bmkg=new Map((data.points||[]).map(p=>[p.key,p]));}catch{}renderVillage();}
 function villageRecords(){return state.raw.filter(r=>inPeriod(r,$('date').value)&&(!$('confidence').value||r.level===$('confidence').value));}
 function renderVillage(){
  const counts=new Map();for(const r of villageRecords())counts.set(villageKey(r),(counts.get(villageKey(r))||0)+1);
@@ -26,7 +25,7 @@ function renderVillage(){
   const total=g.vs.reduce((n,v)=>n+(counts.get(v.key)||0),0);
   return '<details data-kec="'+k+'" '+(open.has(k)||q||(!extras.groupsDrawn&&k==='kahayanhilir')?'open':'')+'><summary><span>'+esc(g.name)+'<small>'+g.vs.length+' desa / kelurahan</small></span><b>'+countLabel(total)+'</b></summary><div class="village-cards">'+g.vs.map(v=>{
    const n=counts.get(v.key)||0,selected=state.selectedVillage===v.key,category=airCategory(v.aqi),available=Number.isFinite(v.pm);
-   return '<button class="village-card '+(state.loaded&&n?'has-hotspots':'no-hotspots')+(selected?' selected':'')+'" aria-pressed="'+selected+'" data-village="'+esc(v.key)+'"><strong>'+esc(v.name)+'</strong><span class="hotspot-number">'+countLabel(n)+'</span><span class="village-pm">PM 2.5 : <b>'+(available?fmt(v.pm)+' µg/m³':'belum tersedia')+'</b></span>'+(category?'<span class="air-category air-band-'+category.band+'">Udara: '+category.label+' · US AQI '+fmt(v.aqi)+'</span>':'<span class="air-category">Kategori udara belum tersedia</span>')+BMKGVillages.cardHTML(extras.bmkg?.get(v.key))+'<small>'+(selected?'✓ Ditampilkan di peta':'Lihat peta ↗')+'</small></button>';
+   return '<button class="village-card '+(state.loaded&&n?'has-hotspots':'no-hotspots')+(selected?' selected':'')+'" aria-pressed="'+selected+'" data-village="'+esc(v.key)+'"><strong>'+esc(v.name)+'</strong><span class="hotspot-number">'+countLabel(n)+'</span><span class="village-pm">PM 2.5 : <b>'+(available?fmt(v.pm)+' µg/m³':'belum tersedia')+'</b></span>'+(category?'<span class="air-category air-band-'+category.band+'">Udara: '+category.label+' · US AQI '+fmt(v.aqi)+'</span>':'<span class="air-category">Kategori udara belum tersedia</span>')+'<small>'+(selected?'✓ Ditampilkan di peta':'Lihat peta ↗')+'</small></button>';
   }).join('')+'</div></details>';
  }).join('')||'<p class="caption">'+(extras.villages.length?'Desa tidak ditemukan.':'Daftar desa belum tersedia.')+'</p>';
  if(extras.villages.length)extras.groupsDrawn=true;
@@ -63,5 +62,3 @@ document.addEventListener('visibilitychange',startWind);loadGrid();setInterval((
 
 function updateVillageTime(){const available=extras.villages.some(v=>v.time);$('villageStatus').hidden=available;$('villageStatus').textContent=available?'':'Data PM 2.5 belum tersedia';}
 setInterval(updateVillageTime,60000);
-
-loadVillageBMKG();

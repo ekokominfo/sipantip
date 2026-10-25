@@ -20,14 +20,21 @@ const bmkg=fs.readFileSync(path.join(root,'bmkg-villages.js'),'utf8').replace("i
 fs.writeFileSync(path.join(out,'bmkg-villages.mjs'),bmkg+'\nexport const {normalizeBMKG}=globalThis.BMKGVillages;\n');
 const bmkgCollection=fs.readFileSync(path.join(root,'scripts/bmkg-collection.cjs'),'utf8').replace("'use strict';",'').replace("const {normalizeBMKG}=require('../bmkg-villages.js');","import {normalizeBMKG} from './bmkg-villages.mjs';").replace('module.exports={collectBMKG};','export {collectBMKG};');
 fs.writeFileSync(path.join(out,'bmkg-collection.mjs'),header+bmkgCollection);
+const firms=fs.readFileSync(path.join(root,'firms-source.js'),'utf8').replace("if(typeof module!=='undefined')module.exports=api;",'');
+fs.writeFileSync(path.join(out,'firms-source.mjs'),firms+'\nexport default globalThis.FirmsSource;\n');
+fs.writeFileSync(path.join(out,'firms-geography.mjs'),header+'export const FIRMS_GEO='+fs.readFileSync(path.join(root,'firms-geography.json'),'utf8')+';\n');
+const firmsCollection=fs.readFileSync(path.join(root,'scripts/firms-collection.cjs'),'utf8').replace("'use strict';",'').replace("const FirmsSource=require('../firms-source.js');","import FirmsSource from './firms-source.mjs';").replace('module.exports={collectFIRMS};','export {collectFIRMS};');
+fs.writeFileSync(path.join(out,'firms-collection.mjs'),header+firmsCollection);
 let collector=fs.readFileSync(path.join(root,'scripts/refresh-data.cjs'),'utf8');
 collector=collector.slice(0,collector.indexOf('if(require.main===module)'));
 collector=collector.replace("'use strict';",'').replace("const fs=require('node:fs/promises'),path=require('node:path');",'');
 collector=collector.replace("const {Store,compactHotspots,trimModel,villagePoints,wibTime,failure}=require('./cache-core.cjs');","import {Store} from './storage-store.mjs';\nimport {compactHotspots,trimModel,wibTime,failure} from './validation.mjs';\nimport {POINTS} from './locations.mjs';\nimport {URL,forecastURL,validate} from './rain-core.mjs';");
 collector=collector.replace("const {collectBMKG}=require('./bmkg-collection.cjs');","import {collectBMKG} from './bmkg-collection.mjs';");
+collector=collector.replace("const {collectFIRMS}=require('./firms-collection.cjs');","import {collectFIRMS} from './firms-collection.mjs';\nimport {FIRMS_GEO} from './firms-geography.mjs';");
 collector=collector.replace("const {collectSiPongi}=require('./sipongi-collection.cjs');","import {collectSiPongi} from './sipongi-collection.mjs';");
 collector=collector.replace("const {sourceRequest}=require('./source-request.cjs');","import {sourceRequest} from './source-request.mjs';");
 collector=collector.replace("root=path.resolve(__dirname,'..')","root=''");
+collector=collector.replace("JSON.parse(await fs.readFile(path.join(root,'firms-geography.json'),'utf8'))",'FIRMS_GEO');
 collector=collector.replace("villagePoints(JSON.parse(await fs.readFile(path.join(root,'villages.geojson'),'utf8')))",'POINTS');
 collector=collector.replace("const {URL,validate}=require('./rain-core.cjs');",'').replace("const {forecastURL,validate}=require('./rain-core.cjs'),old=",'const old=');
 if(/require\(|__dirname|\bfs\.|\bpath\./.test(collector))throw Error('Unconverted Node dependency in Edge collector');
@@ -35,8 +42,8 @@ fs.writeFileSync(path.join(out,'collector.mjs'),header+collector+'\nexport {refr
 console.log('Generated Edge collector and '+points.length+' reference locations.');
 if(process.argv[2]==='--bundle'){
  const target=path.resolve(process.argv[3]||path.join(out,'bundle.ts'));
- const names=['validation.mjs','rain-core.mjs','storage-store.mjs','source-request.mjs','locations.mjs','sipongi-source.mjs','sipongi-collection.mjs','bmkg-villages.mjs','bmkg-collection.mjs','collector.mjs','index.ts'];
+ const names=['validation.mjs','rain-core.mjs','storage-store.mjs','source-request.mjs','locations.mjs','firms-source.mjs','firms-geography.mjs','firms-collection.mjs','bmkg-villages.mjs','bmkg-collection.mjs','collector.mjs','index.ts'];
  const entry=fs.readFileSync(path.join(out,'index.ts'),'utf8').split('\n')[0];
- const bundle=entry+'\n'+names.map(name=>fs.readFileSync(path.join(out,name),'utf8').replace(/^import[^\n]*\n/gm,'').replace('export default globalThis.SiPongiSource;','const SiPongiSource=globalThis.SiPongiSource;').replace(/^export\s*\{[^}]*\};?\s*$/gm,'').replace(/^export /gm,'')).join('\n');
+ const bundle=entry+'\n'+names.map(name=>fs.readFileSync(path.join(out,name),'utf8').replace(/^import[^\n]*\n/gm,'').replace('export default globalThis.FirmsSource;','const FirmsSource=globalThis.FirmsSource;').replace('export default globalThis.SiPongiSource;','const SiPongiSource=globalThis.SiPongiSource;').replace(/^export\s*\{[^}]*\};?\s*$/gm,'').replace(/^export /gm,'')).join('\n');
  fs.writeFileSync(target,bundle);console.log('Wrote dashboard bundle: '+target);
 }

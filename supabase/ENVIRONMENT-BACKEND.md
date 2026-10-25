@@ -1,11 +1,8 @@
 # Environmental backend
 
-Deployed to project ltcnoaqibnxsyjouzyxw (sipantip, Tokyo). Full collection succeeded on 25 October 2026 at 06:15 WIB with no resource errors. The public cache is Supabase Storage bucket sipantip-environment. pg_cron invokes environment-refresh at minutes 17 and 47 each hour. Hotspot TTL is 30 minutes; model TTL is one hour. The GitHub automatic collector is disabled; workflow_dispatch retains the emergency snapshot path.
+Deployed to project ltcnoaqibnxsyjouzyxw (sipantip, Tokyo). The original SiPongi collection succeeded at 06:15 WIB; after the source change, the FIRMS collection succeeded on 25 October 2026 at 12:48 WIB with no resource errors. The public cache is Supabase Storage bucket sipantip-environment. pg_cron invokes environment-refresh at minutes 17 and 47 each hour. Hotspot TTL is 30 minutes; model TTL is one hour. The GitHub automatic collector is disabled; workflow_dispatch retains the emergency snapshot path.
 
-The source remains SiPongi, using the public endpoint used by its official map client:
-https://opsroom.sipongidata.my.id/api/opsroom/indoHotspot
-Official website: https://sipongi.gakkum.kehutanan.go.id/
-The legacy Palangkaraya proxy timed out from cloud regions. The direct endpoint succeeded from Supabase. Query province 13 is SiPongi's internal Kalimantan Tengah ID (BPS 62), with all three satellites and confidence levels and rolling 48-hour coverage. Keep this mapping explicit. Source payload has no feed generation timestamp: retrieval time is labeled separately and latest detection comes from date_hotspot_ori (UTC).
+The active source is NASA FIRMS. The collector reads the three regional 48-hour CSVs listed in firms-source.js from the official firms2 mirror, without a MAP_KEY. All three must validate (including Last-Modified freshness) before any active feed is replaced. Coordinate-to-administration joins use BNPB reference polygons bundled in firms-geography.json. Unmatched villages remain unknown. SiPongi is a historical/reference source only.
 
 Daily archives retain older SiPongi-derived snapshots. Only yesterday and elapsed today are recomputed from rolling 48-hour coverage; today is marked partial. Older uncovered dates are never inferred as zero. Earlier closed months retain timestamps and are marked historical. Backfill of missing older dates requires a verified historical source; arbitrary custom periods currently returned upstream 500.
 
