@@ -35,6 +35,10 @@ Jalankan `node --test tests/dashboard.test.cjs`. Pemeriksaan antarmuka meliputi 
 
 ## Statistik pengunjung
 
+Admin versi **3.0**: lihat [ADMIN-V3.md](ADMIN-V3.md) untuk backup v2,
+migrasi `supabase/report-v3.sql`, arti metrik, pelacakan fitur peta, validasi,
+dan pemulihan. Versi halaman publik tetap 4.0. Deploy SQL sebelum file `dist/`.
+
 Halaman admin: https://ekokominfo.github.io/sipantip/admin.html. Login Supabase memakai email/password. Hak baca laporan diperiksa oleh fungsi database terhadap tabel privat admins, bukan hanya menyembunyikan halaman. Token akses hanya berada dalam memori tab; muat ulang meminta login kembali. Tidak ada service-role key atau password di kode. analytics-config.js hanya berisi publishable key.
 
 Migrasi ada di supabase/analytics.sql; pemeriksaan transaksi ada di supabase/analytics-test.sql. RLS aktif di seluruh tabel privat, tanpa akses tabel langsung untuk anon/authenticated. API publik hanya menerima metadata yang dibatasi dan mengeluarkan total agregat. Tambahkan UID admin melalui SQL Editor hanya setelah memverifikasi pemilik akun.
