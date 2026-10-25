@@ -43,3 +43,11 @@ footer{grid-template-columns:1fr auto}
 @media(max-width:370px){.village-cards{grid-template-columns:1fr}.village-card{min-height:0}}
 
 .village-bmkg{display:flex;flex-direction:column;gap:4px;margin-top:4px;padding-top:10px;border-top:1px solid #d9e5ed;font-size:12px;line-height:1.5;color:#315570}.village-bmkg b{font-weight:600}.village-bmkg>span{font-size:11px;color:#526b80}
+
+/* Release 3.5c: hide rain summaries and emphasize delayed hotspot data. */
+.metrics .forecast-card[hidden],#rain-section[hidden],.hotspot-data-warning[hidden]{display:none!important}
+.design-v2 .metrics{grid-template-columns:repeat(5,minmax(0,1fr))}
+#hotspotDataTime{display:block;font-size:11px;line-height:1.7;margin-top:12px;color:#52677d;overflow-wrap:anywhere}
+.metrics .hotspot-data-warning{margin:12px 0 0;padding:11px 12px;border:1px solid #e8b7ad;border-left:4px solid #bf442e;border-radius:9px;background:#fff0e9;color:#8b2e1e;font-size:12px;font-weight:600;line-height:1.6;box-shadow:0 5px 14px #a839242b}
+@media(max-width:1200px){.design-v2 .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.design-v2 .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics .hotspot-card{grid-column:1/-1;order:-1}#hotspotDataTime{font-size:12px}}

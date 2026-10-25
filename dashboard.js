@@ -9,7 +9,14 @@ function setLoad(key,phase,message=''){
 }
 function sourceAge(t){const n=Date.parse(t);return Number.isFinite(n)?Date.now()-n:null;}
 function modelStamp(t){return t?t+':00+07:00':'';}
+function updateHotspotCard(now=Date.now()){
+ const time=$('hotspotDataTime'),warning=$('hotspotDataWarning');if(!time||!warning)return;
+ const times=(state.raw||[]).map(r=>detectionTime(r.when)).filter(t=>Number.isFinite(t)&&t<=now),latest=times.length?Math.max(...times):null;
+ time.textContent=latest===null?'Waktu deteksi terbaru belum tersedia':'Deteksi terbaru: '+new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Jakarta',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(latest))+' WIB ('+(now-latest<3600000?'kurang dari 1 jam lalu':'sekitar '+Math.floor((now-latest)/3600000)+' jam lalu')+')';
+ warning.hidden=latest===null||now-latest<=6*3600000;
+}
 function updateFreshness(){
+ updateHotspotCard();
  const el=$('freshness');if(!el)return;const ts=(state.sourceDates||[]).map(t=>Date.parse(t)).filter(Number.isFinite),oldest=ts.length?Math.min(...ts):null;
  const parts=[oldest===null?'Waktu sumber titik panas belum tersedia':(state.hotspotTimestampKind==='retrieved'?'Diambil dari '+(state.hotspotSource||'sumber')+': ':'Sumber titik panas: ')+wib(new Date(oldest))+(Date.now()-oldest>24*3600000?' · data lebih dari 24 jam':'' )];
  if(state.airSource){const age=sourceAge(modelStamp(state.airSource));parts.push('Sumber PM 2.5: '+state.airSource.replace('T',' ')+' WIB'+(age>3*3600000?' · data lebih dari 3 jam':''));}
