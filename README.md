@@ -112,3 +112,7 @@ Backup: versi-4.0 preserves the release before these changes. The header visibil
 ## Release 4.2te
 
 Hotspot and visibility card descriptions use tighter margins and line heights. The visibility display correction changes from -3 km to -4 km; source values <=4000 m are undetermined. Cached/source values and PM2.5/AQI are unchanged. The card says Data tercantum hanya estimasi (-4 km), without the previous local-adjustment phrase. Validation: six weather UI tests and browser checks on desktop/390/360px passed.
+
+## Release 4.3te
+
+PM2.5 and US AQI now have independent graphs, scales, colored category zones and tooltips. The PM card keeps its hourly source value; color/badge and PM graph use a complete rolling 24-hour mean with EPA 2024 concentration thresholds. Missing history stays unavailable. See docs/RELEASE-4.3te.md for interpretation and validation, docs/BACKUPS.md for every documented backup, and docs/BACKUP-REGISTRY.json for exact original/documentation commits. Backup immediately before this release: versi-4.2te. Backup documentation commits only add BACKUP.md; snapshot application code/data remain unchanged.

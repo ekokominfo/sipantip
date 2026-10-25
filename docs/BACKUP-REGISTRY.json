@@ -1,0 +1,136 @@
+{
+  "documentedAt": "2026-10-25",
+  "timezone": "Asia/Jakarta",
+  "backups": [
+    {
+      "branch": "codex/backup-v2-2026-10-24",
+      "version": "2.0",
+      "source": "Proxy Palangka / SiPongi lama",
+      "description": "Dashboard versi 2 dengan pembacaan salinan cache bersama. Belum memiliki fitur Lokasi saya dan animasi Himawari versi 4.",
+      "originalCommit": "bc4565c82262f6d11a518a13b5ac6e55658caa50",
+      "originalTree": "a5669ed650364e71333a5939e58b19fb34a859f8",
+      "snapshotDate": "2026-10-24T05:31:04+07:00",
+      "documentationCommit": "ad3811a83c8fbd04df7f7cbb95b4d02ca7a608ec",
+      "verifiedChanges": [
+        "BACKUP.md"
+      ]
+    },
+    {
+      "branch": "codex/desain-v1.5",
+      "version": "Desain 1.5; footer 2.0",
+      "source": "Proxy Palangka / SiPongi lama",
+      "description": "Cabang pembanding desain 1.5. Nomor footer pada snapshot masih 2.0; nama cabang tidak berarti footer berubah.",
+      "originalCommit": "96e6daa3e5181b4a9924ee61999ef353ffea3871",
+      "originalTree": "918d9503a40d2e4c2996c32dc0f033aafda0858f",
+      "snapshotDate": "2026-10-24T05:56:20+07:00",
+      "documentationCommit": "e39afab88365b7eb4c3134b592e95ac23ec49be8",
+      "verifiedChanges": [
+        "BACKUP.md"
+      ]
+    },
+    {
+      "branch": "desain-biru",
+      "version": "2.0 desain biru",
+      "source": "Proxy Palangka / SiPongi lama",
+      "description": "Snapshot tampilan biru versi 2 dan identitas pin api. Integrasi sumber lama dapat tidak terjangkau sekarang.",
+      "originalCommit": "ee7ebc787369c0e09e61d31c2743fa127190912c",
+      "originalTree": "977323dc469f553accb330167319e71e4a0faaff",
+      "snapshotDate": "2026-10-23T23:36:32+07:00",
+      "documentationCommit": "5b26e91b925f04c53aa30976c0d56a31ffcbfee4",
+      "verifiedChanges": [
+        "BACKUP.md"
+      ]
+    },
+    {
+      "branch": "codex/release-v3",
+      "version": "3.0",
+      "source": "Proxy Palangka / SiPongi lama",
+      "description": "Rilis versi 3 dengan prakiraan desa dan dashboard yang diperjelas, sebelum pemulihan kolektor Supabase dan pergantian FIRMS.",
+      "originalCommit": "e6b5cccfea10219ec33d4b5f35d914a7315b61cf",
+      "originalTree": "b711a136d222a610d744fa05a3aadf1d780b0648",
+      "snapshotDate": "2026-10-24T20:34:39+07:00",
+      "documentationCommit": "34a82e5597efc02c7b043c2d7fc65e841da04d73",
+      "verifiedChanges": [
+        "BACKUP.md"
+      ]
+    },
+    {
+      "branch": "versi-3.5",
+      "version": "3.5",
+      "source": "SiPongi langsung",
+      "description": "Versi terakhir sebelum sumber aktif diganti ke FIRMS. Kolektor Supabase menggunakan SiPongi. Kartu desa memuat kondisi BMKG pada snapshot ini.",
+      "originalCommit": "9a59bdcab9bd9553be9c37fbe996fa71f9b27020",
+      "originalTree": "8a8efd468f591c09a79e11c31ad2f0150afcc456",
+      "snapshotDate": "2026-10-25T12:11:04+07:00",
+      "documentationCommit": "ddf93e071d839223dbcd26bde148ab7640c60bf9",
+      "verifiedChanges": [
+        "BACKUP.md"
+      ]
+    },
+    {
+      "branch": "versi-3.5b",
+      "version": "3.5b; footer 3.5",
+      "source": "NASA FIRMS",
+      "description": "Masih menampilkan kartu peluang hujan dan grafik gabungan hujan/titik panas. Filter nama kecamatan desa dan perpindahan peta sudah diperbaiki.",
+      "originalCommit": "82dd803fa1a58fe2550cc5cfb5cad670801fad97",
+      "originalTree": "12383ce9445c4c4ac0567df0f7c23570dac92505",
+      "snapshotDate": "2026-10-25T13:19:06+07:00",
+      "documentationCommit": "c81917e94fbc2d4076cc2ce901e4bfe8416db7a1",
+      "verifiedChanges": [
+        "BACKUP.md"
+      ]
+    },
+    {
+      "branch": "codex/backup-versi-3.5c",
+      "version": "3.5c",
+      "source": "NASA FIRMS",
+      "description": "Kartu dan grafik hujan disembunyikan. Waktu deteksi terakhir dan peringatan setelah 6 jam tersedia. Belum ada fitur Lokasi saya versi 4.",
+      "originalCommit": "32ebb441c6e731a6abc861bdd877df9259980de0",
+      "originalTree": "4942d7977e9e7daf6342dad0dd66413fa065575a",
+      "snapshotDate": "2026-10-25T13:54:56+07:00",
+      "documentationCommit": "0a93992ba53cd652e8d02ada4a2d2a38a82dcc4b",
+      "verifiedChanges": [
+        "BACKUP.md"
+      ]
+    },
+    {
+      "branch": "versi-4.0",
+      "version": "4.0; admin 3.5",
+      "source": "NASA FIRMS",
+      "description": "Lokasi saya, pencarian deteksi Tinggi terdekat, 12 puskesmas + RSUD Pulpis, rute Google Maps, dan animasi awan Himawari. Grafik khusus titik panas sudah tampil lagi; angka kartu desa diperbesar. Snapshot turut memuat admin 3.5. Jarak pandang belum dikurangi.",
+      "originalCommit": "13a1b6372f189b438406d48648d6a009c00d51c4",
+      "originalTree": "a39b9fe9051c7d36492e33f0e0a4058265cbe6b7",
+      "snapshotDate": "2026-10-25T15:58:35+07:00",
+      "documentationCommit": "8c141223e09645ffcefcdff029ab312324ec8a90",
+      "verifiedChanges": [
+        "BACKUP.md"
+      ]
+    },
+    {
+      "branch": "versi-4.2te",
+      "version": "4.2te",
+      "source": "NASA FIRMS",
+      "description": "Backup tepat sebelum 4.3te. Jarak pandang meminta titik Kelurahan Pulang Pisau dan tampilan dikurangi 4 km, tanpa mengubah nilai sumber. Nilai sumber <=4 km tidak dapat ditentukan. Catatan kartu dipadatkan; tautan Dinkes/RSUD dihapus. Grafik PM2.5/AQI masih digabung.",
+      "originalCommit": "9bd154a60aaef8942fcba024a0d00762c00097e0",
+      "originalTree": "b72877a200ed5d9c37916a632ab5dee5fb5efe3c",
+      "snapshotDate": "2026-10-25T16:47:32+07:00",
+      "documentationCommit": "db81a5a4ff13b0a05911c38dde9346756b8ce91c",
+      "verifiedChanges": [
+        "BACKUP.md"
+      ]
+    },
+    {
+      "branch": "data-cache",
+      "version": "Arsip data GitHub",
+      "source": "Snapshot cache GitHub",
+      "description": "Cabang ini berisi salinan data lingkungan GitHub, bukan backup kode aplikasi. Backend aktif memakai Supabase Storage. Baca timestamp objek/manifest sebelum memakai data ini; snapshot bukan jaminan kondisi sekarang.",
+      "originalCommit": "dd8c29209e7858c6be2473762df972a2fc755a04",
+      "originalTree": "638768047bbd4bac04eda1e827eb6c49b74be77e",
+      "snapshotDate": "2026-10-24T23:07:09Z",
+      "documentationCommit": "999203f1eb253bec662dc275df408e5d3b07ea1f",
+      "verifiedChanges": [
+        "BACKUP.md"
+      ]
+    }
+  ]
+}
