@@ -19,11 +19,3 @@
 .metrics .visibility-card .visibility-condition{margin:2px 0 4px;padding:4px 8px;align-self:flex-start;line-height:1.4}
 .metrics .visibility-estimate-note{margin:4px 0;line-height:1.45}
 .metrics .visibility-scale{margin:8px 0 4px}.metrics .visibility-ticks{margin-top:6px}
-
-/* Release 4.3te: independent pollutant charts and 24-hour PM interpretation. */
-.metrics .pm-card #pm{color:var(--pm-color,#52677d)}.pm-category{align-self:flex-start;display:inline-block;padding:5px 8px;border-radius:7px;font-size:11px;font-weight:600;line-height:1.5;margin:2px 0 6px;max-width:100%;overflow-wrap:anywhere}
-#aqiChart{height:250px;padding:15px 24px}#aqiChart svg{display:block;width:100%;height:100%;overflow:visible}#aqiChart rect:focus-visible{outline:2px solid #136ca5;outline-offset:-2px}
-.pm-category-legend{display:flex;flex-wrap:wrap;gap:9px 16px;padding:4px 24px 12px;color:#425d7a;font-size:11px}.pm-category-legend>span{display:inline-flex;align-items:center;gap:5px}.pm-category-legend i{display:inline-block;width:14px;height:12px;border:1px solid;border-radius:2px}.pm-category-legend small{color:#52677d;font-size:10px}
-@media(max-width:760px){#aqiChart{padding-inline:16px}.pm-category-legend{padding-inline:16px;font-size:10px}.pm-category{font-size:10px}}
-
-#pm-section>.caption,#aqi-section>.caption{font-size:11px;line-height:1.7}.pm-category-legend{font-size:11px}.pm-category-legend small{font-size:11px}

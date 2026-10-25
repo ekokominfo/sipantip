@@ -30,7 +30,7 @@ function updateActiveFilters(){
 document.addEventListener('DOMContentLoaded',()=>{
  $('resetFilters').onclick=()=>{state.selectedVillage=null;state.page=0;$('district').value='';$('date').value='24h';$('regencyDate').value='24h';$('confidence').value='';$('search').value='';render();renderRegions();};
  document.addEventListener('click',async e=>{const b=e.target.closest('[data-retry]');if(!b)return;b.disabled=true;const actions={hotspots:refresh,regions:refresh,villages:loadVillagePM,daily:loadDaily,air:air,weather:weather};try{await actions[b.dataset.retry]?.();}finally{if(b.isConnected)b.disabled=false;}});
- for(const id of ['chart','aqiChart','dailyChart','rainChart']){
+ for(const id of ['chart','dailyChart','rainChart']){
   const host=$(id),tip=document.createElement('div');tip.className='chart-tooltip';tip.role='status';tip.hidden=true;document.body.append(tip);
   const hide=()=>{tip.hidden=true;};
   const show=e=>{const target=e.target.closest('rect');if(!target||!host.contains(target))return;const title=target.querySelector('title');const text=target.dataset.tooltip||title?.textContent;if(!text)return;if(title){target.dataset.tooltip=text;target.setAttribute('aria-label',text);title.remove();}tip.textContent=text;tip.hidden=false;const r=target.getBoundingClientRect();const x=e.clientX||r.left+r.width/2,y=e.clientY||r.top;tip.style.left=Math.max(8,Math.min(window.innerWidth-tip.offsetWidth-8,x+10))+'px';tip.style.top=Math.max(8,Math.min(window.innerHeight-tip.offsetHeight-8,y-tip.offsetHeight-10))+'px';};
