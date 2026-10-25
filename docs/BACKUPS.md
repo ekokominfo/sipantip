@@ -27,4 +27,4 @@ Setiap branch berikut memiliki BACKUP.md yang menjelaskan isi, sumber, batasan, 
 
 ## Versi terkini
 
-4.3te setelah revisi pengguna menggabungkan kembali grafik PM2.5 dan US AQI seperti versi 4.2te: dua garis, dua sumbu, nilai per jam asli dan tooltip kedua nilai. Rerata 24 jam, badge rerata, dan zona warna dihapus. PM2.5 dan AQI tidak ditambah/dikurangi. Prakiraan hujan tetap disembunyikan, grafik titik panas tetap tampil, dan koreksi jarak pandang -4 km dari 4.2te dipertahankan.
+4.4te merapikan kartu desa: PM2.5 dan AQI berdampingan, kategori udara terpisah, periode deteksi dan waktu udara jelas, serta aksi tampilkan di peta. Grafik gabungan sederhana dari revisi 4.3te tetap digunakan, dengan nilai per jam asli dan tooltip kedua nilai. PM2.5 dan AQI tidak ditambah/dikurangi. Prakiraan hujan tetap disembunyikan, grafik titik panas tetap tampil, dan koreksi jarak pandang -4 km dari 4.2te dipertahankan. Dokumentasi rilis ada di [RELEASE-4.4te.md](RELEASE-4.4te.md); daftar backup di atas tetap historis.

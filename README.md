@@ -116,3 +116,7 @@ Hotspot and visibility card descriptions use tighter margins and line heights. T
 ## Release 4.3te — combined-chart revision
 
 Following user review, PM2.5 and US AQI are combined again in the original simple dual-axis graph. Both lines use hourly source values; the latest tooltip values match the header cards at the same source time. The moving average, average badge, separate AQI panel and colored zones are removed. PM2.5 and AQI source numbers remain unchanged. See docs/RELEASE-4.3te.md for the revision history and validation, docs/BACKUPS.md for documented backups, and docs/BACKUP-REGISTRY.json for exact original/documentation commits. Backup before 4.3te remains versi-4.2te.
+
+## Release 4.4te — village cards
+
+Village cards place PM2.5 and US AQI side by side, with a separate air category badge, hotspot filter period, air source time in WIB and a clear map action. Card height follows its content; missing air readings remain unavailable. Source values and map selection behavior are preserved. Desktop and 390/360px browser checks passed, including period changes, raw values, missing data and matching map counts. See [docs/RELEASE-4.4te.md](docs/RELEASE-4.4te.md).
