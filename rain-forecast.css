@@ -64,10 +64,13 @@ footer{grid-template-columns:1fr auto}
 @media(max-width:760px){
  .design-v2 .metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:12px}.metrics .metric,.metrics .hotspot-card{grid-column:auto;order:0;min-height:166px;aspect-ratio:auto;padding:12px}.metrics .metric .label{font-size:11px;letter-spacing:.2px;gap:5px;line-height:1.4}.metrics .metric .label span{width:25px;height:25px;flex-shrink:0;font-size:17px}.metrics .metric .label svg{width:19px;height:19px}
  .metrics .metric .value{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 5px;margin:8px 0 6px}.metrics .metric .value b{font-size:32px;line-height:1.15;letter-spacing:-1px}.metrics .metric .value span{font-size:11px;line-height:1.4}.metrics .metric p{font-size:11px;line-height:1.5;margin:6px 0}.metrics .metric small{font-size:11px;line-height:1.5;color:#52677d}
- #hotspotDataTime{display:none}#hotspotDataTimeCompact{display:block;font-size:11px;line-height:1.5;margin-top:6px;color:#52677d}.hotspot-high{margin:5px 0!important}.metrics .pm-card>small,.metrics .wind-card>small,.metrics .air .scale,.metrics .visibility-scale{display:none}.metrics .visibility-card .visibility-condition{margin:6px 0}.metrics .visibility-estimate-note{display:block}
+ #hotspotDataTime{display:none}#hotspotDataTimeCompact{display:block;font-size:11px;line-height:1.5;margin-top:6px;color:#52677d}.hotspot-high{margin:5px 0!important}.metrics .pm-card>small,.metrics .wind-card>small{display:none}.metrics .visibility-card .visibility-condition{margin:6px 0}.metrics .visibility-estimate-note{display:block}
  .metrics .forecast-card{padding-bottom:32px}.metrics .forecast-card .value{display:block}.metrics .forecast-card .value span{font-size:11px;margin-top:3px}.forecast-open>span{left:12px;bottom:10px;font-size:11px}.metrics .pm-card .pm-category{font-size:11px;padding:4px 7px}.metrics .air .pill{font-size:11px;line-height:1.5;max-width:100%;white-space:normal}.rain-periods{padding-inline:16px}.rain-periods button{flex:1;padding:9px 8px;font-size:12px}.hotspot-data-warning{margin:8px 0 14px}
 }
 
 .metric.forecast-card{background:#e8f4f7}.metric.forecast-card .value b{color:#176c83}.metric.hotspot-card .value b{color:#c25248}
 
 .metric.forecast-card .label span{color:#176c83}.metric.wind-card .label span{color:#b98436}
+
+/* Keep color references visible in compact mobile cards. */
+@media(max-width:760px){.metrics .air .scale{display:flex;margin:12px 0 4px;height:6px}.metrics .visibility-scale{display:block;margin:12px 0 2px}.metrics .visibility-track{height:6px}.metrics .visibility-track b{top:-3px;height:12px}.metrics .visibility-ticks{margin-top:7px;font-size:9px;line-height:1.4}}

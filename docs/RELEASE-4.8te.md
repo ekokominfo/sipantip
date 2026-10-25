@@ -37,7 +37,7 @@ Atas permintaan pengguna, grafik titik panas dan peluang hujan digabung menjadi 
 
 Validasi revisi gabungan: 11 pengujian hujan lulus. Pengujian browser pada 1440/390/360 piksel lulus untuk sumbu waktu, kedua satuan, tooltip, data hilang, puncak kartu yang sama dengan prakiraan, ketiadaan prediksi titik panas, grafik PM2.5/AQI dan pemilihan desa.
 
-## Revisi kartu HP dan pilihan periode — aset 4.8te.2 (tampilan terkini)
+## Revisi kartu HP dan pilihan periode — aset 4.8te.2
 
 - Ringkasan menjadi dua kolom dan tiga baris di HP: titik panas–peluang hujan, kualitas udara–partikel halus, jarak pandang–angin. Tinggi kartu mengikuti isi dengan ruang minimum yang lebih kecil; angka tetap besar, label lebih mudah dibaca dan unit dapat membungkus tanpa meluap.
 - Waktu deteksi di HP diringkas menjadi jam WIB dan umur data. Tanggal lengkap tetap ada pada label aksesibel dan tampilan desktop. Peringatan data tetap memakai teks/status yang sama dan bayangan penekanan, pada satu banner di bawah ringkasan.
@@ -50,3 +50,9 @@ Validasi revisi gabungan: 11 pengujian hujan lulus. Pengujian browser pada 1440/
 Validasi: 76 pengujian otomatis lulus. Pemeriksaan browser meliputi susunan 2×3 pada 390/360/320 piksel, waktu ringkas dan label lengkap, kedua periode melalui klik/keyboard, pintasan kartu, tooltip, data hilang dan kecocokan puncak prakiraan. Pada 390 piksel, tinggi ringkasan berkurang sekitar sepertiga dibanding tampilan sebelumnya.
 
 Pemulihan revisi antarmuka ini: kembalikan berkas frontend terkait dari commit 4f04b6e melalui commit baru, sinkronkan root/dist dan publikasikan main. Tidak perlu mengubah backend Supabase.
+
+## Skala warna di HP — aset 4.8te.3 (tampilan terkini)
+
+Skala enam warna AQI dan skala jarak pandang dengan angka batas serta penanda nilai ditampilkan kembali pada kartu HP dalam ukuran ringkas. Label kategori dan catatan estimasi tetap terlihat. Tata letak dua kolom, angka sumber, grafik dan backend tidak berubah.
+
+Validasi browser lulus pada lebar 320, 360, 390 dan 1440 piksel: kedua skala terlihat dan berada di dalam kartu, tidak ada luapan horizontal, susunan kartu serta interaksi grafik tetap berfungsi. Screenshot diperiksa pada lebar 390 piksel. Untuk pemulihan, kembalikan berkas frontend dari commit 4156054 melalui commit baru dan publikasikan main; backend tidak perlu diubah.
