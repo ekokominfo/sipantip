@@ -18,6 +18,16 @@
   return Array.from({length:24},(_,i)=>{const end=base+(options.future?i+1:i-23)*hour,index=lookup.get(end),future=end>now;return {end,future,amount:index===undefined?null:number(h.precipitation?.[index]),probability:index===undefined?null:number(h.precipitation_probability?.[index],100),hotspots:future||!options.loaded?null:counts.has(end)?counts.get(end):end<=coverageEnd&&end-hour>=coverageStart?0:null};});
  }
  function pathFor(list,key,x,y){let active=false;return list.map((r,i)=>{if(r[key]===null){active=false;return '';}const p=(active?'L':'M')+x(i)+','+y(r[key]);active=true;return p;}).join(' ');}
+ function headerRainForecast(data){return data?.points?.find(p=>p.key==='kahayanhilir|pulangpisau'&&Number.isFinite(p.lat)&&Number.isFinite(p.lon)&&Math.abs(p.lat-(-2.751345))<.0001&&Math.abs(p.lon-114.2608442894562)<.0001)||null;}
+ function rainSVG(list,width=600){
+  const left=45,right=width-20,top=35,bottom=210,x=i=>left+i/23*(right-left),y=v=>bottom-v/100*(bottom-top),stamp=t=>new Date(t).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+' WIB';
+  const ticks=[0,50,100].map(v=>`<line x1="${left}" y1="${y(v)}" x2="${right}" y2="${y(v)}" stroke="#e0e8f2"/><text x="${left-7}" y="${y(v)+4}" text-anchor="end" fill="#2563b6" font-size="11">${v}%</text>`).join('');
+  const missing=list.map((r,i)=>r.probability===null?`<rect x="${Math.max(left,x(i)-(right-left)/46)}" y="${top}" width="${Math.min(right,x(i)+(right-left)/46)-Math.max(left,x(i)-(right-left)/46)}" height="${bottom-top}" fill="#94a3b826"/>`:'').join('');
+  const line=`<path d="${pathFor(list,'probability',x,y)}" fill="none" stroke="#2563b6" stroke-width="2.5"/>`,dots=list.map((r,i)=>r.probability===null?'':`<circle cx="${x(i)}" cy="${y(r.probability)}" r="2.5" fill="#2563b6"/>`).join('');
+  const hits=list.map((r,i)=>{const title=stamp(r.end)+' · Peluang hujan: '+(r.probability===null?'Belum tersedia':r.probability+'%');return `<rect x="${Math.max(left,x(i)-(right-left)/46)}" y="${top}" width="${Math.min(right,x(i)+(right-left)/46)-Math.max(left,x(i)-(right-left)/46)}" height="${bottom-top}" fill="transparent" tabindex="0" role="button" data-tooltip="${title}" aria-label="${title}"/>`;}).join('');
+  const labels=[0,12,23].map(i=>`<text x="${x(i)}" y="239" text-anchor="${i===0?'start':i===23?'end':'middle'}" fill="#52677d" font-size="11">${stamp(list[i].end).replace(' WIB','')}</text>`).join('');
+  return `<svg viewBox="0 0 ${width} 250" role="group" aria-label="Grafik peluang hujan per jam, 24 jam ke depan"><text x="${left}" y="16" fill="#2563b6" font-size="11">peluang hujan (%)</text>${missing}${ticks}${line}${dots}${hits}${labels}</svg>`;
+ }
  function hotspotSVG(list,width=600){
   const left=45,right=width-20,top=35,bottom=210,height=250,max=Math.max(2,Math.ceil(Math.max(...list.map(r=>r.hotspots||0))*1.1/2)*2),x=i=>left+i/23*(right-left),y=v=>bottom-v/max*(bottom-top),num=n=>n.toLocaleString('id-ID',{maximumFractionDigits:1}),stamp=t=>new Date(t).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+' WIB';
   const missing=list.map((r,i)=>r.hotspots===null?`<rect x="${Math.max(left,x(i)-(right-left)/46)}" y="${top}" width="${Math.min(right,x(i)+(right-left)/46)-Math.max(left,x(i)-(right-left)/46)}" height="${bottom-top}" fill="#94a3b826"/>`:'').join('');
@@ -27,7 +37,7 @@
   const labels=[0,12,23].map(i=>`<text x="${x(i)}" y="239" text-anchor="${i===0?'start':i===23?'end':'middle'}" fill="#78867e" font-size="11">${stamp(list[i].end).replace(' WIB','')}</text>`).join('');
   return `<svg viewBox="0 0 ${width} ${height}" role="group" aria-label="Grafik deteksi titik panas per jam, 24 jam terakhir"><text x="${left}" y="16" fill="#c4414d" font-size="11">deteksi/jam</text>${missing}${ticks}${path}${dots}${hit}${labels}</svg>`;
  }
- if(typeof module!=='undefined')module.exports={rows,summary,hourlyRows,detectionStamp,rainBrief,hotspotSVG};
+ if(typeof module!=='undefined')module.exports={rows,summary,hourlyRows,detectionStamp,rainBrief,hotspotSVG,rainSVG,headerRainForecast};
  if(!scope.document)return;
  const $=id=>document.getElementById(id),num=v=>v===null?'Belum tersedia':v.toLocaleString('id-ID',{maximumFractionDigits:1});
  const stamp=t=>new Date(t).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' WIB';
@@ -44,12 +54,15 @@
   host.innerHTML=hotspotSVG(list,Math.max(320,Math.round(host.clientWidth||600)));
   const missing=list.filter(r=>r.hotspots===null).length;$('missingChartLegend').hidden=missing===0;
   $('rainStatus').textContent=missing?'Area abu-abu: '+missing+' jam data titik panas belum tersedia (bukan nol deteksi)'+(sourceTimes.length?' (feed hingga '+stamp(Math.min(...sourceTimes))+')':'')+'.':'';
+  const rainHost=$('forecastRainChart'),forecast=hourlyRows(main,[],{future:true}),unavailable=forecast.filter(r=>r.probability===null).length;
+  rainHost.innerHTML=rainSVG(forecast,Math.max(320,Math.round(rainHost.clientWidth||600)));
+  $('forecastRainStatus').textContent=unavailable?'Prakiraan belum lengkap: '+unavailable+' jam belum tersedia. Area abu-abu bukan peluang hujan 0%.':'';
  }
 
  async function load(){
   if(busy)return;busy=true;$('rain-section').setAttribute('aria-busy','true');
   try{
-    const results=await Promise.allSettled([scope.CachedData.get('forecast-main'),scope.CachedData.get('forecast-villages')]);if(results[0].status==='fulfilled')main=results[0].value;if(results[1].status==='fulfilled')points=results[1].value.points||[];
+    const data=await scope.CachedData.get('forecast-villages');points=data.points||[];main=headerRainForecast(data);
 
   }catch(e){/* Keep the last valid local snapshot and its original timestamp. */}
   finally{busy=false;render();$('rain-section').setAttribute('aria-busy','false');}

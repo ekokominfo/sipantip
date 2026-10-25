@@ -13,3 +13,15 @@ test('forecast card excludes elapsed rain and preserves missing totals',()=>{con
 test('future peak retains its time while the past chart remains a separate period',()=>{const clock=Date.parse('2026-10-25T03:30:00Z'),d={hourly:{time:['2026-10-25T10:00','2026-10-25T11:00','2026-10-25T12:00','2026-10-25T18:00'],precipitation_probability:[47,25,100,60],precipitation:[0,0,1,0]}};const brief=rainBrief(d,clock);assert.equal(brief.peak,100);assert.equal(brief.peakAt.time,'2026-10-25T12:00');const past=hourlyRows(d,[],{now:clock,loaded:true});assert.equal(past.at(-1).probability,47);assert.ok(past.every(r=>r.end<=clock));});
 
 test('hotspot-only chart retains hourly counts and gaps without any rain series, percentages or tooltip values',()=>{const {hotspotSVG}=require('../rain-forecast.js'),list=hourlyRows(data(),[{when:'2026-10-24 22:59 WIB'}],{now:+now,loaded:true,coverageEnd:+now-4*3600000}),svg=hotspotSVG(list,360);assert.match(svg,/Titik panas: 1/);assert.match(svg,/Titik panas: Belum tersedia/);assert.match(svg,/stroke="#c4414d"/);assert.doesNotMatch(svg,/hujan|probability|%|#2563b6/);assert.equal((svg.match(/data-tooltip=/g)||[]).length,24);});
+
+test('restored rain graph matches the future card peak and never plots millimetres',()=>{
+ const {rainSVG}=require('../rain-forecast.js'),clock=Date.parse('2026-10-25T03:30:00Z'),d={hourly:{time:['2026-10-25T10:00','2026-10-25T11:00','2026-10-25T12:00','2026-10-25T18:00'],precipitation_probability:[47,25,100,60],precipitation:[0,0,1.5,0]}};
+ const list=hourlyRows(d,[],{now:clock,future:true}),svg=rainSVG(list,360);
+ assert.equal(Math.max(...list.map(r=>r.probability??-1)),rainBrief(d,clock).peak);
+ assert.match(svg,/Peluang hujan: 100%/);assert.match(svg,/Peluang hujan: Belum tersedia/);assert.doesNotMatch(svg,/1\.5|mm|Titik panas|#c4414d/);assert.equal((svg.match(/data-tooltip=/g)||[]).length,24);
+ assert.equal(list[0].end,Date.parse('2026-10-25T11:00:00+07:00'));
+});
+test('rain header validates the kelurahan reference and cannot fall back to another location',()=>{
+ const {headerRainForecast}=require('../rain-forecast.js'),point={key:'kahayanhilir|pulangpisau',lat:-2.751345,lon:114.2608442894562,...data()};
+ assert.equal(headerRainForecast({points:[point]}),point);assert.equal(headerRainForecast({points:[{...point,lon:114.25}]}),null);assert.equal(headerRainForecast({points:[{...point,key:'other'}]}),null);assert.equal(headerRainForecast(null),null);
+});

@@ -1,7 +1,7 @@
 /* NASA FIRMS regional CSVs; administrative labels are spatial joins, not FIRMS fields. */
 (function(scope){
  'use strict';
- const SOURCES=[['modis-c6.1','MODIS_C6_1','NASA-MODIS'],['suomi-npp-viirs-c2','SUOMI_VIIRS_C2','NASA-SNPP'],['noaa-20-viirs-c2','J1_VIIRS_C2','NASA-NOAA20'],['noaa-21-viirs-c2','J2_VIIRS_C2','NASA-NOAA21']].map(([folder,prefix,satellite])=>({satellite,url:'https://firms2.modaps.eosdis.nasa.gov/data/active_fire/'+folder+'/csv/'+prefix+'_SouthEast_Asia_48h.csv'}));
+ const SOURCES=[['modis-c6.1','MODIS_C6_1','NASA-MODIS'],['suomi-npp-viirs-c2','SUOMI_VIIRS_C2','NASA-SNPP'],['noaa-20-viirs-c2','J1_VIIRS_C2','NASA-NOAA20']].map(([folder,prefix,satellite])=>({satellite,url:'https://firms2.modaps.eosdis.nasa.gov/data/active_fire/'+folder+'/csv/'+prefix+'_SouthEast_Asia_48h.csv'}));
  const invalid=()=>Object.assign(new Error('Invalid or stale NASA FIRMS response'),{kind:'invalid'});
  // WIB is UTC+07:00; format once per detection without constructing Intl formatters.
  const stamp=d=>new Date(+d+25200000).toISOString().slice(0,19).replace('T',' ');
@@ -20,7 +20,7 @@
     const x=Number(p.longitude),y=Number(p.latitude),clock=p.acq_time.padStart(4,'0');
     if(!p.longitude||!p.latitude||!Number.isFinite(x)||!Number.isFinite(y)||Math.abs(x)>180||Math.abs(y)>90||!/^\d{4}-\d{2}-\d{2}$/.test(p.acq_date)||!/^([01]\d|2[0-3])[0-5]\d$/.test(clock))throw invalid();
     const t=Date.parse(p.acq_date+'T'+clock.slice(0,2)+':'+clock.slice(2)+':00Z');if(!Number.isFinite(t)||new Date(t).toISOString().slice(0,10)!==p.acq_date||t>+now+300000)throw invalid();
-    const conf=p.confidence.toLowerCase();let level;if(i===0){const n=Number(conf);if(!conf||!Number.isFinite(n)||n<0||n>100)throw invalid();level=n<30?'Low':n<80?'Medium':'High';if(!['T','A'].includes(p.satellite))throw invalid();}else{level={low:'Low',l:'Low',nominal:'Medium',n:'Medium',high:'High',h:'High'}[conf];if(!level||(i===1&&!['N','SNPP'].includes(p.satellite))||(i===2&&!['N20','NOAA-20'].includes(p.satellite))||(i===3&&!['N21','NOAA-21'].includes(p.satellite)))throw invalid();}
+    const conf=p.confidence.toLowerCase();let level;if(i===0){const n=Number(conf);if(!conf||!Number.isFinite(n)||n<0||n>100)throw invalid();level=n<30?'Low':n<80?'Medium':'High';if(!['T','A'].includes(p.satellite))throw invalid();}else{level={low:'Low',l:'Low',nominal:'Medium',n:'Medium',high:'High',h:'High'}[conf];if(!level||(i===1&&!['N','SNPP'].includes(p.satellite))||(i===2&&!['N20','NOAA-20'].includes(p.satellite)))throw invalid();}
     if(t<+now-48*3600000)continue;
     const village=find(villages,x,y),region=village?{properties:{name:'Pulang Pisau'}}:find(regions,x,y);if(!region)continue;
     const district=village?null:region.properties.name==='Pulang Pisau'?find(districts,x,y):null;

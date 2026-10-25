@@ -17,7 +17,7 @@ test('manual refresh really contacts sources, preserves failed data, and stops a
  return {ok:false,status:429};
  }};
  vm.createContext(context);vm.runInContext(await fs.readFile(require.resolve('../source-refresh.js'),'utf8'),context);
- const result=await context.SourceRefresh.run();assert.equal(result.hotspotOK,3);assert.deepEqual(published.filter(p=>p[0].startsWith('hotspot-')).map(p=>p[0]),['hotspot-High','hotspot-Medium','hotspot-Low']);assert.equal(calls.filter(u=>u.includes('/data/active_fire/')).length,4);
+ const result=await context.SourceRefresh.run();assert.equal(result.hotspotOK,3);assert.deepEqual(published.filter(p=>p[0].startsWith('hotspot-')).map(p=>p[0]),['hotspot-High','hotspot-Medium','hotspot-Low']);assert.equal(calls.filter(u=>u.includes('/data/active_fire/')).length,3);
  assert.equal(calls.filter(u=>u.startsWith('https://api.open-meteo.com')).length,1);
  assert.equal(calls.filter(u=>u.startsWith('https://air-quality-api.open-meteo.com')).length,1);
  await assert.rejects(context.SourceRefresh.run(),/satu menit/);
