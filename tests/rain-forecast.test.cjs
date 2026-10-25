@@ -25,3 +25,11 @@ test('rain header validates the kelurahan reference and cannot fall back to anot
  const {headerRainForecast}=require('../rain-forecast.js'),point={key:'kahayanhilir|pulangpisau',lat:-2.751345,lon:114.2608442894562,...data()};
  assert.equal(headerRainForecast({points:[point]}),point);assert.equal(headerRainForecast({points:[{...point,lon:114.25}]}),null);assert.equal(headerRainForecast({points:[{...point,key:'other'}]}),null);assert.equal(headerRainForecast(null),null);
 });
+
+test('combined chart uses actual hours, separate units and no future hotspot predictions',()=>{
+ const {combinedSVG}=require('../rain-forecast.js'),clock=Date.parse('2026-10-25T03:30:00Z'),d={hourly:{time:['2026-10-25T10:00','2026-10-25T11:00','2026-10-25T12:00'],precipitation_probability:[47,25,80],precipitation:[1.5,0,1.5]}};
+ const past=hourlyRows(d,[{when:'2026-10-25 09:59 WIB'}],{now:clock,loaded:true}),future=hourlyRows(d,[],{now:clock,future:true}),list=past.concat(future),svg=combinedSVG(list,360,clock);
+ assert.equal(list.length,48);assert.ok(list.every((r,i)=>!i||r.end-list[i-1].end===3600000));assert.ok(future.every(r=>r.hotspots===null));
+ assert.match(svg,/Peluang hujan model: 47% · Titik panas: 1/);assert.match(svg,/Prakiraan peluang hujan: 80% · Titik panas: Belum tersedia \(waktu mendatang\)/);assert.match(svg,/deteksi\/jam/);assert.match(svg,/100%/);assert.doesNotMatch(svg,/\bmm\b|Prakiraan peluang hujan:[^"<>]*Titik panas: 0/);assert.equal((svg.match(/data-tooltip=/g)||[]).length,48);
+ assert.equal(Math.max(...future.map(r=>r.probability??-1)),rainBrief(d,clock).peak);
+});

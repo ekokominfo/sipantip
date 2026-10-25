@@ -37,7 +37,20 @@
   const labels=[0,12,23].map(i=>`<text x="${x(i)}" y="239" text-anchor="${i===0?'start':i===23?'end':'middle'}" fill="#78867e" font-size="11">${stamp(list[i].end).replace(' WIB','')}</text>`).join('');
   return `<svg viewBox="0 0 ${width} ${height}" role="group" aria-label="Grafik deteksi titik panas per jam, 24 jam terakhir"><text x="${left}" y="16" fill="#c4414d" font-size="11">deteksi/jam</text>${missing}${ticks}${path}${dots}${hit}${labels}</svg>`;
  }
- if(typeof module!=='undefined')module.exports={rows,summary,hourlyRows,detectionStamp,rainBrief,hotspotSVG,rainSVG,headerRainForecast};
+ function combinedSVG(list,width=600,now=Date.now()){
+  const left=45,right=width-45,top=45,bottom=210,last=list.length-1,maxHot=Math.max(2,Math.ceil(Math.max(...list.map(r=>r.future?0:r.hotspots||0))*1.1/2)*2),x=i=>left+i/last*(right-left),yr=v=>bottom-v/100*(bottom-top),yh=v=>bottom-v/maxHot*(bottom-top),stamp=t=>new Date(t).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})+' WIB';
+  const divider=Math.max(left,Math.min(right,left+(now-list[0].end)/(list[last].end-list[0].end)*(right-left)));
+  const backdrop=`<rect x="${divider}" y="${top}" width="${right-divider}" height="${bottom-top}" fill="#eff6ff"/><line x1="${divider}" y1="${top}" x2="${divider}" y2="${bottom}" stroke="#8293aa" stroke-dasharray="4 4"/>`;
+  const missing=list.map((r,i)=>!r.future&&r.hotspots===null?`<rect x="${Math.max(left,x(i)-(right-left)/(2*last))}" y="${top}" width="${Math.min(right,x(i)+(right-left)/(2*last))-Math.max(left,x(i)-(right-left)/(2*last))}" height="${bottom-top}" fill="#94a3b826"/>`:'').join('');
+  const ticks=[0,.5,1].map(f=>`<line x1="${left}" y1="${bottom-f*(bottom-top)}" x2="${right}" y2="${bottom-f*(bottom-top)}" stroke="#e0e8f2"/><text x="${left-7}" y="${bottom-f*(bottom-top)+4}" text-anchor="end" fill="#c4414d" font-size="11">${(maxHot*f).toLocaleString('id-ID')}</text><text x="${right+7}" y="${bottom-f*(bottom-top)+4}" fill="#2563b6" font-size="11">${f*100}%</text>`).join('');
+  const past=list.map(r=>({...r,probability:r.future?null:r.probability})),future=list.map(r=>({...r,probability:r.future?r.probability:null})),observed=list.map(r=>({...r,hotspots:r.future?null:r.hotspots}));
+  const paths=`<path d="${pathFor(past,'probability',x,yr)}" fill="none" stroke="#2563b6" stroke-width="2.5" stroke-dasharray="1 6" stroke-linecap="round"/><path d="${pathFor(future,'probability',x,yr)}" fill="none" stroke="#2563b6" stroke-width="2.5" stroke-dasharray="6 4"/><path d="${pathFor(observed,'hotspots',x,yh)}" fill="none" stroke="#c4414d" stroke-width="2.5"/>`;
+  const dots=list.map((r,i)=>(r.probability===null?'':`<circle cx="${x(i)}" cy="${yr(r.probability)}" r="2" fill="#2563b6"/>`)+(!r.future&&r.hotspots!==null?`<circle cx="${x(i)}" cy="${yh(r.hotspots)}" r="2" fill="#c4414d"/>`:'')).join('');
+  const hits=list.map((r,i)=>{const title=stamp(r.end)+' · '+(r.future?'Prakiraan peluang hujan: ':'Peluang hujan model: ')+(r.probability===null?'Belum tersedia':r.probability+'%')+' · Titik panas: '+(r.future?'Belum tersedia (waktu mendatang)':r.hotspots===null?'Belum tersedia':r.hotspots);return `<rect x="${Math.max(left,x(i)-(right-left)/(2*last))}" y="${top}" width="${Math.min(right,x(i)+(right-left)/(2*last))-Math.max(left,x(i)-(right-left)/(2*last))}" height="${bottom-top}" fill="transparent" tabindex="0" role="button" data-tooltip="${title}" aria-label="${title}"/>`;}).join('');
+  const labels=[0,23,last].map(i=>`<text x="${x(i)}" y="239" text-anchor="${i===0?'start':i===last?'end':'middle'}" fill="#52677d" font-size="11">${stamp(list[i].end).replace(' WIB','')}</text>`).join('');
+  return `<svg viewBox="0 0 ${width} 250" role="group" aria-label="Grafik gabungan titik panas dan peluang hujan: 24 jam terakhir dan 24 jam ke depan"><text x="${left}" y="14" fill="#c4414d" font-size="11">deteksi/jam</text><text x="${right}" y="14" text-anchor="end" fill="#2563b6" font-size="11">peluang hujan (%)</text><text x="${left}" y="32" fill="#52677d" font-size="10">24 jam terakhir</text><text x="${right}" y="32" text-anchor="end" fill="#52677d" font-size="10">24 jam ke depan</text>${backdrop}${missing}${ticks}${paths}${dots}${hits}${labels}</svg>`;
+ }
+ if(typeof module!=='undefined')module.exports={rows,summary,hourlyRows,detectionStamp,rainBrief,hotspotSVG,rainSVG,headerRainForecast,combinedSVG};
  if(!scope.document)return;
  const $=id=>document.getElementById(id),num=v=>v===null?'Belum tersedia':v.toLocaleString('id-ID',{maximumFractionDigits:1});
  const stamp=t=>new Date(t).toLocaleString('id-ID',{timeZone:'Asia/Jakarta',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})+' WIB';
@@ -48,15 +61,14 @@
  function updateCards(){const s=rainBrief(main);$('forecastChance').textContent=s.peak===null?'—':num(s.peak)+'%';$('forecastCondition').textContent=s.peakAt?'Puncak sekitar '+stamp(s.peakAt.end):'Prakiraan belum tersedia';$('forecastTime').textContent=WeatherUI.updateText(main?.collectedAt);for(const el of document.querySelectorAll('[data-rain-village]'))el.innerHTML=villageHTML(el.dataset.rainVillage);}
  scope.RainForecast={villageHTML,load};
  function render(){
-  const host=$('rainChart');updateCards();$('rainTitle').textContent='Titik panas · 24 jam terakhir';$('hotspotChartLegend').hidden=false;$('rainGuide').textContent='Deteksi titik panas Pulang Pisau per jam selama 24 jam terakhir, sesuai filter kepercayaan. Area abu-abu menandakan feed belum tersedia, bukan nol deteksi. Sentuh atau sorot grafik untuk rincian. Sumber: NASA FIRMS.';
+  const host=$('rainChart'),now=Date.now();updateCards();$('rainTitle').textContent='Titik panas & peluang hujan';$('hotspotChartLegend').hidden=false;$('rainGuide').textContent='Merah: deteksi titik panas Pulang Pisau (sumbu kiri). Biru: peluang hujan model Kelurahan Pulang Pisau (sumbu kanan, %). Latar biru muda: 24 jam ke depan, tanpa prakiraan titik panas. Kartu hujan menampilkan peluang tertinggi pada bagian masa depan. Area abu-abu: data titik panas belum tersedia. Sentuh atau sorot grafik untuk rincian. Sumber: NASA FIRMS dan Open-Meteo.';
   const records=typeof state==='undefined'?[]:state.raw.filter(r=>(!$('confidence').value||r.level===$('confidence').value)),sourceTimes=typeof state==='undefined'?[]:(state.sourceDates||[]).map(Date.parse).filter(Number.isFinite);
-  const list=hourlyRows(null,records,{future:false,loaded:typeof state!=='undefined'&&state.loaded,coverageEnd:sourceTimes.length?Math.min(...sourceTimes):0});
-  host.innerHTML=hotspotSVG(list,Math.max(320,Math.round(host.clientWidth||600)));
-  const missing=list.filter(r=>r.hotspots===null).length;$('missingChartLegend').hidden=missing===0;
+  const past=hourlyRows(main,records,{now,future:false,loaded:typeof state!=='undefined'&&state.loaded,coverageEnd:sourceTimes.length?Math.min(...sourceTimes):0}),future=hourlyRows(main,[],{now,future:true}),list=past.concat(future);
+  host.innerHTML=combinedSVG(list,Math.max(320,Math.round(host.clientWidth||600)),now);
+  const missing=past.filter(r=>r.hotspots===null).length;$('missingChartLegend').hidden=missing===0;
   $('rainStatus').textContent=missing?'Area abu-abu: '+missing+' jam data titik panas belum tersedia (bukan nol deteksi)'+(sourceTimes.length?' (feed hingga '+stamp(Math.min(...sourceTimes))+')':'')+'.':'';
-  const rainHost=$('forecastRainChart'),forecast=hourlyRows(main,[],{future:true}),unavailable=forecast.filter(r=>r.probability===null).length;
-  rainHost.innerHTML=rainSVG(forecast,Math.max(320,Math.round(rainHost.clientWidth||600)));
-  $('forecastRainStatus').textContent=unavailable?'Prakiraan belum lengkap: '+unavailable+' jam belum tersedia. Area abu-abu bukan peluang hujan 0%.':'';
+  const unavailable=future.filter(r=>r.probability===null).length;
+  if(unavailable)$('rainStatus').textContent+=' Prakiraan hujan belum lengkap: '+unavailable+' jam belum tersedia (bukan peluang 0%).';
  }
 
  async function load(){

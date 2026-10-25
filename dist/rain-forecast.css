@@ -52,11 +52,7 @@ footer{grid-template-columns:1fr auto}
 @media(max-width:1200px){.design-v2 .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:760px){.design-v2 .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metrics .hotspot-card{grid-column:1/-1;order:-1}#hotspotDataTime{font-size:12px}}
 
-/* Release 4.8te: restore future rain probability beside the existing hotspot chart. */
-#forecast-rain-section{scroll-margin-top:90px}#forecast-rain-section .section-head{gap:16px;flex-wrap:wrap}
-#forecastRainChart{height:250px;padding:15px 24px}#forecastRainChart svg{display:block;width:100%;height:100%;overflow:visible}
-#forecastRainChart rect:focus-visible{outline:2px solid #136ca5;outline-offset:-2px}
-#forecastRainStatus{padding:0 24px;line-height:1.8;margin:4px 0 12px;color:#53677d}#forecastRainStatus:empty{display:none}
+/* Release 4.8te: restore rain probability in the combined hotspot chart. */
 .design-v2 .metrics{grid-template-columns:repeat(6,minmax(0,1fr))}
 @media(max-width:1200px){.design-v2 .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:760px){.design-v2 .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}#forecastRainChart{padding:15px 16px}#forecastRainStatus{padding-inline:16px}#forecast-rain-section h2{font-size:18px}}
+@media(max-width:760px){.design-v2 .metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}

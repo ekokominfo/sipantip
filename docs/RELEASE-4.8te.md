@@ -16,7 +16,7 @@ Kolektor Supabase diterbitkan ulang dan dipicu satu kali untuk memperbarui feed 
 - Grafik peluang hujan per jam ditampilkan dalam persen, skala 0–100%, dengan tooltip sentuh/keyboard dan penanda data hilang. Jumlah hujan dalam mm tidak ditampilkan.
 - Kartu dan grafik memakai titik permintaan Kelurahan Pulang Pisau yang sama dengan acuan jarak pandang: key kahayanhilir|pulangpisau, koordinat -2.751345, 114.2608442894562. Data dari forecast-villages (Open-Meteo); koordinat permintaan divalidasi dan tidak diganti dengan titik acuan lama jika lokasi ini tidak tersedia. Hasil tetap prakiraan grid model, bukan observasi langsung.
 - Kartu dan grafik memakai periode masa depan yang sama. Nilai puncak grafik harus cocok dengan kartu; bukan dibandingkan dengan hujan jam yang sudah lewat.
-- Grafik titik panas 24 jam terakhir tetap tersendiri dan tidak menampilkan hujan. Grafik gabungan PM2.5/AQI tidak diubah.
+- Grafik titik panas dan peluang hujan kini digabung, dengan 24 jam terakhir dan 24 jam ke depan pada satu sumbu waktu. Titik panas tidak diprakirakan. Grafik gabungan PM2.5/AQI tidak diubah.
 - Prakiraan desa dan unsur lain yang sebelumnya disembunyikan di kartu desa tetap tersembunyi. Demo kunjungan pertama dari 4.7te tetap tersedia.
 
 ## Validasi
@@ -30,3 +30,9 @@ Commit sebelum perubahan: ed85ce3 (4.7te). Salinan kode fungsi Supabase sebelumn
 Backup historis tetap tercatat di [BACKUPS.md](BACKUPS.md).
 
 Pengujian browser lokal lulus pada lebar 1440, 390 dan 360 piksel: kartu dan grafik tampil, peluang puncak sesuai, tooltip berfungsi, nilai mm tidak masuk grafik, data hilang tidak menjadi nol, sumber tidak menyebut NOAA-21, dan grafik titik panas/PM2.5/AQI serta pemilihan desa tetap bekerja.
+
+## Revisi grafik gabungan — aset 4.8te.1
+
+Atas permintaan pengguna, grafik titik panas dan peluang hujan digabung menjadi satu panel. Sumbu waktu mencakup 24 jam terakhir dan 24 jam ke depan. Garis merah memakai sumbu kiri deteksi/jam; peluang hujan biru memakai sumbu kanan 0–100%, dengan garis titik-titik untuk periode lalu dan putus-putus untuk prakiraan. Latar biru muda membedakan masa depan. Tidak ada prediksi atau nilai nol buatan untuk titik panas masa depan. Tooltip menyatakan status waktu mendatang dengan jelas. Kartu tetap menunjukkan peluang tertinggi pada 24 jam ke depan yang sama dengan bagian prakiraan grafik. Grafik PM2.5/AQI dan sumber backend tidak berubah. Versi publik tetap 4.8te.
+
+Validasi revisi gabungan: 11 pengujian hujan lulus. Pengujian browser pada 1440/390/360 piksel lulus untuk sumbu waktu, kedua satuan, tooltip, data hilang, puncak kartu yang sama dengan prakiraan, ketiadaan prediksi titik panas, grafik PM2.5/AQI dan pemilihan desa.
