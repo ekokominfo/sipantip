@@ -33,3 +33,7 @@ Metode memakai hingga 12 jam sebelum dan termasuk jam sumber yang ditampilkan. M
 Referensi: [EPA Technical Assistance Document, Mei 2026, bagian IV](https://document.airnow.gov/technical-assistance-document-for-the-reporting-of-daily-air-quailty.pdf), [tabel ambang EPA](https://aqs.epa.gov/aqsweb/documents/codetables/aqi_breakpoints.html).
 
 Validasi: 67 pengujian otomatis lulus, termasuk batas kategori, perubahan konsentrasi, jam hilang, konversi waktu, batas 12 jam, data masa depan dan nilai sumber tetap. Pengujian browser mencakup keenam warna, kondisi data kosong, angka per jam dan isi grafik tidak berubah ketika kategori diperbarui, serta tata letak 1440/390/360 piksel.
+
+## Revisi teks kartu — aset 4.4te.3
+
+Sesuai permintaan pengguna, keterangan Kategori berdasarkan estimasi NowCast dan PM2.5 per jam · estimasi CAMS dihapus dari kartu header. Angka per jam, perhitungan NowCast, label kategori dan warna tetap. Penjelasan sumber dan metode tetap tersedia dalam dokumentasi ini. Grafik tidak berubah.
