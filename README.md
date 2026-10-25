@@ -120,3 +120,5 @@ Following user review, PM2.5 and US AQI are combined again in the original simpl
 ## Release 4.4te — village cards
 
 Village cards place PM2.5 and US AQI side by side, with a separate air category badge, hotspot filter period, air source time in WIB and a clear map action. Card height follows its content; missing air readings remain unavailable. Source values and map selection behavior are preserved. Desktop and 390/360px browser checks passed, including period changes, raw values, missing data and matching map counts. See [docs/RELEASE-4.4te.md](docs/RELEASE-4.4te.md).
+
+Subsequent 4.4te revisions removed village dividers and time captions. Asset 4.4te.2 adds an estimated NowCast category and semantic color only to the PM2.5 header card; the large number remains the raw hourly model concentration. EPA's 12-hour weighting, missing-data rules and updated PM2.5 breakpoints are documented in the release notes. All graphs remain unchanged.

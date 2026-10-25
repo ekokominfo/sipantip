@@ -32,3 +32,16 @@
 .village-map-action{display:flex;align-items:center;justify-content:center;min-height:36px;padding:7px 10px;border:1px solid #c3d8ed;border-radius:8px;background:#edf5ff;color:#245d98;font-size:11px;font-weight:600}
 .village-card.selected .village-map-action{background:#2563b6;color:#fff;border-color:#2563b6}
 @media(max-width:760px){.village-cards{grid-template-columns:1fr}.village-cards .village-card{padding:14px;gap:8px}.village-card .village-name{font-size:14px}.village-reading-label,.village-reading-label>span{font-size:11px}}
+
+/* PM2.5 header: semantic categories from model-based NowCast; chart unchanged. */
+.metric.pm-card{--pm-bg:#edf0f4;--pm-ink:#42546a;--pm-badge:#dce3eb;background:var(--pm-bg)}
+.metric.pm-card[data-pm-band="0"]{--pm-bg:#e5eedf;--pm-ink:#34552b;--pm-badge:#d3e6c8}
+.metric.pm-card[data-pm-band="1"]{--pm-bg:#f6f0d7;--pm-ink:#6a5310;--pm-badge:#efe0a7}
+.metric.pm-card[data-pm-band="2"]{--pm-bg:#f8e9d9;--pm-ink:#784412;--pm-badge:#edc89d}
+.metric.pm-card[data-pm-band="3"]{--pm-bg:#f8e1df;--pm-ink:#8a2935;--pm-badge:#edbbb7}
+.metric.pm-card[data-pm-band="4"]{--pm-bg:#eee1f1;--pm-ink:#653d7c;--pm-badge:#dbc2e2}
+.metric.pm-card[data-pm-band="5"]{--pm-bg:#ecdce2;--pm-ink:#70273e;--pm-badge:#d9b5c3}
+.metric.pm-card #pm,.metric.pm-card .label span{color:var(--pm-ink)}
+.metric.pm-card .pm-category{display:table;max-width:100%;padding:4px 8px;border-radius:6px;background:var(--pm-badge);color:var(--pm-ink);font-size:12px;font-weight:600;line-height:1.5}
+.metric.pm-card .pm-nowcast-note{display:block;font-size:11px;line-height:1.5;color:#42546a}
+.metric.pm-card .pm-source{font-size:11px;color:#42546a;margin:6px 0}
