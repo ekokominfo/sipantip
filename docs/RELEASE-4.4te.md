@@ -19,3 +19,7 @@ Grafik gabungan PM2.5/AQI, grafik titik panas, sumber data, koreksi jarak pandan
 Pemeriksaan browser pada lebar 1440, 390 dan 360 piksel memastikan tidak ada luapan horizontal, dua nilai udara berdampingan, label sesuai nilai sumber, filter periode bekerja, pemilihan desa sesuai jumlah penanda peta, status pilihan berubah, grafik tetap tampil dan data udara kosong tidak diubah menjadi nol.
 
 Daftar backup historis tetap tersedia di [BACKUPS.md](BACKUPS.md). Rilis ini tidak membuat atau menimpa branch backup.
+
+## Revisi kartu 4.4te.1
+
+Atas permintaan pengguna, dua garis pembagi pada blok PM2.5/AQI, label periode pada kartu, dan waktu data udara pada kartu dihapus. Filter periode dan waktu sumber tetap digunakan oleh aplikasi; nilai dan fungsi pemilihan peta tidak berubah. Nomor tampilan tetap 4.4te.
