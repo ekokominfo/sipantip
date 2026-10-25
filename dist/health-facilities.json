@@ -1,0 +1,125 @@
+{
+  "updatedAt": "2026-10-25",
+  "coordinateNote": "Titik acuan dari peta yang disematkan situs resmi fasilitas/Dinas Kesehatan; bukan hasil survei lapangan.",
+  "facilities": [
+    {
+      "id": "puskesmas-bahaur-hilir",
+      "name": "Puskesmas Bahaur Hilir",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -3.2387733,
+      "lon": 114.0961209,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-bahaur-hilir/"
+    },
+    {
+      "id": "puskesmas-bahaur-tengah",
+      "name": "Puskesmas Bahaur Tengah",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -3.2113114,
+      "lon": 114.0998066,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-bahaur-tengah/"
+    },
+    {
+      "id": "puskesmas-bawan",
+      "name": "Puskesmas Bawan",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -1.6281435,
+      "lon": 113.9149916,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-bawan/"
+    },
+    {
+      "id": "puskesmas-bereng",
+      "name": "Puskesmas Bereng",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -2.7348144,
+      "lon": 114.2649184,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-bereng/"
+    },
+    {
+      "id": "puskesmas-bukit-rawi",
+      "name": "Puskesmas Bukit Rawi",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -2.0827886,
+      "lon": 113.9456181,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-bukit-rawi/"
+    },
+    {
+      "id": "puskesmas-jabiren",
+      "name": "Puskesmas Jabiren",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -2.5191705,
+      "lon": 114.1876563,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-jabiren/"
+    },
+    {
+      "id": "puskesmas-maliku",
+      "name": "Puskesmas Maliku",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -2.9575406,
+      "lon": 114.1517101,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-maliku/"
+    },
+    {
+      "id": "puskesmas-pangkoh",
+      "name": "Puskesmas Pangkoh",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -3.0635758,
+      "lon": 114.1564228,
+      "source": "https://dinkespulangpisau.com/berita-artikel/lokakarya-mini-bulanan-puskesmas-pangkoh-evaluasi-dan-penguatan-capaian-program-kesehatan/",
+      "mapSource": "https://maps.app.goo.gl/nkPGmZXJnJ6KuSUu7",
+      "coordinateNote": "Koordinat penanda tempat Google Maps, tautan diberikan pengelola SiPantip."
+    },
+    {
+      "id": "puskesmas-pulang-pisau",
+      "name": "Puskesmas Pulang Pisau",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -2.7474079,
+      "lon": 114.258051,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-pulang-pisau/"
+    },
+    {
+      "id": "puskesmas-sebangau",
+      "name": "Puskesmas Sebangau",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -2.9536573,
+      "lon": 113.8202043,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-sebangau/"
+    },
+    {
+      "id": "puskesmas-tahai",
+      "name": "Puskesmas Tahai",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -3.0374071,
+      "lon": 114.1968942,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-tahai/"
+    },
+    {
+      "id": "puskesmas-tangakhen",
+      "name": "Puskesmas Tangkahen",
+      "type": "puskesmas",
+      "regency": "Pulang Pisau",
+      "lat": -1.5503699,
+      "lon": 113.8959748,
+      "source": "https://dinkespulangpisau.com/upt/puskesmas-tangakhen/"
+    },
+    {
+      "id": "rsud-pulang-pisau",
+      "name": "RSUD Pulang Pisau",
+      "type": "rumah_sakit",
+      "regency": "Pulang Pisau",
+      "lat": -2.7943055,
+      "lon": 114.2628278,
+      "source": "https://rsud.pulangpisaukab.go.id/"
+    }
+  ]
+}
